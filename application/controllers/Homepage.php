@@ -18,6 +18,10 @@ class Homepage extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
+
+	public function __contruct() {
+		parent::__contruct();
+	}
 	public function index()
 	{
 		$this->load->view('home_page');
@@ -39,10 +43,10 @@ class Homepage extends CI_Controller {
 
 		$link = "https://github.com/rootavish/me";
 
-		$this->load->model("user_model");
+		$this->load->model("User_model");
 
-		$umodel = User_Model();
+		$umodel = new User_Model();
 		$umodel->_setId(1);
-		$umodel.setProfilePic($link);
+		$umodel->setProfilePic($link);
 	}
 }
