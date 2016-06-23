@@ -8,6 +8,7 @@ class Userprofile extends CI_controller{
 		parent::__construct();
 	}
 
+	//default method for a new user
 	public function index(){
 		$this->load->library("Userfactory");
 
@@ -17,6 +18,25 @@ class Userprofile extends CI_controller{
 
 		$this->load->view("header");
 		$this->load->view("show_profile",$data);
+		$this->load->view("footer");
+	}
+
+	//method to activate user profile
+	public function activate(){
+		$this->load->library("Userfactory");
+		//var_dump($_GET);
+		$response = $this->userfactory->activateProfile();
+
+		$this->load->view("header");
+		if( $response == ACK )
+			$msg = "Email successfully Verified";
+		else
+			$msg = "Email already verified.";
+		$data = array(
+			"message" => $msg
+			);
+		
+		$this->load->view("activation_status",$data);
 		$this->load->view("footer");
 	}
 

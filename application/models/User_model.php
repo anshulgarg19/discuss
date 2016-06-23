@@ -83,5 +83,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		    	$q = $this->db->query("UPDATE user_profile SET profile_pic=? WHERE u_id=?", array($profilePicUrl, $this->id));
 		    }
 	    }
+
+	    //model to mark user activated
+	    public function _setActivated(){
+	    	$query = 'select activated from user_profile where email_id=?';
+	    	$result = $this->db->query($query, array($_GET['email']));
+	    	//var_dump($result->result());
+	    	$activated = $result->row();
+	    	//user not activated earlier
+	    	if( $activated->activated == '0')
+	    	{
+	    		$query = 'update user_profile set activated=1,reset_link=NULL where email_id=?';
+	    		$result = $this->db->query($query, array($_GET['email']));
+	    		return ACK;
+	    	}
+	    	//user already activated
+	    	else
+	    	{
+	    		return NACK;
+	    	}
+	    }
 }	
 ?>

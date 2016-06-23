@@ -1,3 +1,6 @@
+Activation link part done and working
+(email configurations have been slightly changed in Homepage.php controller)
+
 uri:
 www.discuss.io/index.php/userprofile/
 >>this will open default page show_profile.php

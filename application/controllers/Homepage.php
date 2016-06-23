@@ -27,10 +27,13 @@ class Homepage extends CI_Controller {
 		$this->load->view('home_page');
 	}
 	
+	//method to initiate registration in controller
 	public function register() {
 		$this->load->library("Userfactory");
-		$this->userfactory->setUser($_POST);
-		var_dump($_POST);
+		//var_dump($_POST['email'].ACTIVATE_STRING.' '.sha1($_POST['email'].ACTIVATE_STRING));
+		$activation_key = sha1($_POST['email'].ACTIVATE_STRING);
+		$this->userfactory->setUser($_POST,$activation_key);
+		$this->sendmail($activation_key);
 		
 	}
 
@@ -55,7 +58,35 @@ class Homepage extends CI_Controller {
 		}
 	}
 
-	public function sendmail() {
+	public function sendmail($activation_key) {
+		$activate_uri = ACTIVATE_URI.'code='.$activation_key.'&email='.$_POST['email'];
+		
+		$config = Array(
+		    'protocol' => 'smtp',
+		    'smtp_host' => 'ssl://smtp.googlemail.com',
+		    'smtp_port' => 465,
+		    'smtp_user' => 'discusswebservice@gmail.com',
+		    'smtp_pass' => 'thisisubuntu',
+		    'mailtype'  => 'html', 
+		    'charset'   => 'iso-8859-1'
+		);
+
+	    $config['newline'] = "\r\n";
+
+		$this->load->library('email', $config);
+		$this->email->from('discusswebservice@gmail.com');
+        $this->email->to($_POST['email'],$_POST['fname']);
+
+        $this->email->subject('Activate email');
+        $this->email->message('Activation uri is: '.$activate_uri);  
+
+        $this->email->send();
+
+        echo $this->email->print_debugger();
+	}
+
+	/*public function sendmail() {
+
 		$config = Array(
 		    'protocol' => 'smtp',
 		    'smtp_host' => 'ssl://smtp.googlemail.com',
@@ -78,5 +109,5 @@ class Homepage extends CI_Controller {
         $this->email->send();
 
         echo $this->email->print_debugger();
-	}
+	}*/
 }

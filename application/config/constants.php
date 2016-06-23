@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+defined('ACTIVATE_STRING') OR define('ACTIVATE_STRING','activateit');
+defined('ACTIVATE_URI') OR define('ACTIVATE_URI','www.discuss.io/index.php/userprofile/activate?');
+defined('ACK') OR define('ACK','Acknowledged');
+defined('NACK') OR define('NACK','Not Acknowledged');
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace
