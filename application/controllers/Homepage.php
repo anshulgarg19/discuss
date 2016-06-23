@@ -34,4 +34,15 @@ class Homepage extends CI_Controller {
 		var_dump($_POST);
 		
 	}
+
+	public function setProfilePic() {
+
+		$link = "https://github.com/rootavish/me";
+
+		$this->load->model("user_model");
+
+		$umodel = User_Model();
+		$umodel->_setId(1);
+		$umodel.setProfilePic($link);
+	}
 }

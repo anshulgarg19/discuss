@@ -76,5 +76,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    public function _setProfilePicUrl($profilePic) {
 	    	$this->profilePicUrl = $profilePic;
 	    }
+
+	    public function setProfilePic($profilePicUrl) {
+
+	    	if($this->id > 0) {
+		    	$q = $this->db->prepare("UPDATE TABLE user_profile SET profile_pic=? WHERE u_id=?");
+		    	$q->bind_param('sd', $profilePicUrl, $this->id);
+		    	$q->execute();
+		    }
+	    }
 }
 ?>
