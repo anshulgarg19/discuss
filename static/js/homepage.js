@@ -7,7 +7,7 @@ $(document).ready(function(){
 
 		var login_email = $('#login_email').val();
 
-		validate login email
+		//validate login email
 		if( !validate_email(login_email) )
 		{
 			$("#error-login_email").css("color","red");
