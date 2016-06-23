@@ -54,4 +54,27 @@ class Homepage extends CI_Controller {
 			die();
 		}
 	}
+
+	public function sendmail() {
+		$config = Array(
+		    'protocol' => 'smtp',
+		    'smtp_host' => 'ssl://smtp.googlemail.com',
+		    'smtp_port' => 465,
+		    'smtp_user' => 'discusswebservice@gmail.com',
+		    'smtp_pass' => 'thisisubuntu',
+		    'mailtype'  => 'html', 
+		    'charset'   => 'iso-8859-1'
+		);
+
+		$this->load->library('email', $config);
+		$this->email->from('discusswebservice@gmail.com', 'myname');
+        $this->email->to('avishkar.gupta.delhi@gmail.com'); 
+
+        $this->email->subject('Email Test');
+        $this->email->message('Testing the email class.');  
+
+        $this->email->send();
+
+        echo $this->email->print_debugger();
+	}
 }
