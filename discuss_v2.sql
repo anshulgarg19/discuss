@@ -115,7 +115,8 @@ CREATE TABLE `tag` (
 
 CREATE TABLE `user_profile` (
   `u_id` int(11) NOT NULL,
-  `user_name` varchar(64) NOT NULL,
+  `user_firstname` varchar(32) NOT NULL,
+  `user_lastname` varchar(32) NOT NULL,
   `phone_num` int(11) NOT NULL,
   `email_id` varchar(256) NOT NULL,
   `profile_pic` varchar(512) NOT NULL,
