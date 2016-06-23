@@ -26,14 +26,9 @@ class Homepage extends CI_Controller {
 	{
 		$this->load->view('home_page');
 	}
-
-	public function login() {
-
-		var_dump($_POST);
-	}
 	
 	public function register() {
-		$this->load->library('Userfactory');
+		$this->load->library("Userfactory");
 		$this->userfactory->setUser($_POST);
 		var_dump($_POST);
 		
@@ -48,5 +43,15 @@ class Homepage extends CI_Controller {
 		$umodel = new User_Model();
 		$umodel->_setId(1);
 		$umodel->setProfilePic($link);
+	}
+
+	public function login() {
+
+		$this->load->library("Userfactory");
+		if (!$this->userfactory->verifyLogin($_POST)) {
+			// Wrong username or password, session was not set
+			http_response_code(400);
+			die();
+		}
 	}
 }

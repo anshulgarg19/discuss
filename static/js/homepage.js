@@ -7,7 +7,7 @@ $(document).ready(function(){
 
 		var login_email = $('#login_email').val();
 
-		//validate login email
+		validate login email
 		if( !validate_email(login_email) )
 		{
 			$("#error-login_email").css("color","red");
@@ -32,6 +32,10 @@ $(document).ready(function(){
 			console.log(response);
 			console.log("success");
 			$('#result').html(response);
+		})
+		.error(function(response) {
+			console.log(response);
+			$('#result').html(response.responseText);
 		});
 				
 	});
