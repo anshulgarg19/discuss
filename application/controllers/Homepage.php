@@ -66,9 +66,11 @@ class Homepage extends CI_Controller {
 		    'charset'   => 'iso-8859-1'
 		);
 
+	    $config['newline'] = "\r\n";
+
 		$this->load->library('email', $config);
-		$this->email->from('discusswebservice@gmail.com', 'myname');
-        $this->email->to('avishkar.gupta.delhi@gmail.com'); 
+		$this->email->from('discusswebservice@gmail.com');
+        $this->email->to('avishkar.gupta.delhi@gmail.com','avishkar');
 
         $this->email->subject('Email Test');
         $this->email->message('Testing the email class.');  
