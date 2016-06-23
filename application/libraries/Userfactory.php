@@ -9,6 +9,16 @@ class Userfactory{
 		$this->_ci->load->model("User_model");
 	}
 
+	//method to fetch user profile
+	public function getUser($user_id){
+
+		$query = $this->_ci->db->get_where("user_profile",array("u_id"=>$user_id));
+		//var_dump($query->row());
+		$data = $query->row();
+
+		return $this->createUserObject($data);
+	}
+
 	public function setUser($data){
 		$query = 'insert into user_profile(user_firstname,user_lastname,phone_num,email_id,password) values(?,?,?,?,?)';
 		$this->_ci->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],sha1($data['password'])));
@@ -23,7 +33,7 @@ class Userfactory{
 		foreach($result->result_array() as $row) {
 
 			var_dump($row);
-			$_SESSION['id'] = $row['u_id'];
+			$_SESSION['u_id'] = $row['u_id'];
 			$_SESSION['firstname'] = $row['user_firstname'];
 		}
 
@@ -32,6 +42,17 @@ class Userfactory{
 
 		$result->free_result();
 		return true;
+	}
+
+	public function createUserObject( $data ){
+		$user_object = new User_Model();
+		$user_object->_setId($data->u_id);
+		$user_object->_setFirstname($data->user_firstname);
+		$user_object->_setLastname($data->user_lastname);
+		$user_object->_setEmail($data->email_id);
+		$user_object->_setPhone($data->phone_num);
+		$user_object->_setProfilePicUrl($data->profile_pic);
+		return $user_object;
 	}
 };
 ?>

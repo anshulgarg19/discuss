@@ -1,0 +1,9 @@
+uri:
+www.discuss.io/index.php/userprofile/
+>>this will open default page show_profile.php
+
+added functionality to multi cast form.
+
+TO DO:
+config settings for file upload
+(created a temp method changepic to test settings)

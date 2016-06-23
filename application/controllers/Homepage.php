@@ -19,8 +19,8 @@ class Homepage extends CI_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-	public function __contruct() {
-		parent::__contruct();
+	public function __construct() {
+		parent::__construct();
 	}
 	public function index()
 	{
