@@ -31,5 +31,6 @@ class Homepage extends CI_Controller {
 	public function register() {
 
 		var_dump($_POST);
+		
 	}
 }

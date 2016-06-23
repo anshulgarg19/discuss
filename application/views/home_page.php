@@ -15,7 +15,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 
 	<pre id="result"></pre>
-	
+
+	<!-- register form -->	
+
+	<br/>
+	<br/>
+	Register:
+	<br/>
+
+	<form>
+		<label for="fname">First Name </label><input type="text" name="fname" id="first_name"><br/>
+		<label for="lname">Last Name </label><input type="text" name="lname" id="last_name"><br/>
+		<label for="pnum">Phone Num </label><input type="text" name="pnum" id="phone_num"><br/>
+		<label for="email">Email </label><input type="text" name="email" id="register_email"><br/>
+		<label for="password">Password </label><input type="password" name="password" id="register_password"><br/>
+		<label for="confirm_pw">Confirm Password</label><input type="password" name="confirm_pw" id="confirm_password"><br/>
+		<button type="button" id="register_submit">Register</button>
+	</form>
+
+	<pre id="register_response"></pre>
+
 	<!-- page javscript -->	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<script type="text/javascript" src="static/js/homepage.js"></script>
