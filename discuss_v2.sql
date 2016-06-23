@@ -93,6 +93,7 @@ CREATE TABLE `question` (
   `q_content` text NOT NULL,
   `timestamp` datetime DEFAULT CURRENT_TIMESTAMP,
   `title` varchar(200) NOT NULL,
+  `a_count` int(5) NOT NULL DEFAULT 0,
   `appropriate` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -104,7 +105,8 @@ CREATE TABLE `question` (
 
 CREATE TABLE `tag` (
   `tag_id` int(11) NOT NULL,
-  `tag_name` varchar(32) NOT NULL
+  `tag_name` varchar(32) NOT NULL,
+  `num_questions` int DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
