@@ -10,6 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		private $lastname;
 		private $phone;
 		private $email;
+		private $profilePicUrl;
 
 		// invoke the parent class constructor
 		function __construct() {
@@ -66,6 +67,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    public function _setEmail($email)
 	    {
 	        $this->email = $email;
+	    }
+
+	    public function getProfilePicUrl() {
+	    	return $this->profilePicUrl;
+	    }
+
+	    public function _setProfilePicUrl(profilePic) {
+	    	$this->profilePicUrl = profilePic;
 	    }
 }
 ?>
