@@ -29,7 +29,8 @@ class Homepage extends CI_Controller {
 	}
 	
 	public function register() {
-
+		$this->load->library('Userfactory');
+		$this->userfactory->setUser($_POST);
 		var_dump($_POST);
 		
 	}

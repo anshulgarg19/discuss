@@ -42,6 +42,7 @@ $('#register_submit').click(function(event){
 		error: function(response){
 			console.log(response);
 			console.log("register failure");
+			$('#register_response').html(response.responseText);
 		}
 	});
 });

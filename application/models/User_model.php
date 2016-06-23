@@ -73,8 +73,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    	return $this->profilePicUrl;
 	    }
 
-	    public function _setProfilePicUrl(profilePic) {
-	    	$this->profilePicUrl = profilePic;
+	    public function _setProfilePicUrl($profilePic) {
+	    	$this->profilePicUrl = $profilePic;
 	    }
 }
 ?>
