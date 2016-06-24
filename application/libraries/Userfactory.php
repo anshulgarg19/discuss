@@ -73,18 +73,15 @@ class Userfactory{
 		}
 	}
 
-	public function passwordResetHandler($token, $email) {
-
-		$user_model = User_Model();
-
-		// Check if the user with this token exists, else do not show a view
-		if($user_model->getUserForReset($token, $email)) {
-
-		}
-	}
-
 	public function passwordResetClose($token, $email, $newpass) {
 		// Finally reset the password
+		$user_object = new User_Model();
+		
+		if(!$user_object->resetPass($token, $email, $newpass)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public function verifyLogin($userdata) {

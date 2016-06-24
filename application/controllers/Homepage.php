@@ -91,6 +91,28 @@ class Homepage extends CI_Controller {
         echo $this->email->print_debugger();
 	}
 
+	public function PasswordReset() {
+
+		if (array_key_exists('token',$_GET)) {
+			$this->load->view("header");
+			$this->load->view("password_reset");
+			$this->load->view("footer");
+		}
+		else {
+			echo "Password cannot be reset without a valid activation link";
+		}
+	}
+
+	public function PasswordResetClose() {
+		$this->load->library("Userfactory");
+		if ($this->userfactory->PasswordResetClose($_POST['token'], $_POST['email'], $_POST['password'])) {
+			echo "Your password was reset successfully.";
+		}
+		else {
+			http_response_code(401);
+			echo "The password reset was unsuccessful, are you sure you are using the link we sent you?";
+		}
+	}
 	/*public function sendmail() {
 
 		$config = Array(

@@ -126,5 +126,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    		return true;
 	    	}
 	    }
+
+	    public function resetPass($token, $email, $password) {
+
+	    	$q = "SELECT reset_link FROM user_profile WHERE email_id=?";
+	    	$tokenres = $this->db->query($q, array($email));
+
+	    	if(!$tokenres) {
+	    		return false;
+	    	}
+
+	    	foreach($tokenres->result_array() as $dbtoken) {
+
+	    		if($token != $dbtoken['reset_link']) {
+	    			return false;
+	    		}
+
+	    		$q = "UPDATE user_profile SET password=?, reset_link=NULL WHERE email_id=?";
+
+	    		$result = $this->db->query($q, array(sha1($password), $email));
+
+	    		if(!$result) {
+	    			return false;
+	    		}
+	    		else {
+	    			return true;
+	    		}
+	    	}
+
+	    }
 }	
 ?>
