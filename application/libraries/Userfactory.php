@@ -22,7 +22,7 @@ class Userfactory{
 
 	//library method to set user credetials after successful regitration
 	public function createUser($data,$activation_key){
-		$this->user_object->register_user($data, $activation_key);
+		$this->user_object->registerUser($data, $activation_key);
 	}
 
 	//library method to activate profile
@@ -82,8 +82,8 @@ class Userfactory{
 	// Function to check if the user credentials are correct
 	public function verifyLogin($userdata) {
 		if($result = $this->user_object->loginCheck($userdata)) {
-			$_SESSION['user_id'] = $result['user_id'];
-			$_SESSION['firstname'] = $result['firstname'];
+			$_SESSION['user_id'] = $result[0];
+			$_SESSION['firstname'] = $result[1];
 			return true;
 		}
 		else {

@@ -122,7 +122,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    public function loginCheck($userdata) {
 
 	    	$q = "SELECT u_id, user_firstname FROM user_profile WHERE email_id=? AND password=?";
-	    	$result = $this->_ci->db->query($q, array($userdata['email'], sha1($userdata['password'])));
+	    	$result = $this->db->query($q, array($userdata['email'], sha1($userdata['password'])));
 
 	    	if ($result->num_rows() < 1)
 	    		return false;
@@ -134,7 +134,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    // Function to create a database entry for a new user
 	    public function registerUser($data, $activation_key) {
 	    	$query = 'insert into user_profile(user_firstname,user_lastname,phone_num,email_id,reset_link,password) values(?,?,?,?,?,?)';
-	    	$this->_ci->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$activation_key,sha1($data['password'])));
+	    	$this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$activation_key,sha1($data['password'])));
 	    }
 
 	    // Save the reset link to the database
