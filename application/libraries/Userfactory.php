@@ -14,8 +14,7 @@ class Userfactory{
 	//method to fetch user profile
 	public function getUser($user_id){
 
-		$query = $this->_ci->db->get_where("user_profile",array("u_id"=>$user_id));
-		$data = $query->row();
+		$data = $this->user_object->retrieveUser($user_id);		
 
 		return $this->createUserObject($data);
 	}
@@ -93,9 +92,9 @@ class Userfactory{
 
 	public function createUserObject( $data ){
 		$u_object = new User_Model();
-		$u_object->_setId($data->u_id);
-		$u_object->_setFirstname($data->user_firstname);
-		$u_object->_setLastname($data->user_lastname);
+		$u_object->_setId($data->user_id);
+		$u_object->_setFirstname($data->firstname);
+		$u_object->_setLastname($data->lastname);
 		$u_object->_setEmail($data->email_id);
 		$u_object->_setPhone($data->phone_num);
 		$u_object->_setProfilePicUrl($data->profile_pic);

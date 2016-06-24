@@ -12,7 +12,7 @@
 		// Get the list of all tags from the databse.
 		public function getTags() {
 
-			$result = $this->db->query("SELECT * FROM tag");
+			$result = $this->db->query("SELECT * FROM Tags");
 
 			if($result)
 				return $result->result_array();
@@ -23,7 +23,7 @@
 
 		public function writeUserTags($pairs) {
 
-			$q = 'INSERT INTO user_tag (tag_id, u_id) VALUES '.implode(',', $pairs);
+			$q = 'INSERT INTO Users_Tags (tag_id, user_id) VALUES '.implode(',', $pairs);
 			
 			print_r($q);
 			$result = $this->db->query($q);

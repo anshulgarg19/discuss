@@ -80,13 +80,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    public function setProfilePic($profilePicUrl) {
 
 	    	if($this->id > 0) {
-		    	$q = $this->db->query("UPDATE user_profile SET profile_pic=? WHERE u_id=?", array($profilePicUrl, $this->id));
+		    	$q = $this->db->query("UPDATE Users SET profile_pic=? WHERE user_id=?", array($profilePicUrl, $this->id));
 		    }
 	    }
 
 	    //model to mark user activated
 	    public function _setActivated(){
-	    	$query = 'select reset_link,activated from user_profile where email_id=?';
+	    	$query = 'select reset_link,activated from Users where email_id=?';
 	    	$result = $this->db->query($query, array($_GET['email']));
 	    	//var_dump($result->result());
 	    	//bad activation request
@@ -101,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    		if( $result_object->reset_link != $_GET['code'])
 	    			return BAD_REQUEST.' : reset_link not valid';
 
-	    		$query = 'update user_profile set activated=1,reset_link=NULL where email_id=?';
+	    		$query = 'update Users set activated=1,reset_link=NULL where email_id=?';
 	    		$result = $this->db->query($query, array($_GET['email']));
 	    		return ACK;
 	    	}
@@ -114,14 +114,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    //model to update profile pic url
 	    public function _updateProfilePicURL($filename){
-	    	$query = 'update user_profile set profile_pic=?';
+	    	$query = 'update Users set profile_pic=?';
 	    	$result = $this->db->query($query,array($filename));
 	    }
 
 	    // Function to verify a user's login credentials
 	    public function loginCheck($userdata) {
 
-	    	$q = "SELECT u_id, user_firstname FROM user_profile WHERE email_id=? AND password=?";
+	    	$q = "SELECT user_id, firstname FROM Users WHERE email_id=? AND password=?";
 	    	$result = $this->db->query($q, array($userdata['email'], sha1($userdata['password'])));
 
 	    	if ($result->num_rows() < 1)
@@ -131,16 +131,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     		return array($user->u_id, $user->user_firstname);
 	    }
 
+	    //Function to retrieve user profile
+	    public function retrieveUser($user_id){
+	    	$query = 'select * from Users where user_id=?';
+	    	$result = $this->db->query($query,array($user_id));
+	    	return $result->row();
+			
+	    }
+
 	    // Function to create a database entry for a new user
 	    public function registerUser($data, $activation_key) {
-	    	$query = 'insert into user_profile(user_firstname,user_lastname,phone_num,email_id,reset_link,password) values(?,?,?,?,?,?)';
+	    	$query = 'insert into Users(firstname,lastname,phone_num,email_id,reset_link,password) values(?,?,?,?,?,?)';
 	    	$this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$activation_key,sha1($data['password'])));
 	    }
 
 	    // Save the reset link to the database
 	    public function saveResetToken($token, $email_id) {
 
-	    	$q = "UPDATE user_profile SET reset_link=? WHERE email_id=?";
+	    	$q = "UPDATE Users SET reset_link=? WHERE email_id=?";
 	    	$result = $this->db->query($q, array($token, $email_id));
 
 	    	if (!$result) {
@@ -155,7 +163,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    // Function to reset the password stored in the database
 	    public function resetPass($token, $email, $password) {
 
-	    	$q = "SELECT reset_link FROM user_profile WHERE email_id=?";
+	    	$q = "SELECT reset_link FROM Users WHERE email_id=?";
 	    	$tokenres = $this->db->query($q, array($email));
 
 	    	if(!$tokenres) {
@@ -168,7 +176,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    			return false;
 	    		}
 
-	    		$q = "UPDATE user_profile SET password=?, reset_link=NULL WHERE email_id=?";
+	    		$q = "UPDATE Users SET password=?, reset_link=NULL WHERE email_id=?";
 
 	    		$result = $this->db->query($q, array(sha1($password), $email));
 

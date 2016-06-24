@@ -14,7 +14,7 @@ class Userprofile extends CI_controller{
 		$this->load->library("Userfactory");
 
 		$data = array(
-			"user" => $this->userfactory->getUser(40)
+			"user" => $this->userfactory->getUser(41)
 			);
 
 		$this->load->view("header");
