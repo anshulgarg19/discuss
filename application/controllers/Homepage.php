@@ -58,6 +58,12 @@ class Homepage extends CI_Controller {
 		}
 	}
 
+	public function forgot() {
+
+		$this->load->library("Userfactory");
+		$this->userfactory->passwordResetInit($_POST['forgotmail']);
+	}
+
 	public function sendmail($activation_key) {
 		$activate_uri = ACTIVATE_URI.'code='.$activation_key.'&email='.$_POST['email'];
 		

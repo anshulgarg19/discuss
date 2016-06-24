@@ -40,7 +40,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</form>
 
 	<pre id="register_response"></pre>
+	
 
+	<div id="modal">
+		<form id="pwresetemail">
+			<input type="text" name="forgotmail">
+			<button type="button" id="reset_button">Send password reset email</button>
+		</form>
+		<pre id="reset_result"></pre>
+	</div>
 	<!-- page javscript -->	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	<script type="text/javascript" src="static/js/homepage.js"></script>

@@ -33,6 +33,60 @@ class Userfactory{
 		return $response;
 	}
 
+	public function passwordResetInit($email) {
+		
+		// Generate a reset token of length 64 bytes
+		$token = bin2hex(openssl_random_pseudo_bytes(64));
+
+		// Now write this token to the database
+		$user_object = new User_Model();
+		
+		if($user_object->saveResetToken($token, $email)) {
+
+			$link = "https://discuss.io/index.php/Homepage/PasswordReset?token=".$token."&email=".$email;
+
+			$config = Array(
+			    'protocol' => 'smtp',
+			    'smtp_host' => 'ssl://smtp.googlemail.com',
+			    'smtp_port' => 465,
+			    'smtp_user' => 'discusswebservice@gmail.com',
+			    'smtp_pass' => 'thisisubuntu',
+			    'mailtype'  => 'html', 
+			    'charset'   => 'iso-8859-1'
+			);
+
+		    $config['newline'] = "\r\n";
+
+			$this->_ci->load->library('email', $config);
+			$this->_ci->email->from('discusswebservice@gmail.com');
+	        $this->_ci->email->to($email);
+
+	        $this->_ci->email->subject('Password reset email');
+	        $this->_ci->email->message('Reset uri is: '.$link);  
+
+	        $this->_ci->email->send();
+
+	        echo $this->_ci->email->print_debugger();
+		}
+		else {
+			http_response_code(500);
+		}
+	}
+
+	public function passwordResetHandler($token, $email) {
+
+		$user_model = User_Model();
+
+		// Check if the user with this token exists, else do not show a view
+		if($user_model->getUserForReset($token, $email)) {
+
+		}
+	}
+
+	public function passwordResetClose($token, $email, $newpass) {
+		// Finally reset the password
+	}
+
 	public function verifyLogin($userdata) {
 
 		$q = "SELECT u_id, user_firstname FROM user_profile WHERE email_id=? AND password=?";

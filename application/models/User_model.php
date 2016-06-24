@@ -111,5 +111,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    		return NACK;
 	    	}
 	    }
+
+	    // Save the reset link
+	    public function saveResetToken($token, $email_id) {
+
+	    	$q = "UPDATE user_profile SET reset_link=? WHERE email_id=?";
+	    	$result = $this->db->query($q, array($token, $email_id));
+
+	    	if (!$result) {
+	    		return $result->error();
+	    	}
+
+	    	else {
+	    		return true;
+	    	}
+	    }
 }	
 ?>

@@ -114,6 +114,26 @@ $(document).ready(function(){
 		});
 	});
 
+	// Function for password reset submit
+	$('#reset_button').click(function(event) {
+
+		$.ajax({
+			url: '/index.php/homepage/forgot',
+			type: 'POST',
+			data: $('#pwresetemail').serialize()
+		})
+		.success(function (response) {
+			console.log("success");
+			$('#reset_result').html(response);
+		})
+		.error(function(response) {
+			console.log("error");
+			console.log(response);
+			$('#reset_result').html(response.responseText);
+		});
+		
+	});
+
 	//function to validate phone number
 	function validate_phonenumber(inputtxt)  
 	{  
