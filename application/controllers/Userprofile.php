@@ -6,6 +6,7 @@ class Userprofile extends CI_controller{
 
 	public function __construct(){
 		parent::__construct();
+		$this->load->library("Userfactory");
 	}
 
 	//default method for a new user
@@ -13,7 +14,7 @@ class Userprofile extends CI_controller{
 		$this->load->library("Userfactory");
 
 		$data = array(
-			"user" => $this->userfactory->getUser(1)
+			"user" => $this->userfactory->getUser(40)
 			);
 
 		$this->load->view("header");
@@ -58,23 +59,28 @@ class Userprofile extends CI_controller{
 	}
 
 	public function changepic(){
-		$this->config =  array(
-	      //'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/files/",
-	      //'upload_url'      => base_url()."files/",
-	      'allowed_types'   => "gif|jpg|png",
-	      'overwrite'       => TRUE,
-	      'max_size'        => "1000KB",
-	      'max_height'      => "768",
-	      'max_width'       => "1024"  
-	    );
-	    $this->load->library('upload', $this->config);
-		if($this->upload->do_upload())
+		
+		$filename = '1';
+	    $config['upload_path']          = UPLOAD_DIR;
+        $config['allowed_types']        = 'gif|jpg|png|jpeg';
+        $config['max_size']             = 1024*1024*1024*2;
+        $config['max_width']            = 2000;
+        $config['max_height']           = 2768;
+        $config['file_name'] 			= $filename;
+
+	    $this->load->library('upload', $config);
+
+		if(!$this->upload->do_upload('userfile'))
 		{
-		    echo "file upload success";
+			var_dump($this->upload->display_errors());
+		    echo "file upload failed";
 		}
 		else
 		{
-		   echo "file upload failed";
+			$this->userfactory->updateProfilePic($filename);
+			$this->index();
+		   //echo "file upload success";
+
 		}
 	}
 };

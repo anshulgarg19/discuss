@@ -7,6 +7,7 @@ defined('ACK') OR define('ACK','Acknowledged');
 defined('NACK') OR define('NACK','Not Acknowledged');
 defined('BAD_REQUEST') OR define('BAD_REQUEST','Bad URL request');
 
+defined('UPLOAD_DIR') OR define('UPLOAD_DIR','./uploads');
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

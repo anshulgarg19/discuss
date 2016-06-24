@@ -103,6 +103,13 @@ class Userfactory{
 		return true;
 	}
 
+	//library helper to update profile pic url in database
+	public function updateProfilePic($filename){
+		$user_object = new User_Model();
+		$user_object->_updateProfilePicURL($filename);		
+	}
+
+
 	public function createUserObject( $data ){
 		$user_object = new User_Model();
 		$user_object->_setId($data->u_id);

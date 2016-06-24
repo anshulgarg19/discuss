@@ -112,6 +112,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    	}
 	    }
 
+	    //model to update profile pic url
+	    public function _updateProfilePicURL($filename){
+	    	$query = 'update user_profile set profile_pic=?';
+	    	$result = $this->db->query($query,array($filename));
+	    }
+
 	    // Save the reset link
 	    public function saveResetToken($token, $email_id) {
 
