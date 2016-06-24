@@ -22,7 +22,6 @@ class Userfactory{
 	//library method to set user credetials after successful regitration
 	public function setUser($data,$activation_key){
 		$query = 'insert into user_profile(user_firstname,user_lastname,phone_num,email_id,reset_link,password) values(?,?,?,?,?,?)';
-		
 		$this->_ci->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$activation_key,sha1($data['password'])));
 	}
 

@@ -5,6 +5,8 @@ defined('ACTIVATE_STRING') OR define('ACTIVATE_STRING','activateit');
 defined('ACTIVATE_URI') OR define('ACTIVATE_URI','www.discuss.io/index.php/userprofile/activate?');
 defined('ACK') OR define('ACK','Acknowledged');
 defined('NACK') OR define('NACK','Not Acknowledged');
+defined('BAD_REQUEST') OR define('BAD_REQUEST','Bad URL request');
+
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

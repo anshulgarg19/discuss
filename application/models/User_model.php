@@ -86,13 +86,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    //model to mark user activated
 	    public function _setActivated(){
-	    	$query = 'select activated from user_profile where email_id=?';
+	    	$query = 'select reset_link,activated from user_profile where email_id=?';
 	    	$result = $this->db->query($query, array($_GET['email']));
 	    	//var_dump($result->result());
-	    	$activated = $result->row();
+	    	//bad activation request
+	    	if( !$result->num_rows() )
+	    		return BAD_REQUEST.' : no result found';
+
+	    	$result_object = $result->row();
 	    	//user not activated earlier
-	    	if( $activated->activated == '0')
+
+	    	if( $result_object->activated == '0')
 	    	{
+	    		if( $result_object->reset_link != $_GET['code'])
+	    			return BAD_REQUEST.' : reset_link not valid';
+
 	    		$query = 'update user_profile set activated=1,reset_link=NULL where email_id=?';
 	    		$result = $this->db->query($query, array($_GET['email']));
 	    		return ACK;

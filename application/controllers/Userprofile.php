@@ -23,6 +23,15 @@ class Userprofile extends CI_controller{
 
 	//method to activate user profile
 	public function activate(){
+
+		//validating email and code presence in activation link or not
+		if( !isset($_GET['email']) || !isset($_GET['code']) || count($_GET) != 2)
+		{
+			var_dump("get fileds not set");
+			http_response_code(400);
+			die();
+		}		
+
 		$this->load->library("Userfactory");
 		//var_dump($_GET);
 		$response = $this->userfactory->activateProfile();
@@ -30,12 +39,20 @@ class Userprofile extends CI_controller{
 		$this->load->view("header");
 		if( $response == ACK )
 			$msg = "Email successfully Verified";
-		else
+		else if( $response == NACK )
 			$msg = "Email already verified.";
+		//bad $_GET parameters
+		else 		
+		{
+			var_dump($response);
+			http_response_code(400);
+			die();
+		}
+
 		$data = array(
 			"message" => $msg
 			);
-		
+
 		$this->load->view("activation_status",$data);
 		$this->load->view("footer");
 	}
