@@ -3,33 +3,31 @@ defined('BASEPATH') or exit('No direct scripts allowed');
 
 class Userfactory{
 	private $_ci;
-
+	private $user_object;
+	
 	function __construct(){
 		$this->_ci =& get_instance();
 		$this->_ci->load->model("User_model");
+		$this->user_object = new User_Model();
 	}
 
 	//method to fetch user profile
 	public function getUser($user_id){
 
 		$query = $this->_ci->db->get_where("user_profile",array("u_id"=>$user_id));
-		//var_dump($query->row());
 		$data = $query->row();
 
 		return $this->createUserObject($data);
 	}
 
 	//library method to set user credetials after successful regitration
-	public function setUser($data,$activation_key){
-		$query = 'insert into user_profile(user_firstname,user_lastname,phone_num,email_id,reset_link,password) values(?,?,?,?,?,?)';
-		$this->_ci->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$activation_key,sha1($data['password'])));
+	public function createUser($data,$activation_key){
+		$this->user_object->register_user($data, $activation_key);
 	}
 
 	//library method to activate profile
 	public function activateProfile(){
-		//var_dump($_GET);
-		$user_object = new User_Model();
-		$response = $user_object->_setActivated();
+		$response = $this->user_object->_setActivated();
 		return $response;
 	}
 
@@ -38,10 +36,8 @@ class Userfactory{
 		// Generate a reset token of length 64 bytes
 		$token = bin2hex(openssl_random_pseudo_bytes(64));
 
-		// Now write this token to the database
-		$user_object = new User_Model();
-		
-		if($user_object->saveResetToken($token, $email)) {
+		// Now write this token to the database		
+		if($this->user_object->saveResetToken($token, $email)) {
 
 			$link = "https://discuss.io/index.php/Homepage/PasswordReset?token=".$token."&email=".$email;
 
@@ -75,50 +71,35 @@ class Userfactory{
 
 	public function passwordResetClose($token, $email, $newpass) {
 		// Finally reset the password
-		$user_object = new User_Model();
 		
-		if(!$user_object->resetPass($token, $email, $newpass)) {
+		if(!$this->user_object->resetPass($token, $email, $newpass)) {
 			return false;
 		}
 
 		return true;
 	}
 
+	// Function to check if the user credentials are correct
 	public function verifyLogin($userdata) {
-
-		$q = "SELECT u_id, user_firstname FROM user_profile WHERE email_id=? AND password=?";
-		$result = $this->_ci->db->query($q, array($userdata['email'], sha1($userdata['password'])));
-
-		foreach($result->result_array() as $row) {
-
-			var_dump($row);
-			$_SESSION['u_id'] = $row['u_id'];
-			$_SESSION['firstname'] = $row['user_firstname'];
+		if($result = $this->user_object->loginCheck($userdata)) {
+			$_SESSION['user_id'] = $result['user_id'];
+			$_SESSION['firstname'] = $result['firstname'];
+			return true;
 		}
-
-		if ($result->num_rows() < 1)
+		else {
 			return false;
-
-		$result->free_result();
-		return true;
+		}
 	}
-
-	//library helper to update profile pic url in database
-	public function updateProfilePic($filename){
-		$user_object = new User_Model();
-		$user_object->_updateProfilePicURL($filename);		
-	}
-
 
 	public function createUserObject( $data ){
-		$user_object = new User_Model();
-		$user_object->_setId($data->u_id);
-		$user_object->_setFirstname($data->user_firstname);
-		$user_object->_setLastname($data->user_lastname);
-		$user_object->_setEmail($data->email_id);
-		$user_object->_setPhone($data->phone_num);
-		$user_object->_setProfilePicUrl($data->profile_pic);
-		return $user_object;
+		$u_object = new User_Model();
+		$u_object->_setId($data->u_id);
+		$u_object->_setFirstname($data->user_firstname);
+		$u_object->_setLastname($data->user_lastname);
+		$u_object->_setEmail($data->email_id);
+		$u_object->_setPhone($data->phone_num);
+		$u_object->_setProfilePicUrl($data->profile_pic);
+		return $u_object;
 	}
 };
 ?>

@@ -32,7 +32,7 @@ class Homepage extends CI_Controller {
 		$this->load->library("Userfactory");
 		//var_dump($_POST['email'].ACTIVATE_STRING.' '.sha1($_POST['email'].ACTIVATE_STRING));
 		$activation_key = sha1($_POST['email'].ACTIVATE_STRING);
-		$this->userfactory->setUser($_POST,$activation_key);
+		$this->userfactory->createUser($_POST,$activation_key);
 		$this->sendmail($activation_key);
 		
 	}
