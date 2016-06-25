@@ -8,6 +8,8 @@ defined('NACK') OR define('NACK','Not Acknowledged');
 defined('BAD_REQUEST') OR define('BAD_REQUEST','Bad URL request');
 
 defined('UPLOAD_DIR') OR define('UPLOAD_DIR','./uploads');
+defined('PHONE_EXISTS') OR define('PHONE_EXISTS','This phone number already exists');
+defined('EMAIL_EXISTS') OR define('EMAIL_EXISTS', 'This email already exits');
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

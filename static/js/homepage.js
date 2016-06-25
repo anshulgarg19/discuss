@@ -3,6 +3,8 @@ $(document).ready(function(){
 	//onClick function for login submit
 	$('#login_submit').click(function(event) {
 
+		$('#error-login_email').html('');
+
 		var invalid = false;
 
 		var login_email = $('#login_email').val();
@@ -10,8 +12,7 @@ $(document).ready(function(){
 		//validate login email
 		if( !validate_email(login_email) )
 		{
-			$("#error-login_email").css("color","red");
-			$("#error-login_email").html("Invalid Email format");
+			action_invalid_login_email();
 			invalid = true;
 		}
 
@@ -29,6 +30,10 @@ $(document).ready(function(){
 			data: data
 		})
 		.success(function(response) {
+			if( response.indexOf('error-login_email') > -1 )
+			{
+				action_invalid_login_email();
+			}
 			console.log(response);
 			console.log("success");
 			$('#result').html(response);
@@ -43,6 +48,12 @@ $(document).ready(function(){
 	//onClick function for register submit
 	$('#register_submit').click(function(event){
 
+		//initialisations
+		$('#error-pnum').html('');
+		$('#error-register_email').html('');
+		$('#error-register_password').html('');
+		$('#error-confirm_password').html('');
+
 		//values stored in variables
 		var first_name = $('#first_name').val();
 		var last_name = $('#last_name').val();
@@ -53,37 +64,38 @@ $(document).ready(function(){
 
 		var invalid = false;
 
+		/*
+		** client side valditions
+		*/
+
 		// integer phone num validation
 		if( !validate_phonenumber(pnum) )
 		{
-			$('#error-pnum').css("color","red");
-			$('#error-pnum').html("Phone Number can only be 10 digits");
+			action_invalid_register_phonenumber();
 			invalid = true;
 		}
 
 		//validate email
 		if( !validate_email(register_email) )
 		{
-			$("#error-email").css("color","red");
-			$("#error-email").html("Invalid email format");
+			action_invalid_register_email();
 			invalid = true;
 		}
 
 		//validate password
 		if( !validate_password( register_password) )
 		{
-			$("#error-password").css("color","red");
-			$("#error-password").html("Invalid password.Length should be between 6 to 20 characters");
+			action_invalid_register_password();
 			invalid = true;
 		}
 
 		//validate confirm password
 		if( confirm_passwd != register_password )
 		{
-			$("#error-confirm_password").css("color","red");
-			$("#error-confirm_password").html("Password doesnt match");
+			action_mismatch_register_password();
 			invalid = true;
 		}
+	
 
 		if( invalid )
 			return;
@@ -102,6 +114,33 @@ $(document).ready(function(){
 			type: 'POST',
 			data : data,
 			success: function(response){
+				if( response.indexOf('error-phone') > -1  )
+				{
+					action_invalid_register_phonenumber();
+				}
+				if( response.indexOf('error-email') > -1 )
+				{
+					action_invalid_register_email();
+				}
+				if( response.indexOf('error-password') > -1 )
+				{
+					action_invalid_register_password();
+				}
+				if( response.indexOf('error-mismatch-password') > -1  )
+				{
+					action_mismatch_register_password();
+				}
+
+				if( response.indexOf('phone-exists') > -1 )
+				{
+					action_phone_exists();
+				}
+
+				if( response.indexOf('email-exists') > -1 )
+				{
+					action_email_exists();
+				}
+
 				console.log(response);
 				console.log("register success");
 				$('#register_response').html(response);
@@ -123,7 +162,7 @@ $(document).ready(function(){
 			data: $('#pwresetemail').serialize()
 		})
 		.success(function (response) {
-			console.log("success");
+			console.log(response);
 			$('#reset_result').html(response);
 		})
 		.error(function(response) {
@@ -167,4 +206,49 @@ $(document).ready(function(){
     	return true;
     }
 
+    //action to take on invalid phone number 
+    function action_invalid_register_phonenumber(){
+    	
+    	$('#error-pnum').css("color","red");
+		$('#error-pnum').html("Phone Number can only be 10 digits");
+    }
+
+    //action to take on invalid email
+    function action_invalid_register_email(){
+    	
+    	$("#error-register_email").css("color","red");
+		$("#error-register_email").html("Invalid email format");
+    }
+
+    //action to take on invalid password
+    function action_invalid_register_password(){
+    	
+    	$("#error-register_password").css("color","red");
+		$("#error-register_password").html("Invalid password.Length should be between 6 to 20 characters");
+    }
+
+    //action to take if phone already exists
+    function action_phone_exists(){
+    	$('#error-pnum').css("color","red");
+		$('#error-pnum').html("Phone Number already exists :/");	
+    }
+
+    //action if email already exists
+    function action_email_exists(){
+    	$("#error-register_email").css("color","red");
+		$("#error-register_email").html("Email already exists :/");	
+    }
+
+    //action to take if passwords dont match
+    function action_mismatch_register_password(){
+    	
+    	$("#error-confirm_password").css("color","red");
+		$("#error-confirm_password").html("Password doesnt match");
+    }
+
+    //action to take if login email invalid
+    function action_invalid_login_email(){
+    	$("#error-login_email").css("color","red");
+		$("#error-login_email").html("Invalid Email format");
+    }
 });

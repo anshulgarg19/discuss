@@ -21,7 +21,9 @@ class Homepage extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
+		$this->load->helper('validations_helper');
 	}
+
 	public function index()
 	{
 		$this->load->view('home_page');
@@ -29,10 +31,63 @@ class Homepage extends CI_Controller {
 	
 	//method to initiate registration in controller
 	public function register() {
+		
 		$this->load->library("Userfactory");
 		//var_dump($_POST['email'].ACTIVATE_STRING.' '.sha1($_POST['email'].ACTIVATE_STRING));
+
+		$inputValid = true;
+		$validation_errors = array();
+
+		/* 
+		** starting server side validations
+		*/
+
+		//validating phone number
+		if( !validate_phonenumber($_POST['phone_num'] ))
+		{
+			$validation_errors['error-phone'] = true;
+			$inputValid = false;
+		}
+
+		//valdating phone number
+		if( !validate_email($_POST['email']))
+		{
+			$validation_errors['error-email'] = true;
+			$inputValid = false;
+		}
+
+		//validating password
+		if( !validate_password($_POST['password']) )
+		{
+			$validation_errors['error-password'] = true;
+			$inputValid = false;
+		}
+
+
+		if( $_POST['password'] != $_POST['confirm_password'] )
+		{
+			$validation_errors['error-mismatch-password'] = true;
+			$inputValid = false;
+		}
+
+		
+		if( !$inputValid )
+		{
+			echo json_encode($validation_errors);
+			return;
+		}
+
+		
 		$activation_key = sha1($_POST['email'].ACTIVATE_STRING);
-		$this->userfactory->createUser($_POST,$activation_key);
+		$response = $this->userfactory->createUser($_POST,$activation_key);
+
+		$already_exists = false;
+		if( isset($response['phone-exists']) || isset($response['email-exists']))
+		{
+			echo json_encode($response);
+			return;
+		}
+
 		$this->sendmail($activation_key);
 		
 	}
@@ -51,11 +106,22 @@ class Homepage extends CI_Controller {
 	public function login() {
 
 		$this->load->library("Userfactory");
+
+		$validation_errors = array();
+
+		if( !validate_email($_POST['email']))
+		{
+			$validation_errors['error-login_email'] = true;
+			echo json_encode($validation_errors);
+			return;
+		}
+
 		if (!$this->userfactory->verifyLogin($_POST)) {
 			// Wrong username or password, session was not set
 			http_response_code(400);
 			die();
 		}
+
 	}
 
 	public function forgot() {

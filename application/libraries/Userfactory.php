@@ -21,7 +21,7 @@ class Userfactory{
 
 	//library method to set user credetials after successful regitration
 	public function createUser($data,$activation_key){
-		$this->user_object->registerUser($data, $activation_key);
+		return $this->user_object->registerUser($data, $activation_key);
 	}
 
 	//library method to activate profile

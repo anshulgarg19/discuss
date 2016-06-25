@@ -141,8 +141,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    // Function to create a database entry for a new user
 	    public function registerUser($data, $activation_key) {
-	    	$query = 'insert into Users(firstname,lastname,phone_num,email_id,reset_link,password) values(?,?,?,?,?,?)';
-	    	$this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$activation_key,sha1($data['password'])));
+	    	$query = 'select * from Users where phone_num=?';
+	    	$result = $this->db->query($query, array($_POST['phone_num']));
+
+	    	$already_exists = false;
+	    	$error_data = array();
+
+	    	if($result->num_rows() )
+	    	{
+	    		$error_data['phone-exists'] = true;
+	    		$already_exists = true;
+	    	}
+
+	    	$query = 'select * from Users where email_id=?';
+	    	$result = $this->db->query($query,array($_POST['email']));
+	    	if($result->num_rows() )
+	    	{
+	    		$error_data['email-exists'] = true;
+	    		$already_exists = true;
+	    	}
+
+	    	if( !$already_exists )
+	    	{
+		    	$query = 'insert into Users(firstname,lastname,phone_num,email_id,reset_link,password) values(?,?,?,?,?,?)';
+		    	$result = $this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$activation_key,sha1($data['password'])));
+		    }
+		    
+		    return $error_data;	
+	    	
+//	    	var_dump($this->db->_error_message());
 	    }
 
 	    // Save the reset link to the database
