@@ -14,7 +14,7 @@ class Userprofile extends CI_controller{
 		$this->load->library("Userfactory");
 
 		$data = array(
-			"user" => $this->userfactory->getUser(41)
+			"user" => $this->userfactory->getUser(56)
 			);
 
 		$this->load->view("header");
@@ -77,7 +77,7 @@ class Userprofile extends CI_controller{
 		}
 		else
 		{
-			$this->userfactory->updateProfilePic($filename);
+			$this->userfactory->updateProfilePicURI($filename);
 			$this->index();
 		   //echo "file upload success";
 

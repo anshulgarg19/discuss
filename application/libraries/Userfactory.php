@@ -100,5 +100,9 @@ class Userfactory{
 		$u_object->_setProfilePicUrl($data->profile_pic);
 		return $u_object;
 	}
+
+	public function updateProfilePicURI( $filename ){
+		$this->user_object->_updateProfilePicURL($filename);
+	}
 };
 ?>
