@@ -8,7 +8,7 @@ class Userhome extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Question_model');
-		$this->qmodel = Question_Model();
+		$this->qmodel = new Question_Model();
 	}
 
 	public function index()
