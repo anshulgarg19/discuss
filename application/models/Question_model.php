@@ -138,6 +138,13 @@
 	    	$result = $this->db->query($q);
 	    	return $result->result_array();
 	    }
+
+	    public function interestQuestion($user_id) {
+	    	$q = "SELECT DISTINCT Questions.question_id FROM Questions INNER JOIN Tags_Questions INNER JOIN Users_Tags ON Questions.question_id = Tags_Questions.question_id WHERE Tags_Questions.tag_id = Users_Tags.tag_id AND Users_Tags.user_id=?";
+	    	$result = $this->db->query($q, array($user_id));
+
+	    	
+	    }
 	}
 	
 	/* End of file Question_model.php */
