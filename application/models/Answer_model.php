@@ -134,6 +134,12 @@ class Answer_Model extends CI_Model {
     	$this->db->insert('Answers', $data);
     	$insert_id = $this->db->insert_id();
     }
+
+    public function getAnswersToQuestion($question_id) {
+
+    	$answers = $this->db->query("SELECT firstname, Users.user_id, Answers.created_on, answer_content FROM Users INNER JOIN Answers ON Answers.user_id=Users.user_id WHERE Answers.question_id=?", array($question_id));
+    	return $answers->result_array();
+    }
 }
 
 /* End of file Answer_model.php */
