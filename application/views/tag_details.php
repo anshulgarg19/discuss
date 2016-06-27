@@ -1,0 +1,64 @@
+<div class="container">
+	<div class="col-md-10 col-md-offset-1">
+		<h3>Showing recent questions tageed with: <?php echo $tag; ?></h3>
+		<form id="changestatus">
+			<input type="hidden" name="tag" value="<?php echo $tag; ?>">
+			<?php if($following) {?>
+				<button id="follow" type="button" class="btn btn-danger">Unfollow</button>
+			<?php } else {?>
+				<button id="follow" type="button" class="btn btn-success">Follow</button>
+			<?php }?>
+				<input type="hidden" name="followstatus" id="change" value="<?php echo $following; ?>">
+		</form>
+		<?php foreach($questions as $question) {?>
+			<div class="panel panel-default">
+			  <div class="panel-heading"><b><?php echo $question['title']; ?></b></div>
+			  <div class="panel-body">
+			    <?php echo substr($question['question_content'], 0, 500); 
+			    if(strlen($question['question_content']) > 500) {
+			    	echo "...<a>continued</a>";	
+			    }?>
+			  </div>
+			  <footer class="footer">
+			  	<a><?php echo $question['answer_count']?> answers</a>
+			  	<div class="pull-right">
+			  		Posted on <?php echo $question['created_on']?>
+			  	</div>
+			  </footer>
+			</div>
+		<?php } ?>
+	</div>
+	<pre id="error"></pre>
+</div>
+<script type="text/javascript">
+	jQuery(document).ready(function($) {
+		
+		$('#follow').click(function(event) {
+
+			$.ajax({
+				data: $('#changestatus').serialize(),
+				method: 'POST',
+				url: '/index.php/tagdetails/changeFollowStatus'
+			})
+			.success(function(response) {
+				var current = $('#follow').html();
+				if (current == "Follow") {
+					$('#follow').removeClass('btn-success');
+					$('#follow').addClass('btn-danger');
+					$('#follow').html("Unfollow");
+					$('#change').val(1);
+				}
+				else {
+					$('#follow').removeClass('btn-danger');
+					$('#follow').addClass('btn-success');
+					$('#follow').html("Follow");
+					$('#change').val(0);
+				}
+				$('#error').html(response);
+			})
+			.error(function(response) {
+				$('#error').html(response.responseText);
+			})
+		});
+	});
+</script>
