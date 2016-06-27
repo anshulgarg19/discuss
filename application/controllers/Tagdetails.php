@@ -21,7 +21,6 @@ class Tagdetails extends CI_Controller {
 
 	public function changeFollowStatus()
 	{
-		var_dump($_POST);
 		$_SESSION['user_id'] = 40;
 		$this->taglib->changeFollowStatus($_POST['tag'], $_SESSION['user_id'], !(int)$_POST["followstatus"]);
 	}

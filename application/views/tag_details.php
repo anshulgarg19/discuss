@@ -28,7 +28,6 @@
 			</div>
 		<?php } ?>
 	</div>
-	<pre id="error"></pre>
 </div>
 <script type="text/javascript">
 	jQuery(document).ready(function($) {
@@ -54,11 +53,7 @@
 					$('#follow').html("Follow");
 					$('#change').val(0);
 				}
-				$('#error').html(response);
-			})
-			.error(function(response) {
-				$('#error').html(response.responseText);
-			})
+			});
 		});
 	});
 </script>
