@@ -12,4 +12,5 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 		<div id="error-question-tags"></div>
 		<button type="button" id="post-question-button">POST QUESTION</button>
 	</form>
+	<div id="question-response"></div>
 </div>

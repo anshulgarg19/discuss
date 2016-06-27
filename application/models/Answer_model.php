@@ -123,21 +123,19 @@ class Answer_Model extends CI_Model {
         $this->answer_content = $answer_content;
     }
 
-    public function addAnswerToQuestion($questionid, $userid, $answer_content) {
+    //public function addAnswerToQuestion($questionid, $userid, $answer_content) {
+    public function addAnswerToQuestion($data){
+    	
 
-    	$data = array(
-    		"question_id" => $questionid,
-    		"user_id" => $userid,
-    		"answer_content" => $answer_content
-    		);
-
-    	$this->db->insert('Answers', $data);
-    	$insert_id = $this->db->insert_id();
+        $query = 'insert into Answers(question_id,user_id,answer_content) values(?,?,?);';
+        $this->db->query($query, array($data['question'],$data['user_id'],$data['answer_content']));
+        
     }
 
     public function getAnswersToQuestion($question_id) {
 
     	$answers = $this->db->query("SELECT firstname, Users.user_id, Answers.created_on, answer_content FROM Users INNER JOIN Answers ON Answers.user_id=Users.user_id WHERE Answers.question_id=?", array($question_id));
+        //var_dump($answers->result_array());
     	return $answers->result_array();
     }
 }

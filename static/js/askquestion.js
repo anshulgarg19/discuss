@@ -28,18 +28,20 @@ $(document).ready(function(){
 	});*/
 
 
-	$('post-question-button').click(function(){
+	$('#post-question-button').click(function(event){
 
 		//initialisations
 		$("#error-question-title").html('');
 		$('#error-question-content').html('');
 		$('#error-question-tags').html('');
+		//$('#question-response').hide();
 
 		var question_title = $('#question-title').val();
 		var question_content = $('#question-content').val();
 		var question_tags = $('#question-tags').val();
 
 		var invalid = false;
+
 
 		if( !question_title.length )
 		{
@@ -58,21 +60,24 @@ $(document).ready(function(){
 			return;
 
 		var data = {
-			questionTitle : question-title,
+			questionTitle : question_title,
 			questionContent : question_content,
 			questionTags : question_tags
 		};
 
 		$.ajax({
+			url : '/index.php/question/postquestion',
 			data : data,
-			type : "POST",
-			url : "/index.php/question/postquestion",
+			type : 'POST',
+			
 			success: function( response ){
 				console.log(response);
-
+				//$('#question-form').hide();
+				$('#question-response').html(response);
 			},
 			error: function( response ){
 				console.log(response);
+				$('#question-response').html(response.responseText);
 			}
 		});
 	});
@@ -85,7 +90,7 @@ $(document).ready(function(){
 
 	//action on empty question content
 	function action_question_content_empty(){
-		$('#error-question-content').red("color","red");
-		$('#error-question-content').html("Title cannot be empty");
+		$('#error-question-content').css("color","red");
+		$('#error-question-content').html("Content cannot be empty");
 	}
 });

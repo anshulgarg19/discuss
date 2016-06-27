@@ -10,11 +10,13 @@ class Userprofile extends CI_controller{
 	}
 
 	//default method for a new user
-	public function index(){
+	public function index($user = 0){
 		$this->load->library("Userfactory");
 
+		if( !$user )
+			$user = 56;		//change to $_SESSION['id']
 		$data = array(
-			"user" => $this->userfactory->getUser(56)
+			"user" => $this->userfactory->getUser($user)
 			);
 
 		$this->load->view("header");

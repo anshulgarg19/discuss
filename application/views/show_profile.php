@@ -9,7 +9,7 @@
 
 	<form action="/index.php/userprofile/changepic" method="POST" enctype="multipart/form-data">
 
-		Select a Profile Picture to upload:<br/>
+		Update Profile Picture:<br/>
 		<input type="file" name="userfile"><br/><br/>
 		<input type="submit" name="submit" value="Upload"/>
 	</form>

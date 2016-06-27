@@ -82,6 +82,7 @@ class Homepage extends CI_Controller {
 		if( !$inputValid )
 		{
 			echo json_encode($validation_errors);
+			//die();
 			return;
 		}
 
@@ -93,6 +94,7 @@ class Homepage extends CI_Controller {
 		if( isset($response['phone-exists']) || isset($response['email-exists']))
 		{
 			echo json_encode($response);
+			//die()
 			return;
 		}
 
@@ -121,13 +123,15 @@ class Homepage extends CI_Controller {
 		{
 			$validation_errors['error-login_email'] = true;
 			echo json_encode($validation_errors);
+			//die();
 			return;
 		}
 
 		if (!$this->userfactory->verifyLogin($_POST)) {
 			// Wrong username or password, session was not set
 			http_response_code(400);
-			die();
+			//die();
+			return;
 		}
 
 	}

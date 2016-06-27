@@ -142,12 +142,33 @@
 	    public function interestQuestion($user_id) {
 	    	$q = "SELECT DISTINCT Questions.question_id FROM Questions INNER JOIN Tags_Questions INNER JOIN Users_Tags ON Questions.question_id = Tags_Questions.question_id WHERE Tags_Questions.tag_id = Users_Tags.tag_id AND Users_Tags.user_id=?";
 	    	$result = $this->db->query($q, array($user_id));
+	    }
+
 	    //Function to store question into database
 	    public function postQuestion( $data ){
 	    	$tags = explode(',', $data['questionTags']);
 
 	    	//insert question
-	    	$query = ''
+
+	    	$insertData = array();
+	    	$insertData['question_id'] = '';
+	    	$insertData['question_content'] = $data['questionContent'];
+	    	$insertData['title'] = $data['questionTitle'];
+
+	    	$this->db->insert('Questions',$insertData);
+	    	$insertedID = $this->db->insert_id();
+
+	    	//
+	    	//TO DO: change the user id from session id
+	    	//
+
+	    	//inserting in user question relation
+	    	$query = 'insert into Users_Questions(user_id,question_id,type) values(?,?,"POST")';
+	    	$result = $this->db->query($query,array( 56, $insertedID));
+
+
+	    	$tagData = array();
+
 	    	foreach($tags as $tag)
 	    	{
 	    		$tag = strtolower($tag);
@@ -155,13 +176,73 @@
 	    		$query = 'select tag_id from Tags where tag_name=?';
 	    		$result = $this->db->query( $query, array($tag));
 
+	    		//tag already present
 	    		if( $result->num_rows() )
 	    		{
+	    			$response = $result->row();
 
+	    			$tag_id = $response->tag_id;
+	    			//update question count in Tags table
+	    			$query = 'update Tags set question_count = question_count+1 where tag_id=?';
+	    			$this->db->query($query, array($tag_id));
+
+
+	    		}
+	    		//tag not present
+	    		else
+	    		{
+	    			$tagData['tag_id'] = '';
+	    			$tagData['tag_name'] = $tag;
+	    			$tagData['question_count'] = 1;
+	    			//insert new tag in Tags table
+	    			$this->db->insert('Tags',$tagData);
+	    			$tag_id = $this->db->insert_id();
+	    		}
+    			$query = 'insert into Tags_Questions(question_id,tag_id) values(?,?)';
+    			$result = $this->db->query($query,array($insertedID, $tag_id));
+	    		
+	    		//insert tag in user tag relation
+	    		$query = 'select * from Users_Tags where user_id=? and tag_id=?';
+	    		$result = $this->db->query($query, array( 56, $tag_id));	//change 56 to $_SESSION['id']
+
+	    		if( !$result->num_rows() )
+	    		{
+	    			$query = 'insert into Users_Tags(user_id,tag_id) values(?,?)';
+	    			$result = $this->db->query($query, array( 56 ,$tag_id)); //change 56 to $_SESSION['id']
 	    		}
 	    	}
 	    }
+
+	    //Function to return question details 
+	    public function getQuestionDetails($data){
+	    	$question_id = (int)$data['question'];
+	    	$results = array();
+
+	    	$query ='select question_content,title,created_on,answer_count from Questions where question_id=?';
+	    	$result = $this->db->query($query,array($question_id));
+	    	$result =  $result->row();
+
+	    	$results['question_id'] = $question_id;
+	    	$results['title'] = $result->title;
+	    	$results['question_content'] = $result->question_content;
+	    	$results['created_on'] = $result->created_on;
+	    	$results['answer_count'] = $result->answer_count;
+
+	    	$query = 'select Tags.tag_id,Tags.tag_name from Tags_Questions INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id where Tags_Questions.question_id=?';	//change 19 to $_SESSION['id']
+
+	    	$result = $this->db->query($query, array($question_id));
+	    	$result = $result->result();
+
+	    	$results['tags'] = $result;
+
+	    	return $results;
+
+	    	/*$query = 'SELECT Tags.tag_name from Questions INNER JOIN Tags_Questions on Questions.question_id = Tags_Questions.question_id INNER JOIN Tags on Tags.tag_id = Tags_Questions.tag_id where Tags_Questions.question_id = ?';
+	    	$result = $this->db->query($query, array($question_id));	*/
+
+	    }
 	
+	};
 	/* End of file Question_model.php */
 	/* Location: ./application/models/Question_model.php */
 ?>
