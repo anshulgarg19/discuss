@@ -26,7 +26,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	<form>
 		<label for="first_name">First Name </label><input type="text" name="fname" id="first_name"><br/>
+		<div id="error-first-name" class="error-div"></div><br/>
 		<label for="last_name">Last Name </label><input type="text" name="lname" id="last_name"><br/>
+		
 		<label for="phone_num">Phone Num </label><input type="text" name="pnum" id="phone_num"><br/>
 		<div id="error-pnum" class="error-div"></div><br/>
 		<label for="register_email">Email </label><input type="text" name="email" id="register_email"><br/>

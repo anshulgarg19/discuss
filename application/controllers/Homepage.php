@@ -42,6 +42,14 @@ class Homepage extends CI_Controller {
 		** starting server side validations
 		*/
 
+		
+		if( strlen($_POST['fname']) == 0 )
+		{
+
+			$validation_errors['error-first-name'] = true;
+			$inputValid = false;
+		}
+
 		//validating phone number
 		if( !validate_phonenumber($_POST['phone_num'] ))
 		{

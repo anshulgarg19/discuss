@@ -49,6 +49,7 @@ $(document).ready(function(){
 	$('#register_submit').click(function(event){
 
 		//initialisations
+		$('#error-first-name').html('');
 		$('#error-pnum').html('');
 		$('#error-register_email').html('');
 		$('#error-register_password').html('');
@@ -67,6 +68,13 @@ $(document).ready(function(){
 		/*
 		** client side valditions
 		*/
+		//first name cant be empty
+		if( !first_name.length )
+		{
+			//console.log('first_name empty');
+			action_first_name_empty();
+			invalid = true;
+		}
 
 		// integer phone num validation
 		if( !validate_phonenumber(pnum) )
@@ -114,6 +122,11 @@ $(document).ready(function(){
 			type: 'POST',
 			data : data,
 			success: function(response){
+				if( response.indexOf('error-first-name') > -1 )
+				{
+					action_first_name_empty();
+				}
+
 				if( response.indexOf('error-phone') > -1  )
 				{
 					action_invalid_register_phonenumber();
@@ -204,6 +217,12 @@ $(document).ready(function(){
     		return false;
     	}
     	return true;
+    }
+
+    //empty first name
+    function action_first_name_empty(){
+    	$('#error-first-name').css("color","red");
+    	$('#error-first-name').html("First name cant be empty");
     }
 
     //action to take on invalid phone number 

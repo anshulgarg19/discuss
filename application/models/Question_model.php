@@ -138,7 +138,26 @@
 	    	$result = $this->db->query($q);
 	    	return $result->result_array();
 	    }
-	}
+
+	    //Function to store question into database
+	    public function postQuestion( $data ){
+	    	$tags = explode(',', $data['questionTags']);
+
+	    	//insert question
+	    	$query = ''
+	    	foreach($tags as $tag)
+	    	{
+	    		$tag = strtolower($tag);
+
+	    		$query = 'select tag_id from Tags where tag_name=?';
+	    		$result = $this->db->query( $query, array($tag));
+
+	    		if( $result->num_rows() )
+	    		{
+
+	    		}
+	    	}
+	    }
 	
 	/* End of file Question_model.php */
 	/* Location: ./application/models/Question_model.php */
