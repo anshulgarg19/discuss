@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 <div id="question">
 <div id="question-tag">
 	<?php foreach($tags as $row) {?>
-		<a href="/index.php/tagdetails?tag=<?php echo $row->tag_id?>" target="_blank"><?php echo $row->tag_name; ?></a>
+		<a href="/index.php/tagdetails?tag=<?php echo $row->tag_name?>" target="_blank"><?php echo $row->tag_name; ?></a>
 		<?php echo '   ';}?>
 </div>
 <div id="question-title"><h1><?php echo $title.'?'; ?></h1></div><br/>
