@@ -125,11 +125,10 @@ class Answer_Model extends CI_Model {
 
     //public function addAnswerToQuestion($questionid, $userid, $answer_content) {
     public function addAnswerToQuestion($data){
-    	
 
         $query = 'insert into Answers(question_id,user_id,answer_content) values(?,?,?);';
         $this->db->query($query, array($data['question'],$data['user_id'],$data['answer_content']));
-        
+        $this->db->query('UPDATE Questions SET answer_count=answer_count + 1 WHERE question_id=?', array($data['question']));        
     }
 
     public function getAnswersToQuestion($question_id) {
