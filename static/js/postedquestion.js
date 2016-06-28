@@ -15,7 +15,7 @@ $(document).ready(function() {
     $("#submit-answer").click(function(event){
       var data = getUrlVars();
       data['answer_content'] = $("#answer_content").val();
-
+      var time = (new Date()).toUTCString();
 
       $.ajax({
           url : '/index.php/answer/postanswer',
@@ -23,11 +23,20 @@ $(document).ready(function() {
           type : "POST",
           success: function(response){
             console.log('success');
-            $("result-answer").html(response);
+            var content = '<div class="answer-content">' +
+            data['answer_content'] +
+            '</div>' +
+            '<div class="answer-time">' +
+            time +
+            '</div>' + 
+            '<div id="answer-user>' +
+            'Posted by you' +
+            '</div>';
+
+            $('#answers').append()
           },
           error: function(response){
             console.log(response);
-            $("result-answer").html(response.responseText);
           }
       });
 
