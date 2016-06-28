@@ -23,17 +23,17 @@ $(document).ready(function() {
           type : "POST",
           success: function(response){
             console.log('success');
-            var content = '<div class="answer-content">' +
+            var content = '<div class="answer-content"><h1>' +
             data['answer_content'] +
-            '</div>' +
+            '</h1></div>' +
             '<div class="answer-time">' +
             time +
             '</div>' + 
-            '<div id="answer-user>' +
+            '<div id="answer-user">' +
             'Posted by you' +
             '</div>';
-
-            $('#answers').append()
+            console.log(content);
+            $('#answers').prepend(content);
           },
           error: function(response){
             console.log(response);
