@@ -128,7 +128,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    		return false;
 
 	    	$user = $result->row();
-    		return array($user->u_id, $user->user_firstname);
+    		return array($user->user_id, $user->firstname);
 	    }
 
 	    //Function to retrieve user profile
