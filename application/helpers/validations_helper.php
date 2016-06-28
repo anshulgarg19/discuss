@@ -11,7 +11,7 @@
 	//helper function to validate email
 	function validate_email($input_text){
 		$atpos = strpos($input_text,'@');
-		$dotpos = strpos($input_text, '.');
+		$dotpos = strrpos($input_text, '.');
 		if ( $atpos<1 || $dotpos < $atpos+2 || $dotpos+2>= strlen($input_text) ) {
 	        return false;
 	    }
