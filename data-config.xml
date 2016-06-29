@@ -1,0 +1,20 @@
+<dataConfig> 
+ <dataSource type="JdbcDataSource" 
+ 	driver="com.mysql.jdbc.Driver"
+ 	url="jdbc:mysql://localhost:3306/discuss"
+ 	user="root"
+ 	password="thisisubuntu"
+ 	batchSize="1" /> 
+ 
+ <document name="questions">   
+  	<entity name="question" pk="id" query="SELECT question_id, question_content, title, answer_count FROM Questions">
+   		<field column="question_id" name="id"/>
+   		<field column="question_content" name="question_content"/>    
+   		<field column="title" name="title"/>    
+   		<field column="answer_count" name="answer_count"/>    
+  		<entity name="tag_list" query="SELECT Tags.tag_id AS tag_id, tag_name FROM Tags_Questions INNER JOIN Tags ON Tags.tag_id=Tags_Questions.tag_id WHERE question_id=${question.question_id}">
+  			<field column="tag_name" name="tag_names"/>
+  		</entity>
+  	</entity>
+ </document>
+</dataConfig>
