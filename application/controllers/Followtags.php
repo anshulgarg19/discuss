@@ -8,7 +8,8 @@
 		}
 
 		function index() {
-
+			$cookie = $this->input->cookie('language',TRUE);
+			var_dump($cookie); 
 			$tags = $this->taglib->getTagList();
 
 			$data['tags'] = $tags;

@@ -133,6 +133,11 @@ class Homepage extends CI_Controller {
 			//die();
 			return;
 		}
+		// $cookie = array(
+		//             'name'   => 'language',
+		//             'value'  => 'en',
+		//             'path'   => '/',
+		//         );
 
 		$this->load->library('session');
 		//$this->session->set_userdata('user_id',56);
