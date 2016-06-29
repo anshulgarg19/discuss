@@ -20,6 +20,9 @@ class Questionlib{
 		return $this->question_model->getQuestionDetails($data);
 	}
 
+	public function get_questions_for_user($user_id){
+		return $this->question_model->getQuestionsForUser($user_id);
+	}
 };
 
 ?>

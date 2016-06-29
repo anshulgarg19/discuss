@@ -10,6 +10,9 @@ defined('BAD_REQUEST') OR define('BAD_REQUEST','Bad URL request');
 defined('UPLOAD_DIR') OR define('UPLOAD_DIR','./uploads');
 defined('PHONE_EXISTS') OR define('PHONE_EXISTS','This phone number already exists');
 defined('EMAIL_EXISTS') OR define('EMAIL_EXISTS', 'This email already exits');
+defined('EMAIL_FROM') OR define('EMAIL_FROM','discusswebservice@gmail.com');
+defined('DEFAULT_PIC') OR define('DEFAULT_PIC','default.png');
+
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

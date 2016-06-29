@@ -140,7 +140,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    }
 
 	    // Function to create a database entry for a new user
-	    public function registerUser($data, $activation_key) {
+	    public function registerUser($data, $activation_key,$profile_pic='') {
 	    	$query = 'select * from Users where phone_num=?';
 	    	$result = $this->db->query($query, array($_POST['phone_num']));
 
@@ -163,8 +163,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    	if( !$already_exists )
 	    	{
-		    	$query = 'insert into Users(firstname,lastname,phone_num,email_id,reset_link,password) values(?,?,?,?,?,?)';
-		    	$result = $this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$activation_key,sha1($data['password'])));
+	    		if( strlen($profile_pic) == 0 )
+	    			$profile_pic = DEFAULT_PIC;
+
+		    	$query = 'insert into Users(firstname,lastname,phone_num,email_id,profile_pic,reset_link,password) values(?,?,?,?,?,?,?)';
+		    	$result = $this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$profile_pic,$activation_key,sha1($data['password'])));
 		    }
 		    
 		    return $error_data;	

@@ -11,20 +11,19 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 <div id="question-content"><?php echo $question_content; ?></div><br/>
 
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#answer-modal">Answer</button>
+<br/>
+<span id="answer_count"><?php echo $answer_count;?></span>
+							<span id="answer_noun"><?php if($answer_count < 2 ) echo ' Answer'; 
+							else echo ' Answers'; ?></span> 
+							<?php echo '        Posted on: '.$created_on;			?>
 
-<div id="answer-count"><?php echo $answer_count;
-							if($answer_count ==1 ) echo ' Answer'; 
-							else echo ' Answers'; 
-							echo '        Posted on: '.$created_on;			?></div>
-</div>
 
 <!--Answers for the question -->
 <div id="answers">
 <?php foreach($answers as $row) { ?>
 	<div id="answer-content"><h1><?php echo $row['answer_content']; ?></h1></div><br/><br/>
 	<div id="answer-time">Posted on: <?php echo $row['created_on']; ?></div><br/>
-	<div id="answer-user">Posted by: <a target="_blank" href='/index.php/userprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a><?php } ?></div>
-</div>
+	<div id="answer-user">Posted by: <a target="_blank" href='/index.php/userprofile/showprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a><?php } ?></div> poste</div>
 
 
 <!-- Modal -->

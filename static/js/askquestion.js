@@ -49,11 +49,12 @@ $(document).ready(function(){
 			invalid = true;
 		}
 
+		/*no need as content is of type text
 		if( !question_content.length )
 		{
 			action_question_content_empty();
 			invalid = true;
-		}
+		}*/
 
 		//TODO: validation for tags
 		if( invalid )

@@ -102,7 +102,7 @@ class Homepage extends CI_Controller {
 		
 	}
 
-	public function setProfilePic() {
+	/*public function setProfilePic() {
 
 		$link = "https://github.com/rootavish/me";
 
@@ -111,7 +111,7 @@ class Homepage extends CI_Controller {
 		$umodel = new User_Model();
 		$umodel->_setId(1);
 		$umodel->setProfilePic($link);
-	}
+	}*/
 
 	public function login() {
 
@@ -134,6 +134,9 @@ class Homepage extends CI_Controller {
 			return;
 		}
 
+		$this->load->library('session');
+		//$this->session->set_userdata('user_id',56);
+
 	}
 
 	public function forgot() {
@@ -145,7 +148,7 @@ class Homepage extends CI_Controller {
 	public function sendmail($activation_key) {
 		$activate_uri = ACTIVATE_URI.'code='.$activation_key.'&email='.$_POST['email'];
 		
-		$config = Array(
+		/*$config = Array(
 		    'protocol' => 'smtp',
 		    'smtp_host' => 'ssl://smtp.googlemail.com',
 		    'smtp_port' => 465,
@@ -155,10 +158,21 @@ class Homepage extends CI_Controller {
 		    'charset'   => 'iso-8859-1'
 		);
 
-	    $config['newline'] = "\r\n";
+	    $config['newline'] = "\r\n";*/
 
-		$this->load->library('email', $config);
-		$this->email->from('discusswebservice@gmail.com');
+	    
+	    //email configuration settings
+	    $emailconfig['protocol'] = $this->config->item('protocol');
+	    $emailconfig['smtp_host'] = $this->config->item('smtp_host');
+	    $emailconfig['smtp_port'] = $this->config->item('smtp_port');
+	    $emailconfig['smtp_user'] = $this->config->item('smtp_user');
+	    $emailconfig['smtp_pass'] = $this->config->item('smtp_pass');
+	    $emailconfig['mailtype'] = $this->config->item('mailtype');
+	    $emailconfig['charset'] = $this->config->item('charset');
+	    $emailconfig['newline'] = $this->config->item('newline');
+
+		$this->load->library('email', $emailconfig);
+		$this->email->from(EMAIL_FROM);
         $this->email->to($_POST['email'],$_POST['fname']);
 
         $this->email->subject('Activate email');

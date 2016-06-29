@@ -81,6 +81,7 @@ class Userfactory{
 	// Function to check if the user credentials are correct
 	public function verifyLogin($userdata) {
 		if($result = $this->user_object->loginCheck($userdata)) {
+			$this->_ci->load->library('session');
 			$_SESSION['user_id'] = $result[0];
 			$_SESSION['firstname'] = $result[1];
 			return true;

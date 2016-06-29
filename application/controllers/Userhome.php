@@ -14,7 +14,9 @@ class Userhome extends CI_Controller {
 	public function index()
 	{
 		$data['questions'] = $this->qmodel->getRecentQuestions();
+		$this->load->view('header');
 		$this->load->view('user_home', $data);
+		$this->load->view('footer');
 	}
 
 }

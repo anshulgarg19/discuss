@@ -511,3 +511,30 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+/*
+**configurations for uploading profile pic
+**
+*/
+
+$config['upload_path']          = UPLOAD_DIR;
+$config['allowed_types']        = 'gif|jpg|png|jpeg';
+$config['max_size']             = 2*1024;
+$config['max_width']            = 2000;
+$config['max_height']           = 2768;
+
+
+/*
+**configurations for sending email
+**
+*/
+
+$config['protocol'] = 'smtp';
+$config['smtp_host'] = 'ssl://smtp.googlemail.com';
+$config['smtp_port'] = 465;
+$config['smtp_user'] = 'discusswebservice@gmail.com';
+$config['smtp_pass'] = 'thisisubuntu';
+$config['mailtype'] = 'html';
+$config['charset'] = 'iso-8859-1';
+$config['newline'] = "\r\n";

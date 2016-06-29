@@ -10,6 +10,7 @@
 
 		function __construct() {
 			parent::__construct();
+			$this->load->library('session');
 		}
 
 
@@ -164,7 +165,7 @@
 
 	    	//inserting in user question relation
 	    	$query = 'insert into Users_Questions(user_id,question_id,type) values(?,?,"POST")';
-	    	$result = $this->db->query($query,array( 56, $insertedID));
+	    	$result = $this->db->query($query,array( $_SESSION['user_id'], $insertedID));
 
 
 	    	$tagData = array();
@@ -203,12 +204,12 @@
 	    		
 	    		//insert tag in user tag relation
 	    		$query = 'select * from Users_Tags where user_id=? and tag_id=?';
-	    		$result = $this->db->query($query, array( 56, $tag_id));	//change 56 to $_SESSION['id']
+	    		$result = $this->db->query($query, array( $_SESSION['user_id'], $tag_id));	//change 56 to $_SESSION['id']
 
 	    		if( !$result->num_rows() )
 	    		{
 	    			$query = 'insert into Users_Tags(user_id,tag_id) values(?,?)';
-	    			$result = $this->db->query($query, array( 56 ,$tag_id)); //change 56 to $_SESSION['id']
+	    			$result = $this->db->query($query, array( $_SESSION['user'] ,$tag_id)); //change 56 to $_SESSION['id']
 	    		}
 	    	}
 	    }
@@ -240,6 +241,13 @@
 	    	/*$query = 'SELECT Tags.tag_name from Questions INNER JOIN Tags_Questions on Questions.question_id = Tags_Questions.question_id INNER JOIN Tags on Tags.tag_id = Tags_Questions.tag_id where Tags_Questions.question_id = ?';
 	    	$result = $this->db->query($query, array($question_id));	*/
 
+	    }
+
+	    //Function to return questions posted by a user
+	    public function getQuestionsForUser($user_id){
+	    	$query = 'SELECT Questions.question_id, Questions.question_content from Questions INNER JOIN Users_Questions on Questions.question_id = Users_Questions.question_id where Users_Questions.user_id =? order by Questions.created_on desc';
+	    	$result = $this->db->query($query, array($user_id));
+	    	return $result->result();
 	    }
 	
 	};

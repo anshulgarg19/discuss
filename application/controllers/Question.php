@@ -11,14 +11,13 @@ class Question extends CI_Controller{
 		$this->load->library('Answerlib');
 	}
 
-	public function index(){
+	/*public function index(){
 		$this->load->view('show_question');
 		
-	}
+	}*/
 
 	public function showquestionform(){
 		$this->load->view('header');
-		$this->load->view('show_question');
 		$this->load->view('question_form');
 		$this->load->view('footer');
 	}
@@ -65,8 +64,8 @@ class Question extends CI_Controller{
 		
 		
 		$this->load->view('header');
-		$this->load->view('show_question');
-		$this->load->view('showQuestionDetails',$details);
+		//$this->load->view('show_question');
+		$this->load->view('show_question_details',$details);
 		$this->load->view('footer');
 
 		//var_dump($details);

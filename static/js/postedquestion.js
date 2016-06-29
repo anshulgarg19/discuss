@@ -11,6 +11,7 @@ $(document).ready(function() {
       }
     });
 
+    //console.log($('#answer_count').text());
 
     $("#submit-answer").click(function(event){
       var data = getUrlVars();
@@ -23,6 +24,11 @@ $(document).ready(function() {
           type : "POST",
           success: function(response){
             console.log('success');
+            var answer_count = parseInt($('#answer_count').text());
+            //console.log($('#answer_count').val());
+            $('#answer_count').text(answer_count+1);
+            if( answer_count == 1 )
+              $('#answer_noun').text('Answers');
             var content = '<div class="answer-content"><h1>' +
             data['answer_content'] +
             '</h1></div>' +

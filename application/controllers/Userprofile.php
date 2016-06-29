@@ -7,16 +7,24 @@ class Userprofile extends CI_controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->library("Userfactory");
+		$this->load->library("Questionlib");
+		$this->load->library("session");
 	}
 
-	//default method for a new user
-	public function index($user = 0){
-		$this->load->library("Userfactory");
+	//method for a new user
+	public function showprofile(){
+		//$this->load->library("Userfactory");
 
-		if( !$user )
-			$user = 56;		//change to $_SESSION['id']
+		if( !isset($_GET['user']) ){
+			$user = $_SESSION['user_id'];		//change to $_SESSION['id']
+		}
+		else{
+			//var_dump($_GET['user']);
+			$user = $_GET['user'];
+		}
 		$data = array(
-			"user" => $this->userfactory->getUser($user)
+			"user" => $this->userfactory->getUser($user),
+			"questions" => $this->questionlib->get_questions_for_user($user)
 			);
 
 		$this->load->view("header");
@@ -62,15 +70,28 @@ class Userprofile extends CI_controller{
 
 	public function changepic(){
 		
-		$filename = '1';
-	    $config['upload_path']          = UPLOAD_DIR;
+		$filename = $_SESSION['user_id'];
+		var_dump($filename);
+		//$this->load->config('config',TRUE);
+		
+/*	    $config['upload_path']          = UPLOAD_DIR;
         $config['allowed_types']        = 'gif|jpg|png|jpeg';
         $config['max_size']             = 1024*1024*1024*2;
         $config['max_width']            = 2000;
-        $config['max_height']           = 2768;
-        $config['file_name'] 			= $filename;
+        $config['max_height']           = 2768;*/
 
-	    $this->load->library('upload', $config);
+        //file config details
+        $fileconfig['upload_path'] 			= $this->config->item('upload_path');
+        $fileconfig['allowed_types']        = $this->config->item('allowed_types');
+        $fileconfig['max_size']             = $this->config->item('max_size');
+        $fileconfig['max_width']            = $this->config->item('max_width');
+        $fileconfig['max_height']           = $this->config->item('max_height');
+        $fileconfig['file_name'] 			= $filename;
+
+
+	    $this->load->library('upload', $fileconfig);
+
+	    
 
 		if(!$this->upload->do_upload('userfile'))
 		{
@@ -79,8 +100,11 @@ class Userprofile extends CI_controller{
 		}
 		else
 		{
+			$filedata = $this->upload->data();
+			$filename = $filename.$filedata['file_ext'];
+			var_dump($filename);
 			$this->userfactory->updateProfilePicURI($filename);
-			$this->index();
+			$this->showprofile();
 		   //echo "file upload success";
 
 		}
