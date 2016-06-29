@@ -7,6 +7,7 @@
 
 			$this->_ci =& get_instance();
 			$this->_ci->load->model("Tag_model");
+			$this->_ci->load->library("session");
 			$this->tag_model = new Tag_Model();
 		}
 
