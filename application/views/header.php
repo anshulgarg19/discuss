@@ -71,17 +71,19 @@
 	        <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        <h4 class="modal-title">New Question</h4>
 	      </div>
-	      <form>
+	      <form method="POST" action="/index.php/question/postquestion" id="question_form">
 		      <div class="modal-body">
 		        <!--<input class="noEnterSubmit" type="text" id="answer_content" onsubmit="return false;" placeholder="Enter your answer here :") />-->
-		        <label for="question_title">Title: </label><input type="text" name="question-title" id="question-title"/><br/>
+		        <label for="question_title">Title: </label><input type="text" name="question_title" id="question_title"/><br/>
 		        <div id="error-question-title"></div>
-		        <label for="question_content">Question: </label><textarea name="text1" placeholder="Enter your question here" id="question_content"></textarea><br/>
-		        <label for="question_tags">Tags: </label><input type="text" name="question-tags" id="question-tags"/><br/>
+		        <label for="question_content">Question: </label><textarea name="question_content" placeholder="Enter your question here" id="question_content"></textarea><br/>
+		        <label for="question_tags">Tags: </label><input type="text" name="question_tags" id="question_tags"/><br/>
 		        <div id="error-question-tags"></div><br/>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal" id="post-question-button">Post</button>
+		        <!--<button type="submit" class="btn btn-default" data-dismiss="modal" id="post-question-button">Post</button>-->
+		        <input type="submit" id="post-question-button"  class="btn btn-default" data-dismiss="modal" value="Post">
+
 		      </div>
 		  </form>    
 	    </div>

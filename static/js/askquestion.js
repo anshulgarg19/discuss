@@ -28,7 +28,31 @@ $(document).ready(function(){
 	});*/
 
 
-	$('#post-question-button').click(function(event){
+	$('#post-question-button').prop('disabled',true);
+
+	$('#question_title').on('keyup',function(event) {
+      if($(this).val() && $('#question_content').val() ) {
+          $('#post-question-button').prop('disabled' , false);
+      }else{
+          $('#post-question-button').prop('disabled' , true);
+      }
+    });
+
+	$('#question_content').on('keyup',function(event) {
+      if($(this).val() && $('#question_title').val() ) {
+          $('#post-question-button').prop('disabled' , false);
+      }else{
+          $('#post-question-button').prop('disabled' , true);
+      }
+    });
+
+	$("#post-question-button").on('click', function(event) {
+		
+
+        $("#question_form").submit();
+    });
+
+	/*$('#post-question-button').click(function(event){
 
 		//initialisations
 		$("#error-question-title").html('');
@@ -49,13 +73,7 @@ $(document).ready(function(){
 			invalid = true;
 		}
 
-		/*no need as content is of type text
-		if( !question_content.length )
-		{
-			action_question_content_empty();
-			invalid = true;
-		}*/
-
+		
 		//TODO: validation for tags
 		if( invalid )
 			return;
@@ -81,7 +99,7 @@ $(document).ready(function(){
 				$('#question-response').html(response.responseText);
 			}
 		});
-	});
+	});*/
 
 	//action on empty question title
 	function action_question_title_empty(){

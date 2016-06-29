@@ -32,6 +32,10 @@
 			}
 		}
 
+		function getTagName($tag){
+			return $this->tag_model->getTagName($tag);
+		}
+
 		function getQuestionsForTag($tag) {
 			return $this->tag_model->getQuestionsForTag($tag);
 		}
@@ -45,6 +49,10 @@
 				$this->tag_model->followTag($tag, $userid);
 			else
 				$this->tag_model->unfollowTag($tag, $userid);
+		}
+
+		function getUserTags($user){
+			return $this->tag_model->get_user_tags($user);
 		}
 	}
 ?>

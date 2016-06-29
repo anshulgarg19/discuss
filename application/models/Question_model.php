@@ -147,14 +147,14 @@
 
 	    //Function to store question into database
 	    public function postQuestion( $data ){
-	    	$tags = explode(',', $data['questionTags']);
+	    	$tags = explode(',', $data['question_tags']);
 
 	    	//insert question
 
 	    	$insertData = array();
 	    	$insertData['question_id'] = '';
-	    	$insertData['question_content'] = $data['questionContent'];
-	    	$insertData['title'] = $data['questionTitle'];
+	    	$insertData['question_content'] = $data['question_content'];
+	    	$insertData['title'] = $data['question_title'];
 
 	    	$this->db->insert('Questions',$insertData);
 	    	$insertedID = $this->db->insert_id();
@@ -212,12 +212,27 @@
 	    			$result = $this->db->query($query, array( $_SESSION['user'] ,$tag_id)); //change 56 to $_SESSION['id']
 	    		}
 	    	}
+	    	return $insertedID;
 	    }
 
 	    //Function to return question details 
 	    public function getQuestionDetails($data){
 	    	$question_id = (int)$data['question'];
 	    	$results = array();
+
+	    	$query = 'select Users.user_id,firstname from Users INNER JOIN Users_Questions on Users.user_id = Users_Questions.user_id where question_id=?';
+	    	$result = $this->db->query($query, array($question_id));
+
+	    	if( !$result->num_rows() )
+	    	{
+	    		$results['question-not-found'] = true;
+	    		return $results;
+	    	}
+
+	    	$result = $result->row();
+
+	    	$results['user_id'] = $result->user_id;
+	    	$results['user_name'] = $result->firstname;
 
 	    	$query ='select question_content,title,created_on,answer_count from Questions where question_id=?';
 	    	$result = $this->db->query($query,array($question_id));

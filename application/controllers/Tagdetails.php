@@ -11,8 +11,17 @@ class Tagdetails extends CI_Controller {
 
 	public function index()
 	{
+		$response = $this->taglib->getTagName($_GET['tag']);
+		if( $response == BAD_REQUEST )
+		{
+			http_response_code(401);
+			echo 'Tag not found';
+			die();
+		}
+
+		$data['tag'] =  $response;
 		$data['questions'] = $this->taglib->getQuestionsForTag($_GET['tag']);
-		$data['tag'] = $_GET['tag'];
+				
 		$data['following'] = $this->taglib->isFollowingTag($_GET['tag'], 40);
 		$this->load->view("header");
 		$this->load->view('tag_details', $data);		

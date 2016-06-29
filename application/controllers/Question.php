@@ -9,6 +9,7 @@ class Question extends CI_Controller{
 		parent::__construct();
 		$this->load->library('Questionlib');
 		$this->load->library('Answerlib');
+		$this->load->helper('url');
 	}
 
 	/*public function index(){
@@ -26,15 +27,17 @@ class Question extends CI_Controller{
 		$validation_errors = array();
 		$inputValid = true;
 
-		
-		if( strlen( $_POST['questionTitle']) == 0 )
+		//var_dump($_POST);
+		//if( strlen( $_POST['questionTitle']) == 0 )
+		if( strlen( $_POST['question_title']) == 0 )
 		{
 			$validation_errors['error-question-title'] = true;
 			$inputValid = false;
 		}
 
 		//non empty question content
-		if( strlen($_POST['questionContent']) == 0 )
+		//if( strlen($_POST['questionContent']) == 0 )
+		if( strlen($_POST['question_content']) == 0 )
 		{
 			$validation_errors['error-question-content'] = true;
 			$inputValid = false;
@@ -47,9 +50,11 @@ class Question extends CI_Controller{
 			die();
 		}
 
-		$this->questionlib->post_question($_POST);
+		$inserted_questionID = $this->questionlib->post_question($_POST);
+
+		redirect('/question/questiondetails?question='.$inserted_questionID);
 		
-		echo $this->load->view('posted_question',$_POST,true);
+		//echo $this->load->view('posted_question',$_POST,true);
 		die();
 	}
 
@@ -58,6 +63,13 @@ class Question extends CI_Controller{
 		
 
 		$details = $this->questionlib->get_question_details($_GET);		
+
+		if( isset($details['question-not-found']) )
+		{
+			http_response_code(401);
+			echo 'No question found';
+			die();
+		}
 		$details['answers'] = $this->answerlib->showAnswers($_GET['question']);
 		//var_dump($details['answers']);
 

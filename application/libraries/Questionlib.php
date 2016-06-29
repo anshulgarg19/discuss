@@ -13,7 +13,7 @@ class Questionlib{
 
 	public function post_question($data){
 		//$this->question_model->postQuestion($_POST);
-		$this->question_model->postQuestion($data);
+		return $this->question_model->postQuestion($data);
 	}
 
 	public function get_question_details($data){

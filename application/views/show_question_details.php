@@ -16,6 +16,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 							<span id="answer_noun"><?php if($answer_count < 2 ) echo ' Answer'; 
 							else echo ' Answers'; ?></span> 
 							<?php echo '        Posted on: '.$created_on;			?>
+							<a href="/index.php/userprofile/showprofile?user=<?php echo $user_id; ?>"><?php echo $user_name;?></a>
 
 
 <!--Answers for the question -->
@@ -23,7 +24,8 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 <?php foreach($answers as $row) { ?>
 	<div id="answer-content"><h1><?php echo $row['answer_content']; ?></h1></div><br/><br/>
 	<div id="answer-time">Posted on: <?php echo $row['created_on']; ?></div><br/>
-	<div id="answer-user">Posted by: <a target="_blank" href='/index.php/userprofile/showprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a><?php } ?></div> poste</div>
+	<div id="answer-user">Posted by: <a target="_blank" href='/index.php/userprofile/showprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a><?php } ?></div>
+</div>
 
 
 <!-- Modal -->

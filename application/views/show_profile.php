@@ -18,6 +18,13 @@
 	<div id="email">Email: <?php echo $user->getEmail() ?></div><br/>
 	<div id="phone_num">Phone Number: <?php echo $user->getPhone() ?></div><br/>
 
+	<div id="my-tags"><?php if( count($tags) == 0 ) echo 'You have not followed any tags yet.'; 							else{ ?><span>My tags:</span><br/>
+								<?php	foreach($tags as $tag){?>
+								<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_name; ?>" target="_blank"><?php echo $tag->tag_name; ?></a><br/>
+								<?php }
+								}?>		
+	</div>
+
 	<div id="my-questions"><?php if( count($questions) == 0 ) echo 'You have not posted any quesitons yet.'; 							else{
 									foreach($questions as $question){?>Q: 
 								<a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank"><?php echo $question->question_content; ?></a><br/>

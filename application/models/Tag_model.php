@@ -41,7 +41,7 @@
 
 		public function getQuestionsForTag($tag)
 		{
-			$q = "SELECT title, Questions.created_on, question_content, answer_count FROM Tags_Questions INNER JOIN Questions on Questions.question_id=Tags_Questions.question_id INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id WHERE Tags.tag_name=? ORDER BY Questions.created_on DESC LIMIT 10";
+			$q = "SELECT title, Questions.created_on, question_content, answer_count FROM Tags_Questions INNER JOIN Questions on Questions.question_id=Tags_Questions.question_id INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id WHERE Tags.tag_id=? ORDER BY Questions.created_on DESC LIMIT 10";
 			$result = $this->db->query($q, array($tag));
 			if(!$result) {
 				return $this->error();
@@ -82,6 +82,21 @@
 			}
 			else
 				return false;
+		}
+
+		function get_user_tags($user){
+			$query = 'select Tags.tag_id,Tags.tag_name from Users INNER JOIN Users_Tags on Users.user_id= Users_Tags.user_id INNER JOIN Tags on Tags.tag_id = Users_Tags.tag_id where Users.user_id=?
+				';
+			$result = $this->db->query($query,array((int)$user));
+			return $result->result();
+		}
+
+		function getTagName($tag){
+			$query = 'select tag_name from Tags where tag_id=?';
+			$result = $this->db->query($query,array($tag));
+			if( !$result->num_rows() )
+				return BAD_REQUEST;
+			return $result->row()->tag_name;
 		}
 	}
 ?>

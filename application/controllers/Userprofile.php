@@ -8,25 +8,37 @@ class Userprofile extends CI_controller{
 		parent::__construct();
 		$this->load->library("Userfactory");
 		$this->load->library("Questionlib");
+		$this->load->library("Taglib");
 		$this->load->library("session");
+		$this->load->helper("url");
 	}
 
 	//method for a new user
 	public function showprofile(){
 		//$this->load->library("Userfactory");
 
+
 		if( !isset($_GET['user']) ){
 			$user = $_SESSION['user_id'];		//change to $_SESSION['id']
 		}
 		else{
 			//var_dump($_GET['user']);
+			if( $_GET['user'] != $_SESSION['user_id'] )
+			{
+				http_response_code(401);
+				echo "You are not logged in as user you are trying to access profile of.";
+				die();
+			}
+
 			$user = $_GET['user'];
 		}
 		$data = array(
 			"user" => $this->userfactory->getUser($user),
+			"tags" => $this->taglib->getUserTags($user),
 			"questions" => $this->questionlib->get_questions_for_user($user)
 			);
 
+		//var_dump($data['tags']);
 		$this->load->view("header");
 		$this->load->view("show_profile",$data);
 		$this->load->view("footer");
@@ -104,7 +116,8 @@ class Userprofile extends CI_controller{
 			$filename = $filename.$filedata['file_ext'];
 			var_dump($filename);
 			$this->userfactory->updateProfilePicURI($filename);
-			$this->showprofile();
+			redirect('/userprofile/showprofile');
+			//$this->showprofile();
 		   //echo "file upload success";
 
 		}
