@@ -22,10 +22,14 @@ class Homepage extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->helper('validations_helper');
+		$this->load->helper('redirect_helper');
 	}
 
 	public function index()
 	{
+		$this->load->library("session");
+		if (isset($_SESSION['user_id']))
+			redirection();
 		$this->load->view('home_page');
 	}
 	
@@ -116,6 +120,7 @@ class Homepage extends CI_Controller {
 	public function login() {
 
 		$this->load->library("Userfactory");
+		$this->load->model("Tag_model");
 
 		$validation_errors = array();
 
@@ -133,15 +138,8 @@ class Homepage extends CI_Controller {
 			//die();
 			return;
 		}
-		// $cookie = array(
-		//             'name'   => 'language',
-		//             'value'  => 'en',
-		//             'path'   => '/',
-		//         );
 
-		$this->load->library('session');
-		//$this->session->set_userdata('user_id',56);
-
+		redirection();
 	}
 
 	public function forgot() {

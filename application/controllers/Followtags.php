@@ -7,9 +7,9 @@
 			$this->load->library('Taglib');
 		}
 
-		function index() {
-			$cookie = $this->input->cookie('language',TRUE);
-			var_dump($cookie); 
+		function index() { 
+			$this->load->library('session');
+			var_dump($_SESSION);
 			$tags = $this->taglib->getTagList();
 
 			$data['tags'] = $tags;
@@ -17,8 +17,6 @@
 			$this->load->view("header");
 			$this->load->view("follow_tags", $data);
 			$this->load->view("footer");
-			$this->load->library('session');
-			var_dump($_SESSION);
 		}
 
 		function TagSelect() {

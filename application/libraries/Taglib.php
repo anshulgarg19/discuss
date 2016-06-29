@@ -21,7 +21,7 @@
 			$values = array();
 
 			foreach($tags as $tag) {
-				$values[] = '('.$tag.', '.$_SESSION['u_id'].')';
+				$values[] = '('.$tag.', '.$_SESSION['user_id'].')';
 			}
 			
 			if($this->tag_model->writeUserTags($values)) {

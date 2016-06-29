@@ -36,7 +36,7 @@ $(document).ready(function(){
 			}
 			console.log(response);
 			console.log("success");
-			$('#result').html(response);
+			$('body').html(response);
 		})
 		.error(function(response) {
 			console.log(response);

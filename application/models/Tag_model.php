@@ -73,5 +73,15 @@
 			$result = $this->db->query("INSERT INTO Users_Tags(user_id, tag_id) VALUES (?,?)",
 				array($userid, $tagid->row()->tag_id));
 		}
+
+		// Utility function to check whether user is following any tags at all
+		function isFollowingTags($user_id) {
+
+			if($this->db->query("SELECT * FROM Users_Tags WHERE user_id=?", array($user_id))->num_rows() > 0) {
+				return true;
+			}
+			else
+				return false;
+		}
 	}
 ?>
