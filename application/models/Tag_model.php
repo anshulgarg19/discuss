@@ -52,8 +52,9 @@
 
 		public function getFollowing($tag, $userid)
 		{
-			$result = $this->db->query("SELECT * FROM Users_Tags JOIN Tags on Users_Tags.tag_id=Tags.tag_id WHERE user_id=? AND Tags.tag_name=?", array($userid, $tag));
+			$result = $this->db->query("SELECT * FROM Users_Tags WHERE user_id=? AND tag_id=?", array($userid, $tag));
 
+			var_dump($result->num_rows());
 			if($result->num_rows())
 				return true;
 			else
