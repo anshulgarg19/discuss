@@ -13,7 +13,7 @@ defined('EMAIL_EXISTS') OR define('EMAIL_EXISTS', 'This email already exits');
 defined('EMAIL_FROM') OR define('EMAIL_FROM','discusswebservice@gmail.com');
 defined('DEFAULT_PIC') OR define('DEFAULT_PIC','default.png');
 defined('SOLR_URL') OR define('SOLR_URL', 'http://localhost:8983/solr/collection1/select?');
-
+defined('SOLR_SUGGEST_URL') OR define('SOLR_SUGGEST_URL', 'http://localhost:8983/solr/suggest?suggest.dictionary=mySuggester&suggest=true&suggest.build=true&wt=json&suggest.q=');
 
 /*
 |--------------------------------------------------------------------------

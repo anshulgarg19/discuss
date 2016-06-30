@@ -1,5 +1,4 @@
 <?php
-	
 	function curlFetchArray($url) {
 		$curl = curl_init();
 		// Set some options - we are passing in a useragent too here

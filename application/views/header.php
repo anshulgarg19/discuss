@@ -50,7 +50,7 @@
 	      </ul> -->
 	      <form class="navbar-form navbar-left" role="search">
 	        <div class="form-group">
-	          <input type="text" class="form-control" placeholder="Search">
+	          <input type="text" class="form-control" id="searchfield" placeholder="Search">
 	        </div>
 	        <button type="submit" class="btn btn-default">Submit</button>
 	      </form>
@@ -84,8 +84,7 @@
 		      </div>
 		      <div class="modal-footer">
 		        <!--<button type="submit" class="btn btn-default" data-dismiss="modal" id="post-question-button">Post</button>-->
-		        <input type="submit" id="post-question-button"  class="btn btn-default" data-dismiss="modal" value="Post">
-
+		        <input type="submit" id="post-question-button"  class="btn btn-default" data-dismiss="modal" value="Post">		        
 		      </div>
 		  </form>    
 	    </div>
@@ -93,3 +92,4 @@
 	  </div>
 	</div>
 	<div id="result-question"></div>
+	<pre id="error"></pre>
