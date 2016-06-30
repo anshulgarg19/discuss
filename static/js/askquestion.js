@@ -28,28 +28,83 @@ $(document).ready(function(){
 	});*/
 
 
-	$('#post-question-button').prop('disabled',true);
+	/*$('#post-question-button').prop('disabled',true);
 
-	$('#question_title').on('keyup',function(event) {
-      if($(this).val() && $('#question_content').val() ) {
+	$('#question_title').focus(function(event) {
+      if($(this).val() && $('#question_content').val() && $('#question_tags').val() ) {
           $('#post-question-button').prop('disabled' , false);
       }else{
           $('#post-question-button').prop('disabled' , true);
       }
     });
 
-	$('#question_content').on('keyup',function(event) {
-      if($(this).val() && $('#question_title').val() ) {
+	$('#question_title').focusout(function(event) {
+      if($(this).val() && $('#question_content').val() && $('#question_tags').val() ) {
           $('#post-question-button').prop('disabled' , false);
       }else{
           $('#post-question-button').prop('disabled' , true);
       }
     });
+
+	$('#question_content').focus(function(event) {
+      if($(this).val() && $('#question_title').val() && $('#question_tags').val() ) {
+          $('#post-question-button').prop('disabled' , false);
+      }else{
+          $('#post-question-button').prop('disabled' , true);
+      }
+    });
+
+	$('#question_content').focusout(function(event) {
+      if($(this).val() && $('#question_title').val() && $('#question_tags').val() ) {
+          $('#post-question-button').prop('disabled' , false);
+      }else{
+          $('#post-question-button').prop('disabled' , true);
+      }
+    });
+
+	$('#question_tags').focus(function(event){
+		if($(this).val() && $('#question_title').val() && $('#question_content').val() )
+			$('#post-question-button').prop('disabled',false);
+		else
+			$('#post-question-button').prop('disabled',true);
+	});
+
+	$('#question_tags').focusout(function(event){
+		if($(this).val() && $('#question_title').val() && $('#question_content').val() )
+			$('#post-question-button').prop('disabled',false);
+		else
+			$('#post-question-button').prop('disabled',true);
+	});*/
+
+	 $('#question-modal').modal('show');
 
 	$("#post-question-button").on('click', function(event) {
-		
+		event.preventDefault();
+		var invalid = false;
 
-        $("#question_form").submit();
+		console.log($('#question_title').val());
+		if( $('#question_title').val().length == 0 )
+		{
+			action_question_title_empty();
+			invalid = true;
+		}
+
+		if( $('#question_content').val().length == 0 )
+		{
+			action_question_content_empty();
+			invalid = true;
+		}
+
+		if( $('#question_tags').val().length == 0)
+		{
+			console.log($('#question_tags').val());
+			invalid = true;
+		}
+
+		if( invalid )
+			return;
+
+        //$("#question_form").submit();
     });
 
 	/*$('#post-question-button').click(function(event){

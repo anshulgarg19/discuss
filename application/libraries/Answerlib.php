@@ -10,6 +10,7 @@ class Answerlib{
 		$this->_ci =& get_instance();
 		$this->_ci->load->model("Answer_model");
 		$this->answer_object = new Answer_model();
+		$this->_ci->load->library('session');
 	}
 
 	public function postAnswer($data){

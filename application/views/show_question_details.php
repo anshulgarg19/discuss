@@ -33,7 +33,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 
 <!--Answers for the question -->
 		<div id="answers" class="row">
-		<ul class="list-group">
+		<ul id="answer-list" class="list-group">
 			<?php foreach($answers as $row) { ?>
 				<li class="list-group-item">
 				<div id="answer-content"><h3><?php echo $row['answer_content']; ?></h3></div><br/>
