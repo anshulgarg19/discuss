@@ -23,12 +23,12 @@ class Userprofile extends CI_controller{
 		}
 		else{
 			//var_dump($_GET['user']);
-			if( $_GET['user'] != $_SESSION['user_id'] )
+			/*if( $_GET['user'] != $_SESSION['user_id'] )
 			{
 				http_response_code(401);
 				echo "You are not logged in as user you are trying to access profile of.";
 				die();
-			}
+			}*/
 
 			$user = $_GET['user'];
 		}
@@ -82,6 +82,7 @@ class Userprofile extends CI_controller{
 
 	public function changepic(){
 		
+		var_dump($_POST);
 		$filename = $_SESSION['user_id'];
 		var_dump($filename);
 		//$this->load->config('config',TRUE);

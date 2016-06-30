@@ -1,0 +1,61 @@
+
+
+
+
+.edit-link
+{
+    z-index:100;
+    position:absolute;    
+    font-size:10px;
+    left: 60px;
+    top: 110px;
+}
+
+
+.link{
+	color: #000000;
+	font-weight: bold;
+	text-decoration: none;
+	background-color: none;
+}
+
+
+.link-tag{
+	background-color: #ffffff;
+	opacity: .5;
+	font-weight: normal;
+}
+
+.partition{
+	border-bottom: solid 1px rgba(0,0,0,0.3);
+	margin-bottom: 10px;
+	
+}
+
+.tag{
+	color:#000000;	
+}
+
+.question-title{
+	color: #000000;
+	font-weight: bolder;
+}
+
+.question-content{
+	color:#000000;
+	opacity: .7;
+}
+
+#profile_pic
+{
+    height:140px;
+    width:140px;
+    position:relative;
+}
+
+#photo
+{    
+    position:absolute;
+    left:0;
+    top:0;
+}

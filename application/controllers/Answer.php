@@ -15,9 +15,9 @@ class Answer extends CI_Controller{
 	}
 
 	//method to fetch answers for a question
-	public function showanswers(){
+	/*public function showanswers(){
 		$question_id = 20;
 		return $this->answerlib->showAnswers($question_id);
-	}
+	}*/
 };
 ?>
