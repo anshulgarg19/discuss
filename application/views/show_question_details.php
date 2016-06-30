@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 	  <div class="row">
 		
 			<?php foreach($tags as $row) {?>
-				<div id="question-tag" class="badge tag"><a href="/index.php/tagdetails?tag=<?php echo $row->tag_id?>" target="_blank"><?php echo $row->tag_name; ?></a></div>
+				<div id="question-tag" class="badge"><a class="tag" href="/index.php/tagdetails?tag=<?php echo $row->tag_id?>" target="_blank"><?php echo $row->tag_name; ?></a></div>
 				<?php echo '   ';}?>
 		
 
@@ -32,11 +32,17 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 
 
 <!--Answers for the question -->
-		<div id="answers">
-		<?php foreach($answers as $row) { ?>
-			<div id="answer-content"><h1><?php echo $row['answer_content']; ?></h1></div><br/><br/>
-			<div id="answer-time">Posted on: <?php echo $row['created_on']; ?></div><br/>
-			<div id="answer-user">Posted by: <a target="_blank" href='/index.php/userprofile/showprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a><?php } ?></div>
+		<div id="answers" class="row">
+		<ul class="list-group">
+			<?php foreach($answers as $row) { ?>
+				<li class="list-group-item">
+				<div id="answer-content"><h3><?php echo $row['answer_content']; ?></h3></div><br/>
+				<h6>Posted on <?php echo $row['created_on']; ?>
+				by <a target="_blank" href='/index.php/userprofile/showprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a>
+				</h6></li>
+			<?php } ?>
+			
+		</ul>
 		</div>
 	</div>
 </div>
@@ -56,7 +62,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
       <form>
 	      <div class="modal-body">
 	        <!--<input class="noEnterSubmit" type="text" id="answer_content" onsubmit="return false;" placeholder="Enter your answer here :") />-->
-	        <textarea name="text1" placeholder="Enter your answer here" id="answer_content"></textarea><br/>
+	        <textarea name="text1" placeholder="Enter your answer here" id="answer_content" class="content"></textarea><br/>
 	        <div id="error-answer"></div><br/>
 	      </div>
 	      <div class="modal-footer">

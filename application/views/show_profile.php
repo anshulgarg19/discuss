@@ -4,7 +4,7 @@
 <div id="personal_detail" class="container">
 	<div class="row">
 		<div id="profile_pic" class="col-md-1 col-md-offset-1">
-			<img src="/uploads/<?php echo $user->getProfilePicUrl() ?>" alt="Profile Picture"  class=" img-circle" id="photo">
+			<img src="/uploads/<?php echo $user->getProfilePicUrl() ?>" alt="Profile Picture"  height="140" width="140" class=" img-circle" id="photo">
 			<!--<img src="/static/img/default.png" alt="Profile Picture" height="42" width="42">-->
 			<p class="edit-link"><a data-toggle="modal" data-target="#photo-modal" >Edit Photo</a></p>
 		</div>
@@ -38,7 +38,7 @@
 							echo 'You have not posted any quesitons yet.'; 
 						else{
 							foreach($questions as $question){?> 
-								<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank" class="link"><?php echo $question->question_content; ?></a></h5>
+								<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank" class="link"><?php echo $question->title; ?></a></h5>
 								</div><br/>
 					<?php }
 					}?>		
