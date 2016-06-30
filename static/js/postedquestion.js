@@ -29,15 +29,11 @@ $(document).ready(function() {
             $('#answer_count').text(answer_count+1);
             if( answer_count == 1 )
               $('#answer_noun').text('Answers');
-            var content = '<div class="answer-content"><h1>' +
-            data['answer_content'] +
-            '</h1></div>' +
-            '<div class="answer-time">' +
-            time +
-            '</div>' + 
-            '<div id="answer-user">' +
-            'Posted by you' +
-            '</div>';
+
+            var content = '<li class="list-group-item"><div id="answer-content"><h3>'+
+        data['answer_content']+ '</h3></div><br/><h6>Posted on' + time +' Posted by You</h6></li>'
+
+            
             console.log(content);
             $('#answers').prepend(content);
           },

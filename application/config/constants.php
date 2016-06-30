@@ -2,7 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 defined('ACTIVATE_STRING') OR define('ACTIVATE_STRING','activateit');
-defined('ACTIVATE_URI') OR define('ACTIVATE_URI','www.discuss.io/index.php/userprofile/activate?');
+defined('ACTIVATE_URI') OR define('ACTIVATE_URI','www.discuss.io/index.php/userprofile/activate');
+defined('RESET_URI') OR define('RESET_URI', 'https://discuss.io/index.php/Homepage/PasswordReset');
 defined('ACK') OR define('ACK','Acknowledged');
 defined('NACK') OR define('NACK','Not Acknowledged');
 defined('BAD_REQUEST') OR define('BAD_REQUEST','Bad URL request');
@@ -13,6 +14,9 @@ defined('EMAIL_EXISTS') OR define('EMAIL_EXISTS', 'This email already exits');
 defined('EMAIL_FROM') OR define('EMAIL_FROM','discusswebservice@gmail.com');
 defined('DEFAULT_PIC') OR define('DEFAULT_PIC','default.png');
 defined('SOLR_URL') OR define('SOLR_URL', 'http://localhost:8983/solr/collection1/select?');
+defined( 'ACTIVITY_SUBJECT') or define('ACTIVITY_SUBJECT','Activity on Question you follow');
+defined('ACTIVITY_MESSAGE') or define('ACTIVITY_MESSAGE','Answer has been posted on ');
+defined('QUESTION_URI') or define('QUESTION_URI','www.discuss.io/index.php/question/questiondetails');
 defined('SOLR_SUGGEST_URL') OR define('SOLR_SUGGEST_URL', 'http://localhost:8983/solr/suggest?suggest.dictionary=mySuggester&suggest=true&suggest.build=true&wt=json&suggest.q=');
 
 /*

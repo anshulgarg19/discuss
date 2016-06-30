@@ -160,14 +160,14 @@
 
 	    //Function to store question into database
 	    public function postQuestion( $data ){
-	    	$tags = explode(',', $data['question_tags']);
+	    	$tags = explode(',', $data['questionTags']);
 
 	    	//insert question
 
 	    	$insertData = array();
 	    	$insertData['question_id'] = '';
-	    	$insertData['question_content'] = $data['question_content'];
-	    	$insertData['title'] = $data['question_title'];
+	    	$insertData['question_content'] = $data['questionContent'];
+	    	$insertData['title'] = $data['questionTitle'];
 
 	    	$this->db->insert('Questions',$insertData);
 	    	$insertedID = $this->db->insert_id();
@@ -222,7 +222,7 @@
 	    		if( !$result->num_rows() )
 	    		{
 	    			$query = 'insert into Users_Tags(user_id,tag_id) values(?,?)';
-	    			$result = $this->db->query($query, array( $_SESSION['user'] ,$tag_id)); //change 56 to $_SESSION['id']
+	    			$result = $this->db->query($query, array( $_SESSION['user_id'] ,$tag_id)); //change 56 to $_SESSION['id']
 	    		}
 	    	}
 	    	return $insertedID;
@@ -295,6 +295,21 @@
 	    			);
 	    	}
 	    	return $retval;
+	    }
+
+	    public function getUserForQuestion( $question_id){
+	    	$query = 'select distinct(email_id) from Users INNER JOIN Users_Questions on Users.user_id= Users_Questions.user_id where Users_Questions.question_id=?';
+	    	$result = $this->db->query($query, array($question_id));
+
+	    	return $result->result_array();
+	    }
+
+	    public function getQuestionTitle($question_id){
+	    	$query = 'select title from Questions where question_id=?';
+	    	$result = $this->db->query($query, array($question_id));
+
+	    	$result = $result->row();
+	    	return $result->title;
 	    }
 	};
 	/* End of file Question_model.php */

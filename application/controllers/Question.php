@@ -29,27 +29,32 @@ class Question extends CI_Controller{
 
 		//var_dump($_POST);
 		//if( strlen( $_POST['questionTitle']) == 0 )
-		if( strlen( $_POST['question_title']) == 0 )
+		if( strlen( $_POST['questionTitle']) == 0 )
 		{
-			$validation_errors['error-question-title'] = true;
+			$validation_errors['error_question_title'] = true;
 			$inputValid = false;
 		}
 
 		//non empty question content
 		//if( strlen($_POST['questionContent']) == 0 )
-		if( strlen($_POST['question_content']) == 0 )
+		if( strlen($_POST['questionContent']) == 0 )
 		{
-			$validation_errors['error-question-content'] = true;
+			$validation_errors['error_question_content'] = true;
 			$inputValid = false;
 		}
 
 
+		//TO DO: validation for  tags
+
 		if( !$inputValid )
 		{
+			http_response_code(400);
 			echo json_encode($validation_errors);
-			die();
+			//die();
+			return;
 		}
 
+		http_response_code(200);
 		$inserted_questionID = $this->questionlib->post_question($_POST);
 
 		redirect('/question/questiondetails?question='.$inserted_questionID);
@@ -61,7 +66,7 @@ class Question extends CI_Controller{
 	//Function to show question contents
 	public function questiondetails(){
 		
-
+		
 		$details = $this->questionlib->get_question_details($_GET);		
 
 		if( isset($details['question-not-found']) )

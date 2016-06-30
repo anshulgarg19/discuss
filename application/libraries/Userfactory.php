@@ -38,30 +38,17 @@ class Userfactory{
 		// Now write this token to the database		
 		if($this->user_object->saveResetToken($token, $email)) {
 
-			$link = "https://discuss.io/index.php/Homepage/PasswordReset?token=".$token."&email=".$email;
+			$link = RESET_URI."?token=".$token."&email=".$email;
 
-			$config = Array(
-			    'protocol' => 'smtp',
-			    'smtp_host' => 'ssl://smtp.googlemail.com',
-			    'smtp_port' => 465,
-			    'smtp_user' => 'discusswebservice@gmail.com',
-			    'smtp_pass' => 'thisisubuntu',
-			    'mailtype'  => 'html', 
-			    'charset'   => 'iso-8859-1'
-			);
+			
 
-		    $config['newline'] = "\r\n";
+			$senddata = array();
+			$senddata['to'] = $email;
+			$senddata['subject'] = 'Password reset email';
+			$senddata['message'] = 'Reset uri is: '.$link;
 
-			$this->_ci->load->library('email', $config);
-			$this->_ci->email->from('discusswebservice@gmail.com');
-	        $this->_ci->email->to($email);
 
-	        $this->_ci->email->subject('Password reset email');
-	        $this->_ci->email->message('Reset uri is: '.$link);  
-
-	        $this->_ci->email->send();
-
-	        echo $this->_ci->email->print_debugger();
+			sendmail($senddata);
 		}
 		else {
 			http_response_code(500);
