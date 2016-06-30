@@ -7,6 +7,7 @@ class Search extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library("Suggesterlib");
+		$this->load->helper("url");
 	}
 
 	public function suggest()
@@ -16,6 +17,9 @@ class Search extends CI_Controller {
 		echo json_encode($this->suggesterlib->getSuggestions(strtolower($_GET['query'])));
 	}
 
+	public function getresults() {
+		return redirect('tagdetails?tag='.$_GET['value'],'location');
+	}
 }
 
 /* End of file Search.php */
