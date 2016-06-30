@@ -25,7 +25,7 @@
 
 					<div class="row">
 						<?php for($i=0; $i < count($question['tag_names']); $i++) { ?>
-						<a href="<?php echo $question['id_list'][$i]; ?>">
+						<a href="tagdetails?tag=<?php echo $question['id_list'][$i]; ?>">
 							<div class="badge">
 								<?php echo $question['tag_names'][$i]; ?>
 							</div>
@@ -68,7 +68,7 @@
 
 	    			<div class="row">
 	    				<?php for($i=0; $i < count($question['tag_names']); $i++) { ?>
-	    				<a href="<?php echo $question['id_list'][$i]; ?>">
+	    				<a href="tagdetails?tag=<?php echo $question['id_list'][$i]; ?>">
 	    					<div class="badge">
 	    						<?php echo $question['tag_names'][$i]; ?>
 	    					</div>
