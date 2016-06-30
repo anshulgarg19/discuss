@@ -135,9 +135,19 @@
 
 	    // Function to return a collection of the ten most recent questions
 	    public function getRecentQuestions() {
-	    	$q = "SELECT question_id, question_content, created_on, title, answer_count FROM Questions ORDER BY created_on DESC LIMIT 10";
+	    	$q = "SELECT * FROM Questions ORDER BY last_modified_on DESC LIMIT 10";
 	    	$result = $this->db->query($q);
-	    	return $result->result_array();
+	    	$retval = array();
+	    	foreach($result->result_array() as $row) {
+	    		$retval[$row['question_id']] = array(
+	    				"question_content" => $row['question_content'],
+	    				"title" => $row['title'],
+	    				"last_modified_on" => $row['last_modified_on'],
+	    				"created_on" => $row['created_on'],
+	    				"answer_count" => $row['answer_count'] 
+	    			);
+	    	}
+	    	return $retval;
 	    }
 
 	    public function interestQuestion($user_id) {
@@ -263,8 +273,7 @@
 	    	$query = 'SELECT Questions.question_id, Questions.question_content from Questions INNER JOIN Users_Questions on Questions.question_id = Users_Questions.question_id where Users_Questions.user_id =? order by Questions.created_on desc';
 	    	$result = $this->db->query($query, array($user_id));
 	    	return $result->result();
-	    }
-	
+	    }	
 	};
 	/* End of file Question_model.php */
 	/* Location: ./application/models/Question_model.php */

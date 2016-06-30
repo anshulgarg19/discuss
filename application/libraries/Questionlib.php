@@ -8,7 +8,21 @@ class Questionlib{
 	function __construct(){
 		$this->_ci =& get_instance();
 		$this->_ci->load->model("Question_model");
+		$this->_ci->load->model("Tag_model");
 		$this->question_model = new Question_model();
+		$this->tag_model = new Tag_Model();
+	}
+
+	public function getRecentQuestions() {
+		$questions = $this->question_model->getRecentQuestions();
+		$tags = $this->tag_model->getTagsForRecentsFromSolr($questions);
+
+		foreach($tags->response->docs as $tag) {
+			$questions[(int)$tag->id]["tag_names"] = $tag->tag_names;
+			$questions[(int)$tag->id]["id_list"] = $tag->id_list;
+		}
+
+		return $questions;
 	}
 
 	public function post_question($data){

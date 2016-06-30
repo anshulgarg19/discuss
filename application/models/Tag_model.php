@@ -7,6 +7,7 @@
 
 		function __construct() {
 			parent::__construct();
+			$this->load->helper("curl_helper");
 		}
 
 		// Get the list of all tags from the databse.
@@ -98,6 +99,17 @@
 			if( !$result->num_rows() )
 				return BAD_REQUEST;
 			return $result->row()->tag_name;
+		}
+
+		// Function to query SOLR and get tags for recent questions
+		public function getTagsForRecentsFromSolr($questions) {
+			$idList = array();
+			foreach($questions as $id => $tuple) {
+				$idList[] = $id; 
+			}
+			$qp = implode("+OR+id%3A", $idList);
+			$q = SOLR_URL."q=id%3A".$qp."&sort=last_modified+desc&fl=tag_names%2C+id%2C+id_list&wt=json";
+			return curlFetchArray($q);
 		}
 	}
 ?>
