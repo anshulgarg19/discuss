@@ -150,6 +150,8 @@
 	    	return $retval;
 	    }
 
+	    // Function to return questions for tags that the user was following recently
+
 	    public function interestQuestion($user_id) {
 	    	$q = "SELECT DISTINCT Questions.question_id FROM Questions INNER JOIN Tags_Questions INNER JOIN Users_Tags ON Questions.question_id = Tags_Questions.question_id WHERE Tags_Questions.tag_id = Users_Tags.tag_id AND Users_Tags.user_id=?";
 	    	$result = $this->db->query($q, array($user_id));
@@ -273,7 +275,26 @@
 	    	$query = 'SELECT Questions.question_id, Questions.question_content from Questions INNER JOIN Users_Questions on Questions.question_id = Users_Questions.question_id where Users_Questions.user_id =? order by Questions.created_on desc';
 	    	$result = $this->db->query($query, array($user_id));
 	    	return $result->result();
-	    }	
+	    }
+
+	    public function getQuestionsForFollowedTags($taglist) {
+
+	    	$q = "SELECT DISTINCT Questions.question_id as question_id, Questions.question_content, title, Questions.last_modified_on, Questions.created_on as created_on, Questions.answer_count FROM Questions INNER JOIN Tags_Questions ON Questions.question_id=Tags_Questions.question_id WHERE Tags_Questions.tag_id IN(".implode(',', $taglist).")ORDER BY Questions.last_modified_on DESC";
+
+	    	$result = $this->db->query($q);
+	    	$retval = array();
+	    	foreach($result->result_array() as $row) {
+	    		$retval[$row['question_id']] = array(
+	    				"question_id" => $row['question_id'],
+	    				"question_content" => $row['question_content'],
+	    				"title" => $row['title'],
+	    				"last_modified_on" => $row['last_modified_on'],
+	    				"created_on" => $row['created_on'],
+	    				"answer_count" => $row['answer_count'] 
+	    			);
+	    	}
+	    	return $retval;
+	    }
 	};
 	/* End of file Question_model.php */
 	/* Location: ./application/models/Question_model.php */
