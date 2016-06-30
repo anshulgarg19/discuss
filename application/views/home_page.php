@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <body>
 	<!-- login form -->
 	<form>
-		<label for="login_email">E-mail </label><input type="text" name="email" id="login_email"><br/>
+		<label for="login_email">E-mail </label><input type="email" name="email" id="login_email"><br/>
 		<div id="error-login_email"></div><br/>
 		<label for="login_password">Password </label><input type="password" name="password" id="login_password"><br/>
 		<button type="button" id="login_submit">Submit</button>

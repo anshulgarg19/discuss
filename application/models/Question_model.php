@@ -140,6 +140,7 @@
 	    	$retval = array();
 	    	foreach($result->result_array() as $row) {
 	    		$retval[$row['question_id']] = array(
+	    				"question_id" => $row['question_id'],
 	    				"question_content" => $row['question_content'],
 	    				"title" => $row['title'],
 	    				"last_modified_on" => $row['last_modified_on'],

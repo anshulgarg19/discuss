@@ -15,6 +15,23 @@
     top: 110px;
 }
 
+#recents > ul > li {
+	padding: 50px;
+}
+
+#recents > ul > li > .row{
+	margin-bottom: 1em;
+	margin-left: 0px;
+}
+
+#following > ul > li {
+	padding: 50px;
+}
+
+#following > ul > li > .row{
+	margin-bottom: 1em;
+	margin-left: 0px;
+}
 
 .link, .link:visited{
 	color: #000000;
