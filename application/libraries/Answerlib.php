@@ -23,5 +23,10 @@ class Answerlib{
 	public function showAnswers($question_id){
 		return $this->answer_object->getAnswersToQuestion($question_id);
 	}
+
+	public function get_user_for_answer($question_id)
+	{
+		return $this->answer_object->getUserForANswer($question_id);
+	}
 }
 ?>

@@ -23,6 +23,7 @@ class Homepage extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('validations_helper');
 		$this->load->helper('redirect_helper');
+		$this->load->helper('email_helper');
 	}
 
 	public function index()
@@ -102,7 +103,7 @@ class Homepage extends CI_Controller {
 			return;
 		}
 
-		$this->sendmail($activation_key);
+		$this->sendactivationmail($_POST,$activation_key);
 		
 	}
 
@@ -148,42 +149,14 @@ class Homepage extends CI_Controller {
 		$this->userfactory->passwordResetInit($_POST['forgotmail']);
 	}
 
-	public function sendmail($activation_key) {
-		$activate_uri = ACTIVATE_URI.'code='.$activation_key.'&email='.$_POST['email'];
+	public function sendactivationmail($data,$activation_key) {
+		$activate_uri = ACTIVATE_URI.'?code='.$activation_key.'&email='.$data['email'];
+		$senddata = array();
+		$senddata['to'] = $data['email'];
+		$senddata['subject'] = 'Activation Email';
+		$senddata['message'] = 'Activation uri is: '.$activate_uri;
+		sendmail($senddata);
 		
-		/*$config = Array(
-		    'protocol' => 'smtp',
-		    'smtp_host' => 'ssl://smtp.googlemail.com',
-		    'smtp_port' => 465,
-		    'smtp_user' => 'discusswebservice@gmail.com',
-		    'smtp_pass' => 'thisisubuntu',
-		    'mailtype'  => 'html', 
-		    'charset'   => 'iso-8859-1'
-		);
-
-	    $config['newline'] = "\r\n";*/
-
-	    
-	    //email configuration settings
-	    $emailconfig['protocol'] = $this->config->item('protocol');
-	    $emailconfig['smtp_host'] = $this->config->item('smtp_host');
-	    $emailconfig['smtp_port'] = $this->config->item('smtp_port');
-	    $emailconfig['smtp_user'] = $this->config->item('smtp_user');
-	    $emailconfig['smtp_pass'] = $this->config->item('smtp_pass');
-	    $emailconfig['mailtype'] = $this->config->item('mailtype');
-	    $emailconfig['charset'] = $this->config->item('charset');
-	    $emailconfig['newline'] = $this->config->item('newline');
-
-		$this->load->library('email', $emailconfig);
-		$this->email->from(EMAIL_FROM);
-        $this->email->to($_POST['email'],$_POST['fname']);
-
-        $this->email->subject('Activate email');
-        $this->email->message('Activation uri is: '.$activate_uri);  
-
-        $this->email->send();
-
-        echo $this->email->print_debugger();
 	}
 
 	public function PasswordReset() {

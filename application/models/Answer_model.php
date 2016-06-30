@@ -137,6 +137,16 @@ class Answer_Model extends CI_Model {
         //var_dump($answers->result_array());
     	return $answers->result_array();
     }
+
+    public function getUserForAnswer($question_id){
+        $query = 'select distinct(email_id) from Users INNER JOIN Answers on Users.user_id=Answers.user_id where Answers.question_id=?';
+        $result = $this->db->query($query, array($question_id));
+        if( $result->num_rows() )
+        {
+            return $result->result_array();
+        }
+    }
+
 }
 
 /* End of file Answer_model.php */

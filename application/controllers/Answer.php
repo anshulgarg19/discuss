@@ -6,12 +6,31 @@ class Answer extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->library('Answerlib');
+		$this->load->library('Questionlib');
+		$this->load->helper('email_helper');
 	}
 
 	//method to post answer
 	public function postanswer(){
 		//var_dump($_POST);
 		$this->answerlib->postAnswer($_POST);
+		$userList = array();
+		$question_user = $this->questionlib->get_user_for_question($_POST['question']);
+		$answer_user = $this->answerlib->get_user_for_answer($_POST['question']);
+		$userList = array_merge($userList, $question_user);
+		$userList = array_merge($userList, $answer_user);
+
+		$question_title = $this->questionlib->get_question_title($_POST['question']);
+
+		$senddata['subject'] = ACTIVITY_SUBJECT;
+		$message = ACTIVITY_MESSAGE.$question_title.'? . Review the activity using the link: '.QUESTION_URI.'?question='.$_POST['question'];
+		$senddata['message'] = $message;
+
+		foreach ($userList as $user) {
+			$senddata['to'] = $user;
+			sendmail($senddata);
+		}
+
 	}
 
 	//method to fetch answers for a question

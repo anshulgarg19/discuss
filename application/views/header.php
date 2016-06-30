@@ -84,9 +84,9 @@
 		        <div id="error-question-tags"></div><br/>
 		      </div>
 		      <div class="modal-footer">
-		        <!--<button type="submit" class="btn btn-default" data-dismiss="modal" id="post-question-button">Post</button>-->
-		        <input type="submit" id="post-question-button"  class="btn btn-default" data-dismiss="modal" value="Post">
-
+		        <!--<button type="submit" class="btn btn-default" data-dismiss="modal" id="post-question-button">Post</button>
+		        <input type="submit" id="post-question-button"  class="btn btn-default" data-dismiss="modal" value="Post">-->
+		        <button type="button" id="post-question-button"  class="btn btn-default" >Post</button>
 		      </div>
 		  </form>    
 	    </div>
