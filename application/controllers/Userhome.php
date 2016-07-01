@@ -8,6 +8,8 @@ class Userhome extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('Questionlib');
+		$this->load->library('session');
+		$this->load->helper('url');
 	}
 
 	public function index()
@@ -19,6 +21,13 @@ class Userhome extends CI_Controller {
 		$this->load->view('footer');
 	}
 
+	public function logout()
+	{
+		$this->session->unset_userdata('user_id');
+		$this->session->unset_userdata('firstname');
+
+		redirect('/','location');
+	}
 }
 
 /* End of file Userhome.php */

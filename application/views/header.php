@@ -57,9 +57,9 @@
 	        <button type="submit" class="btn btn-default">Submit</button>
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="/index.php/userprofile/showprofile" target="_blank">My Profile</a></li>
-	        <li class="dropdown">
+	        <li><a href="/index.php/userprofile/showprofile" target="_blank"><?php echo $_SESSION['firstname'];?></a></li>
 			<li><a data-toggle="modal" data-target="#question-modal">Ask Question</a></li>
+			<li><a href="/index.php/userhome/logout">Logout</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
