@@ -272,9 +272,9 @@
 	    }
 
 	    //Function to return questions posted by a user
-	    public function getQuestionsForUser($user_id){
-	    	$query = 'SELECT Questions.question_id, Questions.title from Questions INNER JOIN Users_Questions on Questions.question_id = Users_Questions.question_id where Users_Questions.user_id =? order by Questions.created_on desc';
-	    	$result = $this->db->query($query, array($user_id));
+	    public function getQuestionsForUser($user_id,$offset,$limit){
+	    	$query = 'SELECT Questions.question_id, Questions.title, Questions.answer_count from Questions INNER JOIN Users_Questions on Questions.question_id = Users_Questions.question_id where Users_Questions.user_id =? order by Questions.created_on desc LIMIT ?,?';
+	    	$result = $this->db->query($query, array($user_id,$offset,$limit));
 	    	return $result->result();
 	    }
 

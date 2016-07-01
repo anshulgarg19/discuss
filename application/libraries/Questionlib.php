@@ -55,8 +55,8 @@ class Questionlib{
 		return $this->question_model->getQuestionDetails($data);
 	}
 
-	public function get_questions_for_user($user_id){
-		return $this->question_model->getQuestionsForUser($user_id);
+	public function get_questions_for_user($user_id,$offest, $limit){
+		return $this->question_model->getQuestionsForUser($user_id,$offest,$limit);
 	}
 
 	public function get_user_for_question($question_id){

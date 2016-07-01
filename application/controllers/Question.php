@@ -17,6 +17,11 @@ class Question extends CI_Controller{
 		
 	}*/
 
+	public function loadquestions(){
+		$data["questions"] = $this->questionlib->get_questions_for_user((int)$_POST['user_id'],(int)$_POST['offset'],(int)$_POST['limit']);
+		$this->load->view('loadquestions',$data);
+	}
+
 	public function showquestionform(){
 		$this->load->view('header');
 		$this->load->view('question_form');
@@ -66,7 +71,7 @@ class Question extends CI_Controller{
 	//Function to show question contents
 	public function questiondetails(){
 		
-		
+		//$_SESSION['user_id'] = 56;
 		$details = $this->questionlib->get_question_details($_GET);		
 
 		if( isset($details['question-not-found']) )
@@ -75,7 +80,7 @@ class Question extends CI_Controller{
 			echo 'No question found';
 			die();
 		}
-		$details['answers'] = $this->answerlib->showAnswers($_GET['question']);
+		$details['answers'] = $this->answerlib->showAnswers($_GET['question'],DEFAULT_OFFSET,DEFAULT_LIMIT);
 		//var_dump($details['answers']);
 
 		

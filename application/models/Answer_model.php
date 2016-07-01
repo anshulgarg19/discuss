@@ -131,9 +131,9 @@ class Answer_Model extends CI_Model {
         $this->db->query('UPDATE Questions SET answer_count=answer_count + 1 WHERE question_id=?', array($data['question']));        
     }
 
-    public function getAnswersToQuestion($question_id) {
+    public function getAnswersToQuestion($question_id,$offset,$limit) {
 
-    	$answers = $this->db->query("SELECT firstname, Users.user_id, Answers.created_on, answer_content FROM Users INNER JOIN Answers ON Answers.user_id=Users.user_id WHERE Answers.question_id=? order by created_on desc;", array($question_id));
+    	$answers = $this->db->query("SELECT firstname, Users.user_id, Answers.created_on, answer_content FROM Users INNER JOIN Answers ON Answers.user_id=Users.user_id WHERE Answers.question_id=? order by created_on desc limit ?,?;", array($question_id,$offset,$limit));
         //var_dump($answers->result_array());
     	return $answers->result_array();
     }

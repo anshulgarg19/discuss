@@ -32,18 +32,17 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 
 
 <!--Answers for the question -->
-		<div id="answers" class="row">
-		<ul id="answer-list" class="list-group">
+		<div id="answers-0">
 			<?php foreach($answers as $row) { ?>
-				<li class="list-group-item">
+				
 				<div id="answer-content"><h3><?php echo $row['answer_content']; ?></h3></div><br/>
 				<h6>Posted on <?php echo $row['created_on']; ?>
 				by <a target="_blank" href='/index.php/userprofile/showprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a>
-				</h6></li>
+				</h6>
+				<div class="partition"></div>
 			<?php } ?>
-			
-		</ul>
-		</div>
+		</div>	
+		
 	</div>
 </div>
 

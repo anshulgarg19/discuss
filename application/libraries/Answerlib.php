@@ -20,8 +20,8 @@ class Answerlib{
 		$this->answer_object->addAnswerToQuestion($data);
 	}
 
-	public function showAnswers($question_id){
-		return $this->answer_object->getAnswersToQuestion($question_id);
+	public function showAnswers($question_id,$offset, $limit){
+		return $this->answer_object->getAnswersToQuestion($question_id,$offset,$limit);
 	}
 
 	public function get_user_for_answer($question_id)

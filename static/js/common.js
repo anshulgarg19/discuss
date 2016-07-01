@@ -3,7 +3,7 @@
 
 	jQuery(document).ready(function($) {
 		$('#searchfield').autocomplete({
-		    serviceUrl: 'search/suggest',
+		    serviceUrl: '/index.php/search/suggest',
 		    onSelect: function (suggestion) {
 		        $('#hiddensearchinput').val(suggestion.data);
 	    	}

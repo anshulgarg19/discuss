@@ -10,6 +10,7 @@
 		</div>
 
 		<div class="col-md-offset-2 col-md-5">
+			<input id="user_id" type="hidden" name="user_id" value="<?php echo $user_id; ?>">
 			<div id="name"><h3><?php echo $user->getFirstname().' '.$user->getLastname() ?></h3></div><br/>
 			<p><i class="glyphicon glyphicon-envelope"></i><?php echo '  '.$user->getEmail() ?><br/>
 			<i class="glyphicon glyphicon-earphone"></i><?php echo '  '.$user->getPhone() ?><br/></p>
@@ -32,13 +33,14 @@
 			</div>
 		</div>
 		<div class="col-md-8 ">
-			<div id="my-questions">
+			<div id="my-questions-0">
 					
 					<?php if( count($questions) == 0 ) 
 							echo 'You have not posted any quesitons yet.'; 
 						else{
 							foreach($questions as $question){?> 
-								<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank" class="link"><?php echo $question->title; ?></a></h5>
+								<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank" class="link"><?php echo $question->title; ?></a></h5><br/>
+									<?php echo $question->answer_count.' '; ?>Answers<br/> 
 								</div><br/>
 					<?php }
 					}?>		
@@ -75,3 +77,4 @@
 	</div>
 </div>
 
+<script type="text/javascript" src="/static/js/profilepage.js"></script>

@@ -17,6 +17,7 @@ class Userprofile extends CI_controller{
 	public function showprofile(){
 		//$this->load->library("Userfactory");
 
+		//$_SESSION['user_id'] = 56;
 
 		if( !isset($_GET['user']) ){
 			$user = $_SESSION['user_id'];		//change to $_SESSION['id']
@@ -33,9 +34,10 @@ class Userprofile extends CI_controller{
 			$user = $_GET['user'];
 		}
 		$data = array(
+			"user_id" => $user,
 			"user" => $this->userfactory->getUser($user),
 			"tags" => $this->taglib->getUserTags($user),
-			"questions" => $this->questionlib->get_questions_for_user($user)
+			"questions" => $this->questionlib->get_questions_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT)
 			);
 
 		//var_dump($data['tags']);

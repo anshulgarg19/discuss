@@ -12,7 +12,7 @@ class Answer extends CI_Controller{
 
 	//method to post answer
 	public function postanswer(){
-		//var_dump($_POST);
+		var_dump($_POST);
 		$this->answerlib->postAnswer($_POST);
 		$userList = array();
 		$question_user = $this->questionlib->get_user_for_question($_POST['question']);
@@ -29,10 +29,15 @@ class Answer extends CI_Controller{
 		foreach ($userList as $user) {
 			$senddata['to'] = $user;
 			sendmail($senddata);
-		}
-
+		}	
 	}
 
+	public function loadanswers(){
+		$data['answers'] = $this->answerlib->showAnswers($_POST['question'], (int)$_POST['offset'], (int)$_POST['limit']);
+
+		$this->load->view('loadanswers',$data);
+
+	}
 	//method to fetch answers for a question
 	/*public function showanswers(){
 		$question_id = 20;

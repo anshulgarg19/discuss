@@ -1,6 +1,24 @@
 
 $(document).ready(function() {
 
+    var url_value = getUrlVars();
+
+    var offset = 10;
+    var limit = 10;
+    
+    var question_id = url_value.question;
+
+    $(window).on('scroll',function(){
+      /*console.log($(window).height());
+      console.log($(document).height());
+      console.log($(window).scrollTop());*/
+      if( Math.round($(window).scrollTop()) == ($(document).height() - $(window).height() )){
+          addMoreAnswers();
+      }
+
+    });
+
+
     //enable submit button only when text is not empty
     $('#submit-answer').prop('disabled', true);
     $('#answer_content').on('keyup',function() {
@@ -15,6 +33,7 @@ $(document).ready(function() {
 
     $("#submit-answer").click(function(event){
       var data = getUrlVars();
+      
       data['answer_content'] = $("#answer_content").val();
       var time = (new Date()).toUTCString();
 
@@ -35,7 +54,8 @@ $(document).ready(function() {
 
             
             console.log(content);
-            $('#answers').prepend(content);
+            $('#answers-0').prepend(content);
+
           },
           error: function(response){
             console.log(response);
@@ -65,5 +85,36 @@ $(document).ready(function() {
             vars[hash[0]] = hash[1];
         }
         return vars;
+    }
+
+    //Function to add more content 
+    function addMoreAnswers(){
+        
+        var data = {
+          question: question_id ,
+          offset: offset,
+          limit: limit
+        }  ; 
+        console.log(data);
+        $.ajax({
+          url: '/index.php/answer/loadanswers',
+          data:data,
+          type : "post",
+          success: function( response ){
+            if( response == "></div>"){
+              $(window).off('scroll');
+              return;
+            }
+                
+            response = '<div id="answers-'+(offset/limit)+response;
+            $(response).insertAfter($('#answers-'+((offset/limit)-1)));
+            offset = offset + limit;
+            console.log(response);
+            
+          },
+          error: function( response ){
+
+          }
+        });        
     }
 });
