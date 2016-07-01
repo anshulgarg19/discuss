@@ -1,7 +1,10 @@
-body {
+#homepagebody {
   padding-top: 40px;
   padding-bottom: 40px;
   background-color: #f9f7f7;
+}
+
+.text-centered {
   text-align: center;
 }
 
@@ -58,4 +61,19 @@ body {
 .form-signin a {
   text-align: center;
   margin-top: 10px;
+}
+
+.glyphicon.spinning {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
 }

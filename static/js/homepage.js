@@ -37,6 +37,7 @@ $(document).ready(function(){
 			console.log(response);
 			console.log("success");
 			$('body').html(response);
+			$('body').removeAttr('id');
 		})
 		.error(function(response) {
 			console.log(response);
@@ -168,7 +169,7 @@ $(document).ready(function(){
 
 	// Function for password reset submit
 	$('#reset_button').click(function(event) {
-
+		$('#reset_button').append('<span class="glyphicon glyphicon-refresh spinning"></span>');
 		$.ajax({
 			url: '/index.php/homepage/forgot',
 			type: 'POST',
@@ -176,12 +177,12 @@ $(document).ready(function(){
 		})
 		.success(function (response) {
 			console.log(response);
-			$('#reset_result').html(response);
+			$('#pwresetmodalbody').html('<span style="color:green;">A reset e-mail was successfully sent.</span>');
 		})
 		.error(function(response) {
 			console.log("error");
 			console.log(response);
-			$('#reset_result').html(response.responseText);
+			$('#pwresetmodalbody').html('<span style="color:red;">A reset e-mail could not be sent. Please try again. Perhaps the email you entered is wrong?</<s></s>pan>');
 		});
 		
 	});

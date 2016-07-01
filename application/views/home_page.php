@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 		<link rel="stylesheet" href="/static/css/homepage.css">
 	</head>
-	<body>
+	<body id="homepagebody">
 		
 		<div class="container">
 			
@@ -50,10 +50,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<label class="sr-only" for="login_password">Password </label><input required placeholder="Password" class="form-control" type="password" name="password" id="login_password">
 						<button type="button" class="btn btn-default" id="login_submit">Submit</button>
 					</form>
+					<div class="text-centered">
 						<!-- Button trigger modal -->
 						<a type="button" data-toggle="modal" data-target="#ForgotPasswordModal">
 							Forgot Password?
 						</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -65,11 +67,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel">Forgot password</h4>
 		      </div>
-		      <div class="modal-body">
+		      <div id="pwresetmodalbody" class="modal-body">
 		        
 		        <form id="pwresetemail" class="form-signin">
 		        	<input type="text" class="form-control" name="forgotmail">
-		        	<button class="btn btn-default" type="button" id="reset_button">Send password reset email</button>
+		        	<button class="btn btn-default" type="button" id="reset_button">Send password reset email
+		        	</button>
 		        </form>
 		      </div>
 		      <div class="modal-footer">
