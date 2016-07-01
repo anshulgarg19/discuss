@@ -24,6 +24,7 @@ class Homepage extends CI_Controller {
 		$this->load->helper('validations_helper');
 		$this->load->helper('redirect_helper');
 		$this->load->helper('email_helper');
+		$this->load->helper('pic_helper');
 	}
 
 	public function index()
@@ -47,7 +48,7 @@ class Homepage extends CI_Controller {
 		** starting server side validations
 		*/
 
-		
+		var_dump($_POST);
 		if( strlen($_POST['fname']) == 0 )
 		{
 
@@ -56,7 +57,7 @@ class Homepage extends CI_Controller {
 		}
 
 		//validating phone number
-		if( !validate_phonenumber($_POST['phone_num'] ))
+		if( !validate_phonenumber($_POST['pnum'] ))
 		{
 			$validation_errors['error-phone'] = true;
 			$inputValid = false;
@@ -77,7 +78,7 @@ class Homepage extends CI_Controller {
 		}
 
 
-		if( $_POST['password'] != $_POST['confirm_password'] )
+		if( $_POST['password'] != $_POST['confirm_pw'] )
 		{
 			$validation_errors['error-mismatch-password'] = true;
 			$inputValid = false;
@@ -91,7 +92,10 @@ class Homepage extends CI_Controller {
 			return;
 		}
 
+
 		
+				
+
 		$activation_key = sha1($_POST['email'].ACTIVATE_STRING);
 		$response = $this->userfactory->createUser($_POST,$activation_key);
 
@@ -103,7 +107,28 @@ class Homepage extends CI_Controller {
 			return;
 		}
 
-		$this->sendactivationmail($_POST,$activation_key);
+		$user_id = $response['user_id'];
+		$filename = $user_id;
+		$fileconfig = getfileconfigurations();
+		$fileconfig['file_name'] = $filename;
+		$this->load->library('upload',$fileconfig);
+
+		if( !$this->upload->do_upload('userfile'))
+		{
+			var_dump($this->upload->display_errors());
+			$filename = DEFAULT_PIC;
+		}
+		else
+		{
+			$filedata = $this->upload->data();
+			var_dump($filedata);
+			$filename = $filename.$filedata['file_ext'];
+			//var_dump($filename);
+			
+		}
+
+		$this->userfactory->updateProfilePicURI($user_id,$filename);	
+		//$this->sendactivationmail($_POST,$activation_key);
 		
 	}
 

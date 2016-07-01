@@ -112,7 +112,7 @@ $(document).ready(function(){
 		if( invalid )
 			return;
 
-		var data = {
+		/*var data = {
 			fname : first_name,
 			lname : last_name,
 			phone_num : pnum,
@@ -167,7 +167,8 @@ $(document).ready(function(){
 				console.log("register failure");
 				$('#register_response').html(response.responseText);
 			}
-		});
+		});*/
+		$('#register-form').submit();
 	});
 
 	// Function for password reset submit

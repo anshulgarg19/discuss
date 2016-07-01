@@ -113,9 +113,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    }
 
 	    //model to update profile pic url
-	    public function _updateProfilePicURL($filename){
-	    	$query = 'update Users set profile_pic=?';
-	    	$result = $this->db->query($query,array($filename));
+	    public function _updateProfilePicURL($user_id,$filename){
+	    	$query = 'UPDATE Users set profile_pic=? where user_id=?';
+	    	$result = $this->db->query($query,array($filename,$user_id));
 	    }
 
 	    // Function to verify a user's login credentials
@@ -140,9 +140,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    }
 
 	    // Function to create a database entry for a new user
-	    public function registerUser($data, $activation_key,$profile_pic='') {
+	    public function registerUser($data, $activation_key) {
 	    	$query = 'select * from Users where phone_num=?';
-	    	$result = $this->db->query($query, array($_POST['phone_num']));
+	    	$result = $this->db->query($query, array($_POST['pnum']));
 
 	    	$already_exists = false;
 	    	$error_data = array();
@@ -163,11 +163,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    	if( !$already_exists )
 	    	{
-	    		if( strlen($profile_pic) == 0 )
+	    		/*if( strlen($profile_pic) == 0 )
 	    			$profile_pic = DEFAULT_PIC;
 
 		    	$query = 'insert into Users(firstname,lastname,phone_num,email_id,profile_pic,reset_link,password) values(?,?,?,?,?,?,?)';
-		    	$result = $this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$profile_pic,$activation_key,sha1($data['password'])));
+		    	$result = $this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$profile_pic,$activation_key,sha1($data['password'])));*/
+		    	$insert_data['firstname'] = $data['fname'];
+		    	if(!isset($data['lname']))
+		    		$data['lname'] = '';
+		    	$insert_data['lastname'] = $data['lname'];
+		    	$insert_data['phone_num'] = $data['pnum'];
+		    	$insert_data['email_id'] = $data['email'];
+		    	$insert_data['reset_link'] = $activation_key;
+		    	$insert_data['password'] = sha1($data['password']);
+		    	$this->db->insert('Users',$insert_data);
+		    	$request['user_id'] = $this->db->insert_id();
+		    	
+
+		    	return $request;
 		    }
 		    
 		    return $error_data;	

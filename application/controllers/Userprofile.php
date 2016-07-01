@@ -85,6 +85,7 @@ class Userprofile extends CI_controller{
 	public function changepic(){
 		
 		var_dump($_POST);
+
 		$filename = $_SESSION['user_id'];
 		var_dump($filename);
 		//$this->load->config('config',TRUE);
@@ -118,7 +119,7 @@ class Userprofile extends CI_controller{
 			$filedata = $this->upload->data();
 			$filename = $filename.$filedata['file_ext'];
 			var_dump($filename);
-			$this->userfactory->updateProfilePicURI($filename);
+			$this->userfactory->updateProfilePicURI($_SESSION['user_id'],$filename);
 			redirect('/userprofile/showprofile');
 			//$this->showprofile();
 		   //echo "file upload success";

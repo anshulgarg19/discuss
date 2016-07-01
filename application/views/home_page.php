@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<!-- Tab panes -->
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane" id="signup">
-					<form class="form-signin">
+					<form id="register-form" class="form-signin" method="POST" enctype="multipart/form-data" action="/index.php/homepage/register">
 						<label class="sr-only" autofocus for="first_name">First Name </label><input placeholder="Firstname" class="form-control" type="text" name="fname" id="first_name">
 						<div id="error-first-name" class="error-div"></div>
 						<label class="sr-only" for="last_name">Last Name </label><input placeholder="Lastname" class="form-control" type="text" name="lname" id="last_name">						
@@ -37,7 +37,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<label class="sr-only" for="register_password">Password </label><input placeholder="password" class="form-control" type="password" name="password" id="register_password">
 						<div id="error-register_password" class="error-div"></div>
 						<label class="sr-only" for="confirm_password">Confirm Password</label><input placeholder="confirm password" class="form-control" type="password" name="confirm_pw" id="confirm_password">
-						
+
+						<input type="file" name="userfile"/>
+
 						<div id="error-confirm_password" class="error-div"></div>
 						<button type="button" class="btn btn-default" id="register_submit">Register</button>
 					</form>

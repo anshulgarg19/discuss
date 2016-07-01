@@ -89,8 +89,8 @@ class Userfactory{
 		return $u_object;
 	}
 
-	public function updateProfilePicURI( $filename ){
-		$this->user_object->_updateProfilePicURL($filename);
+	public function updateProfilePicURI($user_id, $filename ){
+		$this->user_object->_updateProfilePicURL($user_id,$filename);
 	}
 };
 ?>
