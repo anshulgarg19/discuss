@@ -22,7 +22,7 @@
 				return array();
 		}
 
-		public function writeUserTags($pairs) {
+		public function writeUserTags($pairs,$tags) {
 
 			$q = 'INSERT INTO Users_Tags (tag_id, user_id) VALUES '.implode(',', $pairs);
 			
@@ -30,6 +30,7 @@
 			$result = $this->db->query($q);
 
 			if($result) {
+				$this->db->query('UPDATE Tags set user_count = user_count + 1 WHERE tag_id IN ('.implode(',', $tags).')');
 				return true;
 			}
 
@@ -89,7 +90,7 @@
 		}
 
 		function get_user_tags($user){
-			$query = 'select Tags.tag_id,Tags.tag_name from Users INNER JOIN Users_Tags on Users.user_id= Users_Tags.user_id INNER JOIN Tags on Tags.tag_id = Users_Tags.tag_id where Users.user_id=?
+			$query = 'SELECT Tags.tag_id,Tags.tag_name,Tags.user_count from Users INNER JOIN Users_Tags on Users.user_id= Users_Tags.user_id INNER JOIN Tags on Tags.tag_id = Users_Tags.tag_id where Users.user_id=?
 				';
 			$result = $this->db->query($query,array((int)$user));
 			return $result->result();

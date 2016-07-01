@@ -177,7 +177,7 @@
 	    	//
 
 	    	//inserting in user question relation
-	    	$query = 'insert into Users_Questions(user_id,question_id,type) values(?,?,"POST")';
+	    	$query = 'INSERT into Users_Questions(user_id,question_id,type) values(?,?,"POST")';
 	    	$result = $this->db->query($query,array( $_SESSION['user_id'], $insertedID));
 
 
@@ -187,7 +187,7 @@
 	    	{
 	    		$tag = strtolower($tag);
 
-	    		$query = 'select tag_id from Tags where tag_name=?';
+	    		$query = 'SELECT tag_id from Tags where tag_name=?';
 	    		$result = $this->db->query( $query, array($tag));
 
 	    		//tag already present
@@ -197,7 +197,7 @@
 
 	    			$tag_id = $response->tag_id;
 	    			//update question count in Tags table
-	    			$query = 'update Tags set question_count = question_count+1 where tag_id=?';
+	    			$query = 'UPDATE Tags set question_count = question_count+1,user_count=user_count+1 where tag_id=?';
 	    			$this->db->query($query, array($tag_id));
 
 
@@ -208,6 +208,7 @@
 	    			$tagData['tag_id'] = '';
 	    			$tagData['tag_name'] = $tag;
 	    			$tagData['question_count'] = 1;
+	    			$tagData['user_count'] = 1;
 	    			//insert new tag in Tags table
 	    			$this->db->insert('Tags',$tagData);
 	    			$tag_id = $this->db->insert_id();

@@ -26,7 +26,7 @@
 			<?php if( count($tags) == 0 ) echo 'No tags';
 			 							else{ ?><span>Tags Followed</span><br/>
 										<?php	foreach($tags as $tag){?>
-										<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" target="_blank" class="link link-tag"><?php echo $tag->tag_name; ?></a><br/>
+										<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" target="_blank" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.')'; ?></a><br/>
 										<?php }
 										}?>		
 			
