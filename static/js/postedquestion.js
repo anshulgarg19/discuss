@@ -101,7 +101,9 @@ $(document).ready(function() {
           data:data,
           type : "post",
           success: function( response ){
-            if( response == "></div>"){
+            console.log(response);
+            response.trim();
+            if( response == '"></div>'){
               $(window).off('scroll');
               return;
             }

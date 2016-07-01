@@ -109,6 +109,7 @@
 			}
 			$qp = implode("+OR+id%3A", $idList);
 			$q = SOLR_URL."q=id%3A".$qp."&sort=last_modified+desc&fl=tag_names%2C+id%2C+id_list&wt=json";
+			var_dump($q);
 			return curlFetchArray($q);
 		}
 	}

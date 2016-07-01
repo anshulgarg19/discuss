@@ -41,8 +41,9 @@ $(document).ready(function(){
 			url : '/index.php/question/loadquestions',
 			data: data,
 			type: "POST",
+			
 			success: function(response){
-				console.log('hello'+response);
+				response.trim();
 				if( response == "</div>")
 				{
 					console.log('empty response');
