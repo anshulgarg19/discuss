@@ -280,7 +280,7 @@
 
 	    public function getQuestionsForFollowedTags($taglist) {
 
-	    	$q = "SELECT DISTINCT Questions.question_id as question_id, Questions.question_content, title, Questions.last_modified_on, Questions.created_on as created_on, Questions.answer_count FROM Questions INNER JOIN Tags_Questions ON Questions.question_id=Tags_Questions.question_id WHERE Tags_Questions.tag_id IN(".implode(',', $taglist).")ORDER BY Questions.last_modified_on DESC";
+	    	$q = "SELECT DISTINCT Questions.question_id as question_id, Questions.question_content, title, Questions.last_modified_on, Questions.created_on as created_on, Questions.answer_count FROM Questions INNER JOIN Tags_Questions ON Questions.question_id=Tags_Questions.question_id WHERE Tags_Questions.tag_id IN(".implode(',', $taglist).")ORDER BY Questions.last_modified_on DESC LIMIT 10";
 
 	    	$result = $this->db->query($q);
 	    	$retval = array();
