@@ -1,6 +1,8 @@
 
 $(document).ready(function(){
 	//onClick function for login submit
+	$('#loginerror').hide();
+
 	$('#login_submit').click(function(event) {
 
 		$('#error-login_email').html('');
@@ -41,7 +43,8 @@ $(document).ready(function(){
 		})
 		.error(function(response) {
 			console.log(response);
-			$('#result').html(response.responseText);
+			$('#loginerror').html("Wrong username and/or password");
+			$('#loginerror').show();
 		});
 				
 	});
