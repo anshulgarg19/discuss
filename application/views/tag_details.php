@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
-		<h3>Showing recent questions tageed with: <?php echo $tag; var_dump($following)	?></h3>
+		<h3>Showing recent questions tageed with: <?php echo $tag_name; var_dump($following)	?></h3>
 		<form id="changestatus">
 			<input type="hidden" name="tag" value="<?php echo $tag; ?>">
 			<?php if($following) {?>

@@ -20,7 +20,8 @@ class Tagdetails extends CI_Controller {
 			die();
 		}
 
-		$data['tag'] =  $response;
+		$data['tag'] =  $_GET["tag"];
+		$data['tag_name'] =  $response;
 		$data['questions'] = $this->taglib->getQuestionsForTag($_GET['tag']);
 				
 		$data['following'] = $this->taglib->isFollowingTag($_GET['tag'], $_SESSION['user_id']);

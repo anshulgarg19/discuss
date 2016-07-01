@@ -64,16 +64,18 @@
 
 		public function unfollowTag($tag, $userid)
 		{
-			$tagid = $this->db->query("SELECT tag_id FROM Tags WHERE tag_name=?", array($tag));
+			$tagid = $this->db->query("SELECT tag_id FROM Tags WHERE tag_id=?", array($tag));
 			$result = $this->db->query("DELETE FROM Users_Tags WHERE user_id=? AND tag_id=?",
 				array($userid, $tagid->row()->tag_id));
+			$this->db->query('UPDATE Tags SET user_count = user_count-1 WHERE tag_id=?',array($tag));
 		}
 
 		public function followTag($tag, $userid)
 		{
-			$tagid = $this->db->query("SELECT tag_id FROM Tags WHERE tag_name=?", array($tag));
+			$tagid = $this->db->query("SELECT tag_id FROM Tags WHERE tag_id=?", array($tag));
 			$result = $this->db->query("INSERT INTO Users_Tags(user_id, tag_id) VALUES (?,?)",
 				array($userid, $tagid->row()->tag_id));
+			$this->db->query("UPDATE Tags set user_count=user_count+1 where tag_id=?",array($tag));
 		}
 
 		// Utility function to check whether user is following any tags at all
