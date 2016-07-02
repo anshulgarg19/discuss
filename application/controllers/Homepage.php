@@ -48,7 +48,7 @@ class Homepage extends CI_Controller {
 		** starting server side validations
 		*/
 
-		var_dump($_POST);
+		//var_dump($_POST);
 		if( strlen($_POST['fname']) == 0 )
 		{
 
@@ -115,20 +115,21 @@ class Homepage extends CI_Controller {
 
 		if( !$this->upload->do_upload('userfile'))
 		{
-			var_dump($this->upload->display_errors());
+			//var_dump($this->upload->display_errors());
 			$filename = DEFAULT_PIC;
 		}
 		else
 		{
 			$filedata = $this->upload->data();
-			var_dump($filedata);
+			//var_dump($filedata);
 			$filename = $filename.$filedata['file_ext'];
 			//var_dump($filename);
 			
 		}
 
 		$this->userfactory->updateProfilePicURI($user_id,$filename);	
-		//$this->sendactivationmail($_POST,$activation_key);
+		$this->sendactivationmail($_POST,$activation_key);
+		$this->load->view('register_success');
 		
 	}
 
