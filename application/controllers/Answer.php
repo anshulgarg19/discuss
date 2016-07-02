@@ -14,6 +14,10 @@ class Answer extends CI_Controller{
 	public function postanswer(){
 		var_dump($_POST);
 		$this->answerlib->postAnswer($_POST);
+		
+	}
+
+	public function sendactivitymail(){
 		$userList = array();
 		$question_user = $this->questionlib->get_user_for_question($_POST['question']);
 		$answer_user = $this->answerlib->get_user_for_answer($_POST['question']);
