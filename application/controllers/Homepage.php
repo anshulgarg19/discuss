@@ -38,74 +38,10 @@ class Homepage extends CI_Controller {
 	//method to initiate registration in controller
 	public function register() {
 		
-		$this->load->library("Userfactory");
-		//var_dump($_POST['email'].ACTIVATE_STRING.' '.sha1($_POST['email'].ACTIVATE_STRING));
-
-		$inputValid = true;
-		$validation_errors = array();
-
-		/* 
-		** starting server side validations
-		*/
-
-		//var_dump($_POST);
-		if( strlen($_POST['fname']) == 0 )
-		{
-
-			$validation_errors['error-first-name'] = true;
-			$inputValid = false;
-		}
-
-		//validating phone number
-		if( !validate_phonenumber($_POST['pnum'] ))
-		{
-			$validation_errors['error-phone'] = true;
-			$inputValid = false;
-		}
-
-		//valdating phone number
-		if( !validate_email($_POST['email']))
-		{
-			$validation_errors['error-email'] = true;
-			$inputValid = false;
-		}
-
-		//validating password
-		if( !validate_password($_POST['password']) )
-		{
-			$validation_errors['error-password'] = true;
-			$inputValid = false;
-		}
-
-
-		if( $_POST['password'] != $_POST['confirm_pw'] )
-		{
-			$validation_errors['error-mismatch-password'] = true;
-			$inputValid = false;
-		}
-
-		
-		if( !$inputValid )
-		{
-			echo json_encode($validation_errors);
-			//die();
-			return;
-		}
-
-
-		
-				
+		$this->load->library("Userfactory");				
 
 		$activation_key = sha1($_POST['email'].ACTIVATE_STRING);
 		$response = $this->userfactory->createUser($_POST,$activation_key);
-
-		$already_exists = false;
-		if( isset($response['phone-exists']) || isset($response['email-exists']))
-		{
-			echo json_encode($response);
-			//die()
-			return;
-		}
 
 		$user_id = $response['user_id'];
 		$filename = $user_id;
@@ -128,21 +64,85 @@ class Homepage extends CI_Controller {
 		}
 
 		$this->userfactory->updateProfilePicURI($user_id,$filename);	
-		$this->sendactivationmail($_POST,$activation_key);
+		//$this->sendactivationmail($_POST,$activation_key);
 		$this->load->view('register_success');
 		
 	}
 
-	/*public function setProfilePic() {
+	//Function for server side validations
+	public function validateuser(){
+		$this->load->library("Userfactory");
+		//var_dump($_POST['email'].ACTIVATE_STRING.' '.sha1($_POST['email'].ACTIVATE_STRING));
 
-		$link = "https://github.com/rootavish/me";
+		$inputValid = true;
+		$validation_errors = array();
 
-		$this->load->model("User_model");
+		if( strlen($_POST['fname']) == 0 )
+		{
 
-		$umodel = new User_Model();
-		$umodel->_setId(1);
-		$umodel->setProfilePic($link);
-	}*/
+			$validation_errors['error-first-name'] = true;
+			$inputValid = false;
+		}
+
+		//validating phone number
+		if( !validate_phonenumber($_POST['phone_num'] ))
+		{
+			$validation_errors['error-phone'] = true;
+			$inputValid = false;
+		}
+
+		//valdating phone number
+		if( !validate_email($_POST['email']))
+		{
+			$validation_errors['error-email'] = true;
+			$inputValid = false;
+		}
+
+		//validating password
+		if( !validate_password($_POST['password']) )
+		{
+			$validation_errors['error-password'] = true;
+			$inputValid = false;
+		}
+
+
+		//validating if password and confirm passwords match
+		if( $_POST['password'] != $_POST['confirm_password'] )
+		{
+			$validation_errors['error-mismatch-password'] = true;
+			$inputValid = false;
+		}
+
+		if( !$inputValid )
+		{
+			http_response_code(400);
+			echo json_encode($validation_errors);
+			//die();
+			return;
+		}		
+
+		$response = $this->userfactory->check_phone_num_email($_POST['phone_num'],$_POST['email']);
+		
+		if(isset($response['phone-exists']))
+		{
+			$validation_errors['phone-exists'] = true;
+			$inputValid = false;
+		}
+
+		if( isset($response['email-exists']))
+		{
+			$validation_errors['email-exists'] = true;
+			$inputValid = false;
+		}
+
+		if( !$inputValid)
+		{
+			http_response_code(400);
+			echo json_encode($validation_errors);
+			return;
+		}
+	}
+	
 
 	public function login() {
 

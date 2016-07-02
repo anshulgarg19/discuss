@@ -37,10 +37,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<label class="sr-only" for="register_password">Password </label><input placeholder="password" class="form-control" type="password" name="password" id="register_password">
 						<div id="error-register_password" class="error-div"></div>
 						<label class="sr-only" for="confirm_password">Confirm Password</label><input placeholder="confirm password" class="form-control" type="password" name="confirm_pw" id="confirm_password">
-
-						<input type="file" name="userfile"/>
-
+					
 						<div id="error-confirm_password" class="error-div"></div>
+						<input type="file" name="userfile"/>
 						<button type="button" class="btn btn-default" id="register_submit">Register</button>
 					</form>
 					
