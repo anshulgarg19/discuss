@@ -183,7 +183,7 @@ $(document).ready(function(){
 			},
 			error: function( response ){
 				console.log("called error");
-				var restext = JSON.parse(response.responseText);
+				/*var restext = JSON.parse(response.responseText);
 				if( !(restext["error_question_title"] == undefined) )
 				{
 					action_question_title_empty();
@@ -193,8 +193,9 @@ $(document).ready(function(){
 				{
 					action_question_content_empty();
 					invalid = true;
-				}
+				}*/
 				$('#question-response').html(response.responseText);
+				console.log(response.responseText);
 			}
 		});
 	});

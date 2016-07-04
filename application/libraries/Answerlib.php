@@ -26,7 +26,11 @@ class Answerlib{
 
 	public function get_user_for_answer($question_id)
 	{
-		return $this->answer_object->getUserForANswer($question_id);
+		return $this->answer_object->getUserForAnswer($question_id);
+	}
+
+	public function get_answers_for_user($user,$offset,$limit){
+		return $this->answer_object->getAnswersForUser($user,$offset,$limit);
 	}
 }
 ?>
