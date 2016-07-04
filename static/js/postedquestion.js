@@ -49,12 +49,14 @@ $(document).ready(function() {
             if( answer_count == 1 )
               $('#answer_noun').text('Answers');
 
-            var content = '<li class="list-group-item"><div id="answer-content"><h3>'+
-        data['answer_content']+ '</h3></div><br/><h6>Posted on' + time +' Posted by You</h6></li>'
+            var content = '<div id="answer-content"><h3>'+
+        data['answer_content']+ '</h3></div><br/><h6>Posted on' + time +' Posted by You</h6><div class="partition"></div>'
 
             
             console.log(content);
             $('#answers-0').prepend(content);
+
+            send_activity_mail(data);
 
           },
           error: function(response){
@@ -65,7 +67,19 @@ $(document).ready(function() {
     });
 
     
-
+    function send_activity_mail(data){
+      $.ajax({
+        url: '/index.php/answer/sendactivitymail',
+        type: "POST",
+        data: data,
+        success: function(){
+          console.log('mail sent');
+        },
+        error:function(){
+          console.log(response);
+        }
+      });
+    }
     
 
     //action if answer is empty

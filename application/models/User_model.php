@@ -144,7 +144,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    // Function to create a database entry for a new user
 	    public function registerUser($data, $activation_key) {
-	    	$query = 'select * from Users where phone_num=?';
+	    	/*$query = 'select * from Users where phone_num=?';
 	    	$result = $this->db->query($query, array($_POST['pnum']));
 
 	    	$already_exists = false;
@@ -165,7 +165,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    	}
 
 	    	if( !$already_exists )
-	    	{
+	    	{*/
 	    		/*if( strlen($profile_pic) == 0 )
 	    			$profile_pic = DEFAULT_PIC;
 
@@ -184,11 +184,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		    	
 
 		    	return $request;
-		    }
+		    //}
 		    
-		    return $error_data;	
+		    //return $error_data;	
 	    	
 //	    	var_dump($this->db->_error_message());
+	    }
+
+	    public function checkPhoneNumEmail($phone_num,$email){
+			$query = 'select * from Users where phone_num=?';
+	    	$result = $this->db->query($query, array($phone_num));
+
+	    	$error_data = array();
+
+	    	if($result->num_rows() )
+	    	{
+	    		$error_data['phone-exists'] = true;
+	    	}
+
+	    	$query = 'select * from Users where email_id=?';
+	    	$result = $this->db->query($query,array($email));
+	    	if( $result->num_rows() )
+	    	{
+	    		$error_data['email-exists'] = true;
+	    	}	    	
+	    	return $error_data;
 	    }
 
 	    // Save the reset link to the database

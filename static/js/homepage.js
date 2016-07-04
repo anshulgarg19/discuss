@@ -140,7 +140,7 @@ $(document).ready(function(){
 		if( invalid )
 			return;
 
-		/*var data = {
+		var data = {
 			fname : first_name,
 			lname : last_name,
 			phone_num : pnum,
@@ -150,53 +150,58 @@ $(document).ready(function(){
 		}
 
 		$.ajax({
-			url : 'index.php/homepage/register',
+			url : 'index.php/homepage/validateuser',
 			type: 'POST',
 			data : data,
 			success: function(response){
-				if( response.indexOf('error-first-name') > -1 )
+				
+
+				console.log(response);
+				console.log("register success");
+				$('#register-form').submit();
+				//$('#register_response').html(response);
+			},
+			error: function(response){
+				console.log(response);
+				response = JSON.parse(response.responseText);
+				console.log(response);
+				if( response['error-first-name'] > -1 )
 				{
 					action_first_name_empty();
 				}
 
-				if( response.indexOf('error-phone') > -1  )
+				if( response['error-phone'] > -1  )
 				{
 					action_invalid_register_phonenumber();
 				}
-				if( response.indexOf('error-email') > -1 )
+				if( response['error-email'] > -1 )
 				{
 					action_invalid_register_email();
 				}
-				if( response.indexOf('error-password') > -1 )
+				if( response['error-password'] > -1 )
 				{
 					action_invalid_register_password();
 				}
-				if( response.indexOf('error-mismatch-password') > -1  )
+				if( response['error-mismatch-password'] > -1  )
 				{
 					action_mismatch_register_password();
 				}
 
-				if( response.indexOf('phone-exists') > -1 )
+				if( response['phone-exists'] > -1 )
 				{
 					action_phone_exists();
 				}
 
-				if( response.indexOf('email-exists') > -1 )
+				if( response['email-exists'] > -1 )
 				{
 					action_email_exists();
 				}
-
-				console.log(response);
-				console.log("register success");
-				$('#register_response').html(response);
-			},
-			error: function(response){
 				console.log(response);
 				console.log("register failure");
 				$('#register_response').html(response.responseText);
 			}
-		});*/
-		$('#register-form').submit();
+		});
+		
 	});
 
 	// Function for password reset submit

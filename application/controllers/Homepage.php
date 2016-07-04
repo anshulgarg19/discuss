@@ -38,17 +38,45 @@ class Homepage extends CI_Controller {
 	//method to initiate registration in controller
 	public function register() {
 		
+		$this->load->library("Userfactory");				
+
+		$activation_key = sha1($_POST['email'].ACTIVATE_STRING);
+		$response = $this->userfactory->createUser($_POST,$activation_key);
+
+		$user_id = $response['user_id'];
+		$filename = $user_id;
+		$fileconfig = getfileconfigurations();
+		$fileconfig['file_name'] = $filename;
+		$this->load->library('upload',$fileconfig);
+
+		if( !$this->upload->do_upload('userfile'))
+		{
+			//var_dump($this->upload->display_errors());
+			$filename = DEFAULT_PIC;
+		}
+		else
+		{
+			$filedata = $this->upload->data();
+			//var_dump($filedata);
+			$filename = $filename.$filedata['file_ext'];
+			//var_dump($filename);
+			
+		}
+
+		$this->userfactory->updateProfilePicURI($user_id,$filename);	
+		//$this->sendactivationmail($_POST,$activation_key);
+		$this->load->view('register_success');
+		
+	}
+
+	//Function for server side validations
+	public function validateuser(){
 		$this->load->library("Userfactory");
 		//var_dump($_POST['email'].ACTIVATE_STRING.' '.sha1($_POST['email'].ACTIVATE_STRING));
 
 		$inputValid = true;
 		$validation_errors = array();
 
-		/* 
-		** starting server side validations
-		*/
-
-		var_dump($_POST);
 		if( strlen($_POST['fname']) == 0 )
 		{
 
@@ -57,7 +85,7 @@ class Homepage extends CI_Controller {
 		}
 
 		//validating phone number
-		if( !validate_phonenumber($_POST['pnum'] ))
+		if( !validate_phonenumber($_POST['phone_num'] ))
 		{
 			$validation_errors['error-phone'] = true;
 			$inputValid = false;
@@ -78,70 +106,43 @@ class Homepage extends CI_Controller {
 		}
 
 
-		if( $_POST['password'] != $_POST['confirm_pw'] )
+		//validating if password and confirm passwords match
+		if( $_POST['password'] != $_POST['confirm_password'] )
 		{
 			$validation_errors['error-mismatch-password'] = true;
 			$inputValid = false;
 		}
 
-		
 		if( !$inputValid )
 		{
+			http_response_code(400);
 			echo json_encode($validation_errors);
 			//die();
 			return;
+		}		
+
+		$response = $this->userfactory->check_phone_num_email($_POST['phone_num'],$_POST['email']);
+		
+		if(isset($response['phone-exists']))
+		{
+			$validation_errors['phone-exists'] = true;
+			$inputValid = false;
 		}
 
-
-		
-				
-
-		$activation_key = sha1($_POST['email'].ACTIVATE_STRING);
-		$response = $this->userfactory->createUser($_POST,$activation_key);
-
-		$already_exists = false;
-		if( isset($response['phone-exists']) || isset($response['email-exists']))
+		if( isset($response['email-exists']))
 		{
-			echo json_encode($response);
-			//die()
+			$validation_errors['email-exists'] = true;
+			$inputValid = false;
+		}
+
+		if( !$inputValid)
+		{
+			http_response_code(400);
+			echo json_encode($validation_errors);
 			return;
 		}
-
-		$user_id = $response['user_id'];
-		$filename = $user_id;
-		$fileconfig = getfileconfigurations();
-		$fileconfig['file_name'] = $filename;
-		$this->load->library('upload',$fileconfig);
-
-		if( !$this->upload->do_upload('userfile'))
-		{
-			var_dump($this->upload->display_errors());
-			$filename = DEFAULT_PIC;
-		}
-		else
-		{
-			$filedata = $this->upload->data();
-			var_dump($filedata);
-			$filename = $filename.$filedata['file_ext'];
-			//var_dump($filename);
-			
-		}
-
-		$this->userfactory->updateProfilePicURI($user_id,$filename);	
-		//$this->sendactivationmail($_POST,$activation_key);
-		
 	}
-
-	/*public function setProfilePic() {
-
-		$link = "https://github.com/rootavish/me";
-
-		$this->load->model("User_model");
-
-		$umodel = new User_Model();
-		$umodel->_setId(1);
-		$umodel->setProfilePic($link);
-	}*/
+	
 
 	public function login() {
 

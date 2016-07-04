@@ -24,6 +24,10 @@ class Userfactory{
 		return $this->user_object->registerUser($data, $activation_key);
 	}
 
+	public function check_phone_num_email($phone_num,$email){
+		return $this->user_object->checkPhoneNumEmail($phone_num,$email);
+	}
+
 	//library method to activate profile
 	public function activateProfile(){
 		$response = $this->user_object->_setActivated();
