@@ -22,12 +22,20 @@ class Tagdetails extends CI_Controller {
 
 		$data['tag'] =  $_GET["tag"];
 		$data['tag_name'] =  $response;
-		$data['questions'] = $this->taglib->getQuestionsForTag($_GET['tag']);
+		$data['questions'] = $this->taglib->getQuestionsForTag($_GET['tag'], 0);
 		$data['num_followers'] = $this->taglib->getNumFollowers($_GET['tag']);
 		$data['following'] = $this->taglib->isFollowingTag($_GET['tag'], $_SESSION['user_id']);
 		$this->load->view("header");
 		$this->load->view('tag_details', $data);		
 		$this->load->view("footer");
+	}
+
+	public function moreQuestions() {
+
+		if(!isset($_GET['tag']) && !isset($_GET['offset']))
+			return;
+		$data['questions'] = $this->taglib->getQuestionsForTag($_GET['tag'], $_GET['offset']);
+		$this->load->view("more_questions_tagpage.php", $data);
 	}
 
 	public function changeFollowStatus()

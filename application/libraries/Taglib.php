@@ -41,8 +41,12 @@
 			return $this->tag_model->getTagName($tag);
 		}
 
-		function getQuestionsForTag($tag) {
-			return $this->tag_model->getQuestionsForTag($tag);
+		function getQuestionsForTag($tag, $offset) {
+			$result = $this->tag_model->getQuestionsForTagSolr($tag, $offset);
+			if(!$result->response->docs)
+				return array();
+
+			return (array)$result->response->docs;
 		}
 
 		function isFollowingTag($tag, $userid) {
