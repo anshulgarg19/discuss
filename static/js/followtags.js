@@ -19,21 +19,10 @@ jQuery(document).ready(function($) {
 			if(tags.length < 3) {
 				window.alert("Choose atleast 3 tags");
 				tags = [];
+				event.preventDefault();
 			}
 			else {
-				$.ajax({
-					url: '/index.php/followtags/TagSelect',
-					type: 'POST',
-					data: {data: JSON.stringify(tags)}
-				})
-				.success(function(response) {
-					console.log('succsess');
-					$('#result').html(response);
-				})
-				.error(function(response) {
-					console.log('error');
-					$('#result').html(response.responseText);
-				});
+				$('#followtagform').submit();
 
 			}
 		});

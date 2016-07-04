@@ -150,7 +150,7 @@ $(document).ready(function(){
 		}
 
 		$.ajax({
-			url : 'index.php/homepage/validateuser',
+			url : '/index.php/homepage/validateuser',
 			type: 'POST',
 			data : data,
 			success: function(response){
