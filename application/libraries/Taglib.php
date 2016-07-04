@@ -17,6 +17,10 @@
 			return $this->tag_model->getTags();
 		}
 
+		// A function to get the number of people who follow this tag
+		function getNumFollowers($tagid) {
+			return $this->tag_model->getFollowers($tagid);
+		}
 		// A function to enter user tag relationships into the database
 		function saveUserTags($tags) {
 			$values = array();

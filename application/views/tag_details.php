@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="col-md-10 col-md-offset-1">
-		<h3>Showing recent questions tageed with: <?php echo $tag_name; var_dump($following)	?></h3>
+		<h3>Showing recent questions tageed with: <?php echo $tag_name;	?></h3>
 		<form id="changestatus">
 			<input type="hidden" name="tag" value="<?php echo $tag; ?>">
 			<?php if($following) {?>
@@ -10,6 +10,7 @@
 			<?php }?>
 				<input type="hidden" name="followstatus" id="change" value="<?php echo $following; ?>">
 		</form>
+		<span>No. of users following this tag: <?php echo $num_followers;?></span>
 		<?php foreach($questions as $question) {?>
 			<div class="panel panel-default">
 			  <div class="panel-heading"><a href="question/questiondetails?question=<?php echo $question['question_id'];?>"><strong><?php echo $question['title']; ?></strong></a></div>
