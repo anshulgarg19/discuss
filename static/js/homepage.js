@@ -1,15 +1,36 @@
 
 $(document).ready(function(){
+	function resendActivation() {	
+		console.log('triggered');
+		$.ajax({
+			url: '/index.php/homepage/resendActivation',
+			type: 'POST',
+			data: {email: login_email},
+		})
+		.success(function() {
+			$('#logininfo').html("The activation link has been successfully resent.");
+			$('#logininfo').show();
+		})
+		.error(function(response) {
+			$('#loginerror').html("We were not able to send the activation link to your email, please <a id=\"resend\">try again</a>.");
+			$('#resend').on('click', resendActivation);
+			console.log(response.responseText);
+			$('#loginerror').show();
+		});
+		
+	}
+
 	//onClick function for login submit
 	$('#loginerror').hide();
+	$('#logininfo').hide();
+	var login_email;
 
 	$('#login_submit').click(function(event) {
 
 		$('#error-login_email').html('');
 
 		var invalid = false;
-
-		var login_email = $('#login_email').val();
+		login_email = $('#login_email').val();
 
 		//validate login email
 		if( !validate_email(login_email) )
@@ -42,11 +63,18 @@ $(document).ready(function(){
 			$('body').removeAttr('id');
 		})
 		.error(function(response) {
-			console.log(response);
-			$('#loginerror').html("Wrong username and/or password");
-			$('#loginerror').show();
+			if(response.status == 401) {
+				$('#loginerror').html("Wrong username and/or password");
+				$('#loginerror').show();
+			}
+			else if(response.status == 403) {
+				$('#loginerror').html("Your account has not been activted yet. ");
+				$('#loginerror').append('<a id="resend">Click here</a> to re-send activation link to your email id');
+				$('#loginerror').show();
+				$('#resend').on('click', resendActivation);
+				// $('#logininfo').show();
+			}
 		});
-				
 	});
 
 	//onClick function for register submit

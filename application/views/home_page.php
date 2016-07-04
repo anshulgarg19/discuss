@@ -51,9 +51,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div id="error-login_email"></div>
 						<label class="sr-only" for="login_password">Password </label><input required placeholder="Password" class="form-control" type="password" name="password" id="login_password">
 						<button type="button" class="btn btn-default" id="login_submit">Submit</button>
-						<div class="alert alert-danger" role="alert" id="loginerror"></div>
 					</form>
 					<div class="text-centered">
+						<div class="alert alert-danger" role="alert" id="loginerror"></div>
+						<div class="alert alert-success" role="alert" id="logininfo"></div>
 						<!-- Button trigger modal -->
 						<a type="button" data-toggle="modal" data-target="#ForgotPasswordModal">
 							Forgot Password?

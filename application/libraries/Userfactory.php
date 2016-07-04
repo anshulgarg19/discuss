@@ -68,12 +68,17 @@ class Userfactory{
 	// Function to check if the user credentials are correct
 	public function verifyLogin($userdata) {
 		if($result = $this->user_object->loginCheck($userdata)) {
+			if($result == "not_active") {
+				http_response_code(403);
+				return false;
+			}
 			$this->_ci->load->library('session');
 			$_SESSION['user_id'] = $result[0];
 			$_SESSION['firstname'] = $result[1];
 			return true;
 		}
 		else {
+			http_response_code(401);
 			return false;
 		}
 	}
