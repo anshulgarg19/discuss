@@ -11,9 +11,9 @@
 		}
 
 		// Get the list of all tags from the databse.
-		public function getTags() {
+		public function getTags($offset,$limit) {
 
-			$result = $this->db->query("SELECT * FROM Tags");
+			$result = $this->db->query("SELECT tag_id,tag_name,user_count FROM Tags LIMIT ?,?",array($offset,$limit));
 
 			if($result)
 				return $result->result_array();

@@ -9,8 +9,8 @@
 
 		function index() { 
 			$this->load->library('session');
-			var_dump($_SESSION);
-			$tags = $this->taglib->getTagList();
+			//var_dump($_SESSION);
+			$tags = $this->taglib->getTagList(DEFAULT_OFFSET,DEFAULT_LIMIT);
 
 			$data['tags'] = $tags;
 
@@ -30,6 +30,14 @@
 			else {
 				http_response_code(200);
 			}
+		}
+
+		function loadtags(){
+			$tags = $this->taglib->getTagList((int)$_POST['offset'], (int)$_POST['limit']);
+			$data['tags'] = $tags;
+
+			$this->load->view("loadtags",$data);
+
 		}
 	}
 ?>

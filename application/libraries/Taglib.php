@@ -12,9 +12,9 @@
 		}
 
 		// Function to return a list of all tags in the database for the view
-		function getTagList() {
+		function getTagList($offset,$limit) {
 			// Get the tag model
-			return $this->tag_model->getTags();
+			return $this->tag_model->getTags($offset,$limit);
 		}
 
 		// A function to enter user tag relationships into the database
