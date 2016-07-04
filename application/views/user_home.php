@@ -2,13 +2,13 @@
 	<div class="col-md-8 col-md-offset-2">
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#recents" aria-controls="home" role="tab" data-toggle="tab">Recent Questions</a></li>
-			<li role="presentation"><a href="#following" aria-controls="profile" role="tab" data-toggle="tab">Questions in followed tags</a></li>
+			<li role="presentation" id="recenttab" class="active"><a href="#recents" aria-controls="home" role="tab" data-toggle="tab">Recent Questions</a></li>
+			<li role="presentation" id="followingtab"><a href="#following" aria-controls="profile" role="tab" data-toggle="tab">Questions in followed tags</a></li>
 		</ul>
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane active" id="recents">
-				<ul class="list-group">
+				<ul id="recentlist" class="list-group">
 					<?php
 							foreach ($questions as $question):
 					?>
@@ -49,7 +49,7 @@
 			</div>
 
 			<div role="tabpanel" class="tab-pane" id="following">
-				<ul class="list-group">
+				<ul id="followinglist" class="list-group">
 					<?php
 							foreach ($followed_questions as $question):
 					?>
@@ -89,3 +89,4 @@
 		</div>
 	</div>
 </div>
+<script src="/static/js/userhome.js" type="text/javascript" charset="utf-8" async defer></script>

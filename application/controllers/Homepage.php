@@ -160,9 +160,6 @@ class Homepage extends CI_Controller {
 		}
 
 		if (!$this->userfactory->verifyLogin($_POST)) {
-			// Wrong username or password, session was not set
-			http_response_code(400);
-			//die();
 			return;
 		}
 
@@ -183,6 +180,10 @@ class Homepage extends CI_Controller {
 		$senddata['message'] = 'Activation uri is: '.$activate_uri;
 		sendmail($senddata);
 		
+	}
+
+	public function resendActivation() {
+		$this->sendactivationmail($_POST, sha1($_POST['email'].ACTIVATE_STRING));
 	}
 
 	public function PasswordReset() {

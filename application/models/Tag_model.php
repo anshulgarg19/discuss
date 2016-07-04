@@ -52,11 +52,17 @@
 			return $result->result_array();
 		}
 
+		public function getFollowers($tagid) {
+			$q = "SELECT user_count FROM Tags WHERE tag_id=?";
+			$result = $this->db->query($q, array($tagid));
+
+			return $result->row()->user_count-1;
+		}
+
 		public function getFollowing($tag, $userid)
 		{
 			$result = $this->db->query("SELECT * FROM Users_Tags WHERE user_id=? AND tag_id=?", array($userid, $tag));
 
-			var_dump($result->num_rows());
 			if($result->num_rows())
 				return true;
 			else
