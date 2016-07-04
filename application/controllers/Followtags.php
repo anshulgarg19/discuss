@@ -5,6 +5,7 @@
 		function __construct() {
 			parent::__construct();
 			$this->load->library('Taglib');
+			$this->load->helper('url');
 		}
 
 		function index() { 
@@ -20,8 +21,7 @@
 		}
 
 		function TagSelect() {
-
-			$tagsSelected = json_decode(stripslashes($_POST['data']));
+			$tagsSelected = $_POST['tag'];
 
 			// Save this user's tags
 			if(!$this->taglib->saveUserTags($tagsSelected)) {
@@ -29,6 +29,7 @@
 			}
 			else {
 				http_response_code(200);
+				return redirect('/userhome', 'location');
 			}
 		}
 
