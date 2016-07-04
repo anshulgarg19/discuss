@@ -14,11 +14,27 @@ class Userhome extends CI_Controller {
 
 	public function index()
 	{
-		$data['questions'] = $this->questionlib->getRecentQuestions();
-		$data['followed_questions'] = $this->questionlib->getFollowedQuestions();
+		$data['questions'] = $this->questionlib->getRecentQuestions(0);
+		$data['followed_questions'] = $this->questionlib->getFollowedQuestions(0);
 		$this->load->view('header');
 		$this->load->view('user_home', $data);
 		$this->load->view('footer');
+	}
+
+	public function moreQuestions() {
+		if (!array_key_exists('offset', $_GET) && !defined($_GET['offset']))
+			return;
+
+		$offset = (int)$_GET['offset'];
+		
+		if($_GET['type'] == "recenttab") {
+			$data['questions'] = $this->questionlib->getRecentQuestions($offset);
+			$this->load->view('more_questions', $data);
+		}
+		else {
+			$data['questions'] = $this->questionlib->getFollowedQuestions($offset);
+			$this->load->view('more_questions', $data);
+		}
 	}
 
 	public function logout()

@@ -16,8 +16,11 @@ class Questionlib{
 
 	// Function to get recent questions and combine them with tags fetched
 	// from Solr, used to render the homepage
-	public function getRecentQuestions() {
-		$questions = $this->question_model->getRecentQuestions();
+	public function getRecentQuestions($offset) {
+		$questions = $this->question_model->getRecentQuestions($offset);
+		if(count($questions) == 0)
+			return array();
+
 		$tags = $this->tag_model->getTagsForRecentsFromSolr($questions);
 
 		foreach($tags->response->docs as $tag) {
@@ -30,13 +33,16 @@ class Questionlib{
 
 	// Function to return recent questions posted in the categories
 	// that are followed by the user.
-	public function getFollowedQuestions() {
+	public function getFollowedQuestions($offset) {
 		$tagsFollowed = $this->tag_model->get_user_tags($_SESSION['user_id']);
 		$ids = array();
 		foreach($tagsFollowed as $tag) {
 			$ids[] = $tag->tag_id;
 		}
-		$questions = $this->question_model->getQuestionsForFollowedTags($ids);
+		$questions = $this->question_model->getQuestionsForFollowedTags($ids, $offset);
+		if(count($questions) == 0)
+			return array();
+
 		$tags = $this->tag_model->getTagsForRecentsFromSolr($questions);
 
 		foreach($tags->response->docs as $tag) {

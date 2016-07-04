@@ -56,7 +56,7 @@
 			$q = "SELECT user_count FROM Tags WHERE tag_id=?";
 			$result = $this->db->query($q, array($tagid));
 
-			return $result->row()->user_count;
+			return $result->row()->user_count-1;
 		}
 
 		public function getFollowing($tag, $userid)

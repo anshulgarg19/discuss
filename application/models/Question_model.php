@@ -134,9 +134,9 @@
 	    }
 
 	    // Function to return a collection of the ten most recent questions
-	    public function getRecentQuestions() {
-	    	$q = "SELECT * FROM Questions ORDER BY last_modified_on DESC LIMIT 10";
-	    	$result = $this->db->query($q);
+	    public function getRecentQuestions($offset) {
+	    	$q = "SELECT * FROM Questions ORDER BY last_modified_on DESC LIMIT ?,10";
+	    	$result = $this->db->query($q, array($offset));
 	    	$retval = array();
 	    	foreach($result->result_array() as $row) {
 	    		$retval[$row['question_id']] = array(
@@ -279,11 +279,11 @@
 	    	return $result->result();
 	    }
 
-	    public function getQuestionsForFollowedTags($taglist) {
+	    public function getQuestionsForFollowedTags($taglist, $offset) {
 
-	    	$q = "SELECT DISTINCT Questions.question_id as question_id, Questions.question_content, title, Questions.last_modified_on, Questions.created_on as created_on, Questions.answer_count FROM Questions INNER JOIN Tags_Questions ON Questions.question_id=Tags_Questions.question_id WHERE Tags_Questions.tag_id IN(".implode(',', $taglist).")ORDER BY Questions.last_modified_on DESC LIMIT 10";
+	    	$q = "SELECT DISTINCT Questions.question_id as question_id, Questions.question_content, title, Questions.last_modified_on, Questions.created_on as created_on, Questions.answer_count FROM Questions INNER JOIN Tags_Questions ON Questions.question_id=Tags_Questions.question_id WHERE Tags_Questions.tag_id IN(?)ORDER BY Questions.last_modified_on DESC LIMIT ?,10";
 
-	    	$result = $this->db->query($q);
+	    	$result = $this->db->query($q, array(implode(',', $taglist), $offset));
 	    	$retval = array();
 	    	foreach($result->result_array() as $row) {
 	    		$retval[$row['question_id']] = array(
