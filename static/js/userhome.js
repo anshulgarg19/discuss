@@ -20,9 +20,8 @@ jQuery(document).ready(function($) {
 		});
 		
 	}
-	$(window).on('scroll',function(){
-	 
-	  if( Math.round($(window).scrollTop()) == ($(document).height() - $(window).height() )){
+	$(window).on('scroll',function(){	
+	  if( Math.ceil($(window).scrollTop()) == ($(document).height() - $(window).height() )){
 	      addMoreQuestions((offset += 10));
 	  }
 

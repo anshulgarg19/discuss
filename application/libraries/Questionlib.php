@@ -26,6 +26,7 @@ class Questionlib{
 		foreach($tags->response->docs as $tag) {
 			$questions[(int)$tag->id]["tag_names"] = $tag->tag_names;
 			$questions[(int)$tag->id]["id_list"] = $tag->id_list;
+
 		}
 
 		return $questions;

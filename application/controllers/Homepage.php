@@ -64,7 +64,7 @@ class Homepage extends CI_Controller {
 		}
 
 		$this->userfactory->updateProfilePicURI($user_id,$filename);	
-		//$this->sendactivationmail($_POST,$activation_key);
+		$this->sendactivationmail($_POST,$activation_key);
 		$this->load->view('register_success');
 		
 	}

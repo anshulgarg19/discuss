@@ -61,7 +61,7 @@ class Userprofile extends CI_controller{
 		//var_dump($_GET);
 		$response = $this->userfactory->activateProfile();
 
-		$this->load->view("header");
+		
 		if( $response == ACK )
 			$msg = "Email successfully Verified";
 		else if( $response == NACK )
@@ -79,7 +79,7 @@ class Userprofile extends CI_controller{
 			);
 
 		$this->load->view("activation_status",$data);
-		$this->load->view("footer");
+		//$this->load->view("footer");
 	}
 
 	public function changepic(){
