@@ -160,7 +160,8 @@
 
 	    //Function to store question into database
 	    public function postQuestion( $data ){
-	    	$tags = explode(',', $data['questionTags']);
+	    	$tags = $data['questionTags'];
+	    	//explode(',', $data['questionTags']);
 
 	    	//insert question
 

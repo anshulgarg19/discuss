@@ -20,11 +20,12 @@
 		<div class="col-md-offset-1 col-md-10 partition"></div>
 	</div>
 	
-		<div class="col-md-2 col-md-offset-1">
-			<div id="my-tags">
+		<div class="col-md-2 col-md-offset-1" >
+			<span>Tags Followed</span>
+			<div id="my-tags" style="height:350px;overflow-y:auto">
 			
 			<?php if( count($tags) == 0 ) echo 'No tags';
-			 							else{ ?><span>Tags Followed</span><br/>
+			 							else{ ?><br/>
 										<?php	foreach($tags as $tag){?>
 										<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" target="_blank" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.')'; ?></a><br/>
 										<?php }
