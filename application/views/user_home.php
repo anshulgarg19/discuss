@@ -35,12 +35,12 @@
 					</div>
 					<div class="row">
 						<div class="pull-right">
-							Posted on: <?php echo $question['created_on']; ?>
+							Posted on: <?php echo date("F j, Y, g:i a",strtotime($question['created_on'])); ?>
 						</div>
 					</div>
 					<div class="row">
 						<div class="pull-right">
-							Last activity: <?php echo $question['last_modified_on'];?>
+							Last activity: <?php echo date("F j, Y, g:i a",strtotime($question['last_modified_on']));?>
 						</div>
 					</div>
 					</li>
@@ -74,12 +74,12 @@
 					</div>
 					<div class="row">
 						<div class="pull-right">
-							Posted on: <?php echo $question['created_on']; ?>
+							Posted on: <?php echo date("F j, Y, g:i a",strtotime($question['created_on'])); ?>
 						</div>
 					</div>
 					<div class="row">
 						<div class="pull-right">
-							Last activity: <?php echo $question['last_modified_on'];?>
+							Last activity: <?php echo date("F j, Y, g:i a",strtotime($question['last_modified_on']));?>
 						</div>
 					</div>
 					</li>

@@ -53,7 +53,7 @@
 	          </ul>
 	        </li>
 	      </ul> -->
-	      <form class="navbar-form navbar-left" id="navBarSearchForm" method="GET" action="search/getresults" role="search">
+	      <form class="navbar-form navbar-left" id="navBarSearchForm" method="GET" action="/index.php/search/getresults" role="search">
 	        <div class="form-group">
 	          <input type="text" name="query" class="form-control" id="searchfield" placeholder="Search">
 	          <input type="hidden" name="value" class="form-control" id="hiddensearchinput">
@@ -62,7 +62,7 @@
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
 	        <li><a href="/index.php/userprofile/showprofile" target="_blank"><?php echo $_SESSION['firstname'];?></a></li>
-			<li><a data-toggle="modal" data-target="#question-modal">Ask Question</a></li>
+			<li><a href="" data-toggle="modal" data-target="#question-modal">Ask Question</a></li>
 			<li><a href="/index.php/userhome/logout">Logout</a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->

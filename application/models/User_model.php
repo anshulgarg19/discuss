@@ -119,9 +119,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    }
 
 	    // Function to verify a user's login credentials
-	    public function loginCheck($userdata) {
+	    public function loginCheck($userdata, $type) {
 
-	    	$q = "SELECT user_id, firstname, activated FROM Users WHERE email_id=? AND password=?";
+	    	if($type == "email")
+	    		$q = "SELECT user_id, firstname, activated FROM Users WHERE email_id=? AND password=?";
+    		else
+    			$q = "SELECT user_id, firstname, activated FROM Users WHERE phone_num=? AND password=?";
 	    	$result = $this->db->query($q, array($userdata['email'], sha1($userdata['password'])));
 
 	    	if ($result->num_rows() < 1)

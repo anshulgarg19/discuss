@@ -2,35 +2,32 @@
 defined('BASEPATH') or exit('No direct scripts allowed');
 
 class Userfactory{
-	private $_ci;
-	private $user_object;
 	
 	function __construct(){
 		$this->_ci =& get_instance();
-		$this->_ci->load->model("User_model");
-		$this->user_object = new User_Model();
+		$this->_ci->load->model("user_model");
 	}
 
 	//method to fetch user profile
 	public function getUser($user_id){
 
-		$data = $this->user_object->retrieveUser($user_id);		
+		$data = $this->_ci->user_model->retrieveUser($user_id);		
 
 		return $this->createUserObject($data);
 	}
 
 	//library method to set user credetials after successful regitration
 	public function createUser($data,$activation_key){
-		return $this->user_object->registerUser($data, $activation_key);
+		return $this->_ci->user_model->registerUser($data, $activation_key);
 	}
 
 	public function check_phone_num_email($phone_num,$email){
-		return $this->user_object->checkPhoneNumEmail($phone_num,$email);
+		return $this->_ci->user_model->checkPhoneNumEmail($phone_num,$email);
 	}
 
 	//library method to activate profile
 	public function activateProfile(){
-		$response = $this->user_object->_setActivated();
+		$response = $this->_ci->user_model->_setActivated();
 		return $response;
 	}
 
@@ -40,7 +37,7 @@ class Userfactory{
 		$token = bin2hex(openssl_random_pseudo_bytes(64));
 
 		// Now write this token to the database		
-		if($this->user_object->saveResetToken($token, $email)) {
+		if($this->_ci->user_model->saveResetToken($token, $email)) {
 
 			$link = RESET_URI."?token=".$token."&email=".$email;
 
@@ -62,7 +59,7 @@ class Userfactory{
 	public function passwordResetClose($token, $email, $newpass) {
 		// Finally reset the password
 		
-		if(!$this->user_object->resetPass($token, $email, $newpass)) {
+		if(!$this->_ci->user_model->resetPass($token, $email, $newpass)) {
 			return false;
 		}
 
@@ -70,8 +67,8 @@ class Userfactory{
 	}
 
 	// Function to check if the user credentials are correct
-	public function verifyLogin($userdata) {
-		if($result = $this->user_object->loginCheck($userdata)) {
+	public function verifyLogin($userdata, $type) {
+		if($result = $this->_ci->user_model->loginCheck($userdata, $type)) {
 			if($result == "not_active") {
 				http_response_code(403);
 				return false;
@@ -99,7 +96,7 @@ class Userfactory{
 	}
 
 	public function updateProfilePicURI($user_id, $filename ){
-		$this->user_object->_updateProfilePicURL($user_id,$filename);
+		$this->_ci->user_model->_updateProfilePicURL($user_id,$filename);
 	}
 };
 ?>
