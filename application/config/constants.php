@@ -21,6 +21,7 @@ defined('SOLR_SUGGEST_URL') OR define('SOLR_SUGGEST_URL', 'http://localhost:8983
 
 defined('DEFAULT_OFFSET') or define('DEFAULT_OFFSET',0);
 defined('DEFAULT_LIMIT') or define('DEFAULT_LIMIT',10);
+//defined('DEFAULT_TAG_LIMIT') or define('DEFAULT_TAG_LIMIT',100);
 
 /*
 |--------------------------------------------------------------------------

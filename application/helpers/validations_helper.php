@@ -26,5 +26,11 @@
 		return true;
 	}
 
+	function action_invalid_user(){
+		http_response_code(400);
+		echo "Not logged in";
+		die();
+	}
+
 
 ?>

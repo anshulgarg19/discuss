@@ -10,6 +10,7 @@ class Question extends CI_Controller{
 		$this->load->library('Questionlib');
 		$this->load->library('Answerlib');
 		$this->load->helper('url');
+		$this->load->helper('validations_helper');
 	}
 
 	/*public function index(){
@@ -71,8 +72,12 @@ class Question extends CI_Controller{
 	//Function to show question contents
 	public function questiondetails(){
 		
+		if( !isset($_SESSION['user_id']) )
+		{
+			action_invalid_user();
+		}
 		//$_SESSION['user_id'] = 56;
-		$details = $this->questionlib->get_question_details($_GET);		
+		$details = $this->questionlib->get_question_details($_GET,$_SESSION['user_id']);		
 
 		if( isset($details['question-not-found']) )
 		{
@@ -90,21 +95,17 @@ class Question extends CI_Controller{
 		$this->load->view('show_question_details',$details);
 		$this->load->view('footer');
 
-		//var_dump($details);
-		//die();
+	}
 
-		/*$data = array('questionTitle' => $details['title'], 
-					'question-Content' => $details['question_content'],
-					'questionTags' => $details['tags']);
+	//Function to change question follow status
+	public function changefollowstatus(){
 
-		$this->load->view('header');
-		$this->load->view('show_question');
-		$this->load->view('posted_question',$data);
-		$this->load->view('footer');
+		if( !isset($_SESSION['user_id']) )
+			action_invalid_user();
 
-		$this->load->view('header');
-		$this->load->view('show_question');
-		$this->load->view('')*/
+		//$question_id = (int)$_POST['question_id'];
+		//var_dump($question_id);
+		$this->questionlib->change_follow_status($_POST,$_SESSION['user_id']);
 	}
 };
 

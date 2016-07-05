@@ -18,6 +18,35 @@ $(document).ready(function() {
 
     });
 
+    //allowing follow-unfollow
+    $('#follow').click(function(){
+      //console.log($('#changestatus').serialize());
+      $.ajax({
+        data: $('#changestatus').serialize(),
+        type: "post",
+        url : "/index.php/question/changefollowstatus",
+        success: function(response){
+          var current = $('#follow').html();
+          if( current == 'Follow'){
+            $('#follow').removeClass('btn-success');
+            $('#follow').addClass('btn-danger');
+            $('#follow').html('Unfollow');
+            $('#follow_status').val(true);
+          }
+          else{
+            $('#follow').removeClass('btn-danger');
+            $('#follow').addClass('btn-success');
+            $('#follow').html('Follow');
+            $('#follow_status').val(false);
+          }
+        },
+        error: function(response){
+
+        }
+      });
+    });
+
+    
 
     //enable submit button only when text is not empty
     $('#submit-answer').prop('disabled', true);

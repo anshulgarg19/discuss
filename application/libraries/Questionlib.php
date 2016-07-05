@@ -54,8 +54,8 @@ class Questionlib{
 		return $this->_ci->question_model->postQuestion($data);
 	}
 
-	public function get_question_details($data){
-		return $this->_ci->question_model->getQuestionDetails($data);
+	public function get_question_details($data,$current_user){
+		return $this->_ci->question_model->getQuestionDetails($data,$current_user);
 	}
 
 	public function get_questions_for_user($user_id,$offest, $limit){
@@ -69,6 +69,10 @@ class Questionlib{
 	public function get_question_title($question_id)
 	{
 		return $this->_ci->question_model->getQuestionTitle($question_id);
+	}
+
+	public function change_follow_status($data,$user_id){
+		return $this->question_model->changeFollowStatus($data, $user_id);
 	}
 };
 
