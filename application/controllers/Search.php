@@ -20,6 +20,21 @@ class Search extends CI_Controller {
 	public function getresults() {
 		return redirect('tagdetails?tag='.$_GET['value'],'location');
 	}
+
+	public function suggestForTags() {
+		if($_GET['q'] == null) {
+			echo json_encode(array());
+			return;
+		}
+		$retval = array();
+
+		$retval[] =	array(
+						"id" => 'nested-1',
+						"text" => 'first nested option'
+					);
+
+		echo json_encode($this->suggesterlib->getTaggingSuggestions(strtolower($_GET['q'])));
+	}
 }
 
 /* End of file Search.php */
