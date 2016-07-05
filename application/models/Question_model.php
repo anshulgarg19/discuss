@@ -258,11 +258,13 @@
 	    }
 
 	    //Function to return question details 
-	    public function getQuestionDetails($data){
+	    public function getQuestionDetails($data, $current_user){
 	    	$question_id = (int)$data['question'];
 	    	$results = array();
 
-	    	$query = 'select Users.user_id,firstname from Users INNER JOIN Users_Questions on Users.user_id = Users_Questions.user_id where question_id=?';
+	    	//$query = 'SELECT Users.user_id,firstname from Users INNER JOIN Users_Questions on Users.user_id = Users_Questions.user_id where question_id=?';
+	    	$query = 'SELECT Users.user_id,firstname from Users INNER JOIN Users_Questions on Users.user_id = Users_Questions.user_id where question_id=? and type="POST"';
+
 	    	$result = $this->db->query($query, array($question_id));
 
 	    	if( !$result->num_rows() )
@@ -275,6 +277,14 @@
 
 	    	$results['user_id'] = $result->user_id;
 	    	$results['user_name'] = $result->firstname;
+
+	    	
+	    	$results['posted'] = ($result->user_id == $current_user);
+
+	    	$query = 'SELECT user_id from Users_Questions where question_id=? and user_id=? and type="FOLLOW"';
+	    	$result = $this->db->query($query, array($question_id,$current_user));
+
+	    	$results['following'] = ($result->num_rows() > 0 );
 
 	    	$query ='select question_content,title,created_on,answer_count from Questions where question_id=?';
 	    	$result = $this->db->query($query,array($question_id));
@@ -327,18 +337,48 @@
 	    }
 
 	    public function getUserForQuestion( $question_id){
-	    	$query = 'select distinct(email_id) from Users INNER JOIN Users_Questions on Users.user_id= Users_Questions.user_id where Users_Questions.question_id=?';
+	    	$query = 'SELECT distinct(email_id) from Users INNER JOIN Users_Questions on Users.user_id= Users_Questions.user_id where Users_Questions.question_id=?';
 	    	$result = $this->db->query($query, array($question_id));
 
 	    	return $result->result_array();
 	    }
 
 	    public function getQuestionTitle($question_id){
-	    	$query = 'select title from Questions where question_id=?';
+	    	$query = 'SELECT title from Questions where question_id=?';
 	    	$result = $this->db->query($query, array($question_id));
 
 	    	$result = $result->row();
 	    	return $result->title;
+	    }
+
+	    public function changeFollowStatus($data, $user_id){
+	    	if( $data['following_question'] )
+	    	{
+	    		$query = 'DELETE from Users_Questions where user_id=? and question_id=? and type="FOLLOW"';
+	    		$this->db->query($query, array($user_id, (int)$data['question_id']));
+	    	}
+	    	else
+	    	{
+	    		$query = 'INSERT into Users_Questions(user_id,question_id,type) VALUES(?,?,"FOLLOW")';
+	    		$this->db->query($query, array($user_id, (int)$data['question_id']));
+	    	}
+
+	    	/*$query = 'SELECT type from Users_Questions where question_id=? and user_id=?';
+	    	$result = $this->db->query($query, array($question_id,$user_id));
+
+	    	if( $result->num_rows() )
+	    	{
+	    		$result = $result->row();
+	    		if( $result->type == "FOLLOW"){
+	    			$query = 'DELETE from Users_Questions where user_id=? and question_id=?';
+	    			$this->db->query($query, array($user_id, $question_id));
+	    		}
+	    	}
+	    	else
+	    	{
+	    		$query = 'INSERT into Users_Questions(user_id,question_id,type) VALUES(?,?,"FOLLOW")';
+	    		$this->db->result($query, array($user_id, $question_id));
+	    	}*/
 	    }
 	};
 	/* End of file Question_model.php */

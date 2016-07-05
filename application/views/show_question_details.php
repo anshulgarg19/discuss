@@ -17,6 +17,18 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 							 by <a href="/index.php/userprofile/showprofile?user=<?php echo $user_id; ?>"><?php echo $user_name;?></a>
 		<br/><br/>
 
+		<form id="changestatus">
+			<input type="hidden" id="questionid" name="question_id" value="<?php echo $question_id; ?>">
+			<?php if( !$posted ){ 
+					if( $following ){ ?>
+						<button id="follow" type="button" class="btn btn-sm btn-danger">Unfollow</button>
+				<?php }else {?>
+					<button id="follow" type="button" class="btn btn-sm btn-success">Follow</button>
+			<?php }	
+				}?>
+			<input type="hidden" id="follow_status" name="following_question" value="<?php echo $following; ?>">
+
+		</form>
 		<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#answer-modal">Answer</button>
 		<br/><br/>
 	  
