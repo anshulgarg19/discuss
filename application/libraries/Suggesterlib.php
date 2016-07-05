@@ -13,7 +13,6 @@ class Suggesterlib
 
 	public function getSuggestions($data) {
 		$response = curlFetchArray(SOLR_SUGGEST_URL.$data)->suggest->mySuggester->$data;
-		var_dump($data);
 		if($response->numFound) {
 			$retval = array("query" => $data, "suggestions" => array());
 			foreach($response->suggestions as $suggestion) {

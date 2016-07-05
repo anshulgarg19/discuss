@@ -53,7 +53,7 @@
 	          </ul>
 	        </li>
 	      </ul> -->
-	      <form class="navbar-form navbar-left" method="GET" action="search/getresults" role="search">
+	      <form class="navbar-form navbar-left" id="navBarSearchForm" method="GET" action="search/getresults" role="search">
 	        <div class="form-group">
 	          <input type="text" name="query" class="form-control" id="searchfield" placeholder="Search">
 	          <input type="hidden" name="value" class="form-control" id="hiddensearchinput">
