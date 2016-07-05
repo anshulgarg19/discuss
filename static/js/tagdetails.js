@@ -36,12 +36,14 @@ jQuery(document).ready(function($) {
 				$('#follow').removeClass('btn-success');
 				$('#follow').addClass('btn-danger');
 				$('#follow').html("Unfollow");
+				$('#numfollowerscontainer').html("No. of users following this tag:<span id=\"numfollowers\">" + (parseInt($('#numfollowers').html()) + 1).toString() + "</span>");
 				$('#change').val(1);
 			}
 			else {
 				$('#follow').removeClass('btn-danger');
 				$('#follow').addClass('btn-success');
 				$('#follow').html("Follow");
+				$('#numfollowerscontainer').html("No. of users following this tag:<span id=\"numfollowers\">" + (parseInt($('#numfollowers').html()) - 1).toString() + "</span>");
 				$('#change').val(0);
 			}
 		});

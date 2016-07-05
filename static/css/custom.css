@@ -96,3 +96,7 @@
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
 
 #navBarSearchForm input[type=text]{width:430px !important;}
+
+#questionsfortag > div > div.panel-body > div.row {
+	margin-left: 0px;
+}
