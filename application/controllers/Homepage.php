@@ -51,16 +51,12 @@ class Homepage extends CI_Controller {
 
 		if( !$this->upload->do_upload('userfile'))
 		{
-			//var_dump($this->upload->display_errors());
 			$filename = DEFAULT_PIC;
 		}
 		else
 		{
 			$filedata = $this->upload->data();
-			//var_dump($filedata);
-			$filename = $filename.$filedata['file_ext'];
-			//var_dump($filename);
-			
+			$filename = $filename.$filedata['file_ext'];			
 		}
 
 		$this->userfactory->updateProfilePicURI($user_id,$filename);	
@@ -72,7 +68,6 @@ class Homepage extends CI_Controller {
 	//Function for server side validations
 	public function validateuser(){
 		$this->load->library("Userfactory");
-		//var_dump($_POST['email'].ACTIVATE_STRING.' '.sha1($_POST['email'].ACTIVATE_STRING));
 
 		$inputValid = true;
 		$validation_errors = array();
@@ -217,29 +212,5 @@ class Homepage extends CI_Controller {
 			echo "The password reset was unsuccessful, are you sure you are using the link we sent you?";
 		}
 	}
-	/*public function sendmail() {
-
-		$config = Array(
-		    'protocol' => 'smtp',
-		    'smtp_host' => 'ssl://smtp.googlemail.com',
-		    'smtp_port' => 465,
-		    'smtp_user' => 'discusswebservice@gmail.com',
-		    'smtp_pass' => 'thisisubuntu',
-		    'mailtype'  => 'html', 
-		    'charset'   => 'iso-8859-1'
-		);
-
-	    $config['newline'] = "\r\n";
-
-		$this->load->library('email', $config);
-		$this->email->from('discusswebservice@gmail.com');
-        $this->email->to('avishkar.gupta.delhi@gmail.com','avishkar');
-
-        $this->email->subject('Email Test');
-        $this->email->message('Testing the email class.');  
-
-        $this->email->send();
-
-        echo $this->email->print_debugger();
-	}*/
 }
+?>

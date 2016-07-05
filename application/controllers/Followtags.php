@@ -10,7 +10,6 @@
 
 		function index() { 
 			$this->load->library('session');
-			//var_dump($_SESSION);
 			$tags = $this->taglib->getTagList(DEFAULT_OFFSET,DEFAULT_LIMIT);
 
 			$data['tags'] = $tags;

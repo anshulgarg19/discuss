@@ -16,22 +16,10 @@ class Userprofile extends CI_controller{
 
 	//method for a new user
 	public function showprofile(){
-		//$this->load->library("Userfactory");
-
-		//$_SESSION['user_id'] = 56;
-
 		if( !isset($_GET['user']) ){
-			$user = $_SESSION['user_id'];		//change to $_SESSION['id']
+			$user = $_SESSION['user_id'];
 		}
 		else{
-			//var_dump($_GET['user']);
-			/*if( $_GET['user'] != $_SESSION['user_id'] )
-			{
-				http_response_code(401);
-				echo "You are not logged in as user you are trying to access profile of.";
-				die();
-			}*/
-
 			$user = $_GET['user'];
 		}
 		$data = array(
@@ -42,7 +30,6 @@ class Userprofile extends CI_controller{
 			"answers" => $this->answerlib->get_answers_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT)
 			);
 
-		//var_dump($data['tags']);
 		$this->load->view("header");
 		$this->load->view("show_profile",$data);
 		$this->load->view("footer");
@@ -54,13 +41,11 @@ class Userprofile extends CI_controller{
 		//validating email and code presence in activation link or not
 		if( !isset($_GET['email']) || !isset($_GET['code']) || count($_GET) != 2)
 		{
-			var_dump("get fileds not set");
 			http_response_code(400);
-			die();
+			return;
 		}		
 
 		$this->load->library("Userfactory");
-		//var_dump($_GET);
 		$response = $this->userfactory->activateProfile();
 
 		
@@ -71,7 +56,6 @@ class Userprofile extends CI_controller{
 		//bad $_GET parameters
 		else 		
 		{
-			var_dump($response);
 			http_response_code(400);
 			die();
 		}
@@ -81,22 +65,11 @@ class Userprofile extends CI_controller{
 			);
 
 		$this->load->view("activation_status",$data);
-		//$this->load->view("footer");
 	}
 
 	public function changepic(){
 		
-		var_dump($_POST);
-
 		$filename = $_SESSION['user_id'];
-		var_dump($filename);
-		//$this->load->config('config',TRUE);
-		
-/*	    $config['upload_path']          = UPLOAD_DIR;
-        $config['allowed_types']        = 'gif|jpg|png|jpeg';
-        $config['max_size']             = 1024*1024*1024*2;
-        $config['max_width']            = 2000;
-        $config['max_height']           = 2768;*/
 
         //file config details
         $fileconfig['upload_path'] 			= $this->config->item('upload_path');
@@ -113,19 +86,14 @@ class Userprofile extends CI_controller{
 
 		if(!$this->upload->do_upload('userfile'))
 		{
-			var_dump($this->upload->display_errors());
 		    echo "file upload failed";
 		}
 		else
 		{
 			$filedata = $this->upload->data();
 			$filename = $filename.$filedata['file_ext'];
-			var_dump($filename);
 			$this->userfactory->updateProfilePicURI($_SESSION['user_id'],$filename);
 			redirect('/userprofile/showprofile');
-			//$this->showprofile();
-		   //echo "file upload success";
-
 		}
 	}
 

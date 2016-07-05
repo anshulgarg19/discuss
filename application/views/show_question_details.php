@@ -78,6 +78,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 	        <div id="error-answer"></div><br/>
 	      </div>
 	      <div class="modal-footer">
+	      <input type="hidden" id="answer_question" value="<?php echo $question_id; ?>">
 	        <button type="button" class="btn btn-default" data-dismiss="modal" id="submit-answer">Submit</button>
 	      </div>
 	  </form>    

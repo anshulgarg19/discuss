@@ -38,7 +38,7 @@
 			    	Posted by <a href="/index.php/userprofile/showprofile?user=<?php echo $question->user_id; ?>"><?php echo $question->name; ?></a>
 			    </div>
 			  </div>
-			  <footer class="footer">
+			  <footer>
 			  	<a href="/index.php/question/questiondetails?question=<?php echo $question->id; ?>">
 			  		<?php echo $question->answer_count; ?> answers</a>
 			  	<div class="pull-right">

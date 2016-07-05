@@ -13,7 +13,6 @@ class Answerlib{
 	}
 
 	public function postAnswer($data){
-		//var_dump($data['question']);
 		//$this->_ci->answer_model->addAnswerToQuestion($data['question'],56,$data['answer_content']);
 		$data['user_id'] = $_SESSION['user_id'];		//change to $_SESSION['id']
 		$this->_ci->answer_model->addAnswerToQuestion($data);

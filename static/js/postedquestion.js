@@ -1,12 +1,10 @@
 
 $(document).ready(function() {
 
-    var url_value = getUrlVars();
-
     var offset = 10;
     var limit = 10;
     
-    var question_id = url_value.question;
+    var question_id = $('#answer_question').val();
 
     $(window).on('scroll',function(){
       /*console.log($(window).height());
@@ -61,9 +59,11 @@ $(document).ready(function() {
     //console.log($('#answer_count').text());
 
     $("#submit-answer").click(function(event){
-      var data = getUrlVars();
+      var data = {};
       
       data['answer_content'] = $("#answer_content").val();
+      data['question'] = $('#answer_question').val();
+
       var time = (new Date()).toUTCString();
 
       $.ajax({
@@ -115,19 +115,6 @@ $(document).ready(function() {
     function action_answer_empty(){
       $("#error-answer").css("color","red");
       $("#error-answer").html("Answer cannot be blank.");
-    }
-
-    // Read a page's GET URL variables and return them as an associative array.
-    function getUrlVars()
-    {
-        var vars = {}, hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(var i = 0; i < hashes.length; i++)
-        {
-            hash = hashes[i].split('=');
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
     }
 
     //Function to add more content 

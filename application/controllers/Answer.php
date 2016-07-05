@@ -12,7 +12,6 @@ class Answer extends CI_Controller{
 
 	//method to post answer
 	public function postanswer(){
-		var_dump($_POST);
 		$this->answerlib->postAnswer($_POST);
 		
 	}
@@ -49,10 +48,5 @@ class Answer extends CI_Controller{
 
 		$this->load->view("show_user_answer",$data);
 	}
-	//method to fetch answers for a question
-	/*public function showanswers(){
-		$question_id = 20;
-		return $this->answerlib->showAnswers($question_id);
-	}*/
 };
 ?>
