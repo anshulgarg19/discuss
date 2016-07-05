@@ -20,16 +20,25 @@
 		<div class="col-md-offset-1 col-md-10 partition"></div>
 	</div>
 	
-		<div class="col-md-2 col-md-offset-1" >
+		<div class="col-md-3 col-md-offset-1" >
 			<span>Tags Followed</span>
 			<div id="my-tags" style="height:350px;overflow-y:auto">
 			
 			<?php if( count($tags) == 0 ) echo 'No tags';
 			 							else{ ?><br/>
 										<?php	foreach($tags as $tag){?>
-										<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" target="_blank" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.')'; ?></a><br/>
+										<div id="tag-div-<?php echo $tag->tag_id; ?>">	
+											
+												<form id="changestatus-<?php echo $tag->tag_id; ?>">
+													<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" target="_blank" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.')'; ?></a>
+
+													<button style="float:right" id="tag-<?php echo $tag->tag_id?>" type="button" class="btn btn-sm unfollow-tag" value="<?php echo $tag->tag_id;?>">Unfollow</button>
+													
+												</form><br/>
+
+										</div>
 										<?php }
-										}?>		
+									} ?>		
 			
 			</div>
 		</div>

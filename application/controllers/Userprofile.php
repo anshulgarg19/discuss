@@ -128,5 +128,9 @@ class Userprofile extends CI_controller{
 
 		}
 	}
+
+	public function unfollowtag(){
+		$this->taglib->unfollowTag((int)$_POST['tag_id'], $_SESSION['user_id']);
+	}
 };
 ?>
