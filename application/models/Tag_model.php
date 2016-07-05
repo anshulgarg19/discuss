@@ -26,7 +26,6 @@
 
 			$q = 'INSERT INTO Users_Tags (tag_id, user_id) VALUES '.implode(',', $pairs);
 			
-			print_r($q);
 			$result = $this->db->query($q);
 
 			if($result) {
@@ -36,7 +35,6 @@
 
 			else {
 
-				print_r($result->error());
 				return false;
 			}
 		}
