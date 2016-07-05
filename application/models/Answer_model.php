@@ -139,7 +139,7 @@ class Answer_Model extends CI_Model {
     }
 
     public function getUserForAnswer($question_id){
-        $query = 'select distinct(email_id) from Users INNER JOIN Answers on Users.user_id=Answers.user_id where Answers.question_id=?';
+        $query = 'SELECT distinct(email_id) from Users INNER JOIN Answers on Users.user_id=Answers.user_id where Answers.question_id=?';
         $result = $this->db->query($query, array($question_id));
         if( $result->num_rows() )
         {
@@ -147,6 +147,11 @@ class Answer_Model extends CI_Model {
         }
     }
 
+    public function getAnswersForUser($user,$offset,$limit){
+        $query = 'SELECT Questions.question_id,Questions.title,Answers.answer_content from Questions INNER JOIN Answers on Questions.question_id = Answers.question_id WHERE Answers.user_id = ? order by Answers.created_on desc limit ?,?';
+        $result = $this->db->query($query, array($user,$offset,$limit));
+        return $result->result();
+    }
 }
 
 /* End of file Answer_model.php */

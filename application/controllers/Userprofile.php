@@ -8,6 +8,7 @@ class Userprofile extends CI_controller{
 		parent::__construct();
 		$this->load->library("Userfactory");
 		$this->load->library("Questionlib");
+		$this->load->library("Answerlib");
 		$this->load->library("Taglib");
 		$this->load->library("session");
 		$this->load->helper("url");
@@ -37,7 +38,8 @@ class Userprofile extends CI_controller{
 			"user_id" => $user,
 			"user" => $this->userfactory->getUser($user),
 			"tags" => $this->taglib->getUserTags($user),
-			"questions" => $this->questionlib->get_questions_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT)
+			"questions" => $this->questionlib->get_questions_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT),
+			"answers" => $this->answerlib->get_answers_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT)
 			);
 
 		//var_dump($data['tags']);

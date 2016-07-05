@@ -42,6 +42,13 @@ class Answer extends CI_Controller{
 		$this->load->view('loadanswers',$data);
 
 	}
+
+	public function getuseranswers(){
+
+		$data['answers'] = $this->answerlib->get_answers_for_user($_POST['user_id'], (int)$_POST['offset'],(int)$_POST['limit']);
+
+		$this->load->view("show_user_answer",$data);
+	}
 	//method to fetch answers for a question
 	/*public function showanswers(){
 		$question_id = 20;

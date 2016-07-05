@@ -183,6 +183,21 @@
 
 	    	$tagData = array();
 
+	    	$query = 'SELECT tag_id from Users_Tags where user_id=?';
+	    	$result = $this->db->query($query, array( $_SESSION['user_id']));
+	    	$followed_tags = $result->result_array();
+	    	$followed_tags_assoc = array();
+	    	$new_tags_followed = array();
+	    	$new_tags = array();
+
+	    	$new_question = array();
+
+	    	//var_dump($followed_tags);
+	    	foreach ($followed_tags as $followed_tag) {
+	    		//var_dump($followed_tag);
+	    		$followed_tags_assoc[$followed_tag['tag_id']]	= 1;
+	    	}
+
 	    	foreach($tags as $tag)
 	    	{
 	    		$tag = strtolower($tag);
@@ -197,9 +212,11 @@
 
 	    			$tag_id = $response->tag_id;
 	    			//update question count in Tags table
-	    			$query = 'UPDATE Tags set question_count = question_count+1,user_count=user_count+1 where tag_id=?';
+	    			$query = 'UPDATE Tags set question_count = question_count+1 where tag_id=?';
 	    			$this->db->query($query, array($tag_id));
 
+	    			
+	    			//INSERT INTO Users_Tags VALUES (1, 1), (1, 2);
 
 	    		}
 	    		//tag not present
@@ -208,24 +225,35 @@
 	    			$tagData['tag_id'] = '';
 	    			$tagData['tag_name'] = $tag;
 	    			$tagData['question_count'] = 1;
-	    			$tagData['user_count'] = 1;
+	    			//$tagData['user_count'] = 1;
 	    			//insert new tag in Tags table
 	    			$this->db->insert('Tags',$tagData);
 	    			$tag_id = $this->db->insert_id();
 	    		}
-    			$query = 'insert into Tags_Questions(question_id,tag_id) values(?,?)';
-    			$result = $this->db->query($query,array($insertedID, $tag_id));
-	    		
-	    		//insert tag in user tag relation
-	    		$query = 'select * from Users_Tags where user_id=? and tag_id=?';
-	    		$result = $this->db->query($query, array( $_SESSION['user_id'], $tag_id));	//change 56 to $_SESSION['id']
 
-	    		if( !$result->num_rows() )
-	    		{
-	    			$query = 'insert into Users_Tags(user_id,tag_id) values(?,?)';
-	    			$result = $this->db->query($query, array( $_SESSION['user_id'] ,$tag_id)); //change 56 to $_SESSION['id']
-	    		}
+	    		if( !isset($followed_tags_assoc[$tag_id]) )
+    			{
+    				$new_tags_followed[] = '('.$tag_id.', '.$_SESSION['user_id'].')';
+    				$new_tags[] = $tag_id;
+    			}
+
+    			$new_question[] = '('.$tag_id.', '.$insertedID.')';
+    			
 	    	}
+
+	    	//inserting unfollowed tags in table
+	    	
+	    	if( count($new_tags_followed) ){
+		    	$query = 'INSERT into Users_Tags(tag_id,user_id) VALUES '.implode(',',$new_tags_followed);
+		    	$this->db->query($query);
+		    	$query = 'UPDATE Tags set user_count = user_count+1 where tag_id in ('.implode(',',$new_tags).')';
+		    	$this->db->query($query);
+		    }
+
+	    	//inserting new questions in table
+	    	$query = 'INSERT into Tags_Questions(tag_id,question_id) VALUES '.implode(',', $new_question);
+	    	$this->db->query($query);
+
 	    	return $insertedID;
 	    }
 
