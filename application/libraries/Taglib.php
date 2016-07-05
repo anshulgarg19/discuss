@@ -63,7 +63,7 @@
 		}
 
 		function unfollowTag($tag_id, $user_id){
-			$this->tag_model->unfollowTag($tag_id,$user_id);
+			$this->_ci->tag_model->unfollowTag($tag_id,$user_id);
 		}
 	}
 ?>

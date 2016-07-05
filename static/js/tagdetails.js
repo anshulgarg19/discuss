@@ -37,7 +37,8 @@ jQuery(document).ready(function($) {
 				$('#follow').addClass('btn-danger');
 				$('#follow').html("Unfollow");
 				$('#numfollowerscontainer').html("No. of users following this tag:<span id=\"numfollowers\">" + (parseInt($('#numfollowers').html()) + 1).toString() + "</span>");
-				$('#change').val(1);
+				$('#change').val(1);				
+
 			}
 			else {
 				$('#follow').removeClass('btn-danger');
@@ -45,6 +46,7 @@ jQuery(document).ready(function($) {
 				$('#follow').html("Follow");
 				$('#numfollowerscontainer').html("No. of users following this tag:<span id=\"numfollowers\">" + (parseInt($('#numfollowers').html()) - 1).toString() + "</span>");
 				$('#change').val(0);
+				
 			}
 		});
 	});

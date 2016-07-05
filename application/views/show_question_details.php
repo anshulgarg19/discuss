@@ -13,13 +13,13 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 		<div id="question-title" class="question-title"><h1><?php echo $title.'?'; ?></h1></div><br/>
 		<div id="question-content" class="question-content"><?php echo $question_content; ?></div><br/>
 
-		<?php echo '        Posted on: '.$created_on;			?>
+		<?php echo '        Posted on: '.date("F j, Y, g:i a",strtotime($created_on));			?>
 							 by <a href="/index.php/userprofile/showprofile?user=<?php echo $user_id; ?>"><?php echo $user_name;?></a>
 		<br/><br/>
 
 		<form id="changestatus">
 			<input type="hidden" id="questionid" name="question_id" value="<?php echo $question_id; ?>">
-			<?php if( !$posted ){ 
+			<?php if( $posted ){ 
 					if( $following ){ ?>
 						<button id="follow" type="button" class="btn btn-sm btn-danger">Unfollow</button>
 				<?php }else {?>
@@ -27,8 +27,9 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 			<?php }	
 				}?>
 			<input type="hidden" id="follow_status" name="following_question" value="<?php echo $following; ?>">
-
+			
 		</form>
+		<br/>
 		<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#answer-modal">Answer</button>
 		<br/><br/>
 	  
