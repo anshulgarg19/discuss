@@ -1,7 +1,6 @@
 
 $(document).ready(function(){
 	function resendActivation() {	
-		console.log('triggered');
 		$.ajax({
 			url: '/index.php/homepage/resendActivation',
 			type: 'POST',
@@ -14,7 +13,6 @@ $(document).ready(function(){
 		.error(function(response) {
 			$('#loginerror').html("We were not able to send the activation link to your email, please <a id=\"resend\">try again</a>.");
 			$('#resend').on('click', resendActivation);
-			console.log(response.responseText);
 			$('#loginerror').show();
 		});
 		
@@ -60,8 +58,6 @@ $(document).ready(function(){
 			{
 				action_invalid_login_email();
 			}
-			console.log(response);
-			console.log("success");
 			$('body').html(response);
 			$('body').removeAttr('id');
 		})
@@ -106,7 +102,6 @@ $(document).ready(function(){
 		//first name cant be empty
 		if( !first_name.length )
 		{
-			//console.log('first_name empty');
 			action_first_name_empty();
 			invalid = true;
 		}
@@ -159,15 +154,11 @@ $(document).ready(function(){
 			success: function(response){
 				
 
-				console.log(response);
-				console.log("register success");
 				$('#register-form').submit();
 				//$('#register_response').html(response);
 			},
 			error: function(response){
-				console.log(response);
 				response = JSON.parse(response.responseText);
-				console.log(response);
 				if( response['error-first-name'] > -1 )
 				{
 					action_first_name_empty();
@@ -199,8 +190,6 @@ $(document).ready(function(){
 				{
 					action_email_exists();
 				}
-				console.log(response);
-				console.log("register failure");
 				$('#register_response').html(response.responseText);
 			}
 		});
@@ -216,12 +205,9 @@ $(document).ready(function(){
 			data: $('#pwresetemail').serialize()
 		})
 		.success(function (response) {
-			console.log(response);
 			$('#pwresetmodalbody').html('<span style="color:green;">A reset e-mail was successfully sent.</span>');
 		})
 		.error(function(response) {
-			console.log("error");
-			console.log(response);
 			$('#pwresetmodalbody').html('<span style="color:red;">A reset e-mail could not be sent. Please try again. Perhaps the email you entered is wrong?</<s></s>pan>');
 		});
 		
@@ -254,7 +240,6 @@ $(document).ready(function(){
     //function to validate password
     function validate_password(inputtxt){
     	if( inputtxt.length < 6 || inputtxt.length > 20 ){
-    		console.log("pwd check");
     		return false;
     	}
     	return true;

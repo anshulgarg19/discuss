@@ -117,12 +117,5 @@
 			$q = SOLR_URL."q=id%3A".$qp."&sort=last_modified+desc&fl=tag_names%2C+id%2C+id_list&wt=json&rows=2000";
 			return curlFetchArray($q);
 		}
-
-		/*public function unfollowTag($tag_id,$user_id){
-			$query = 'DELETE from Users_Tags where tag_id = ? and user_id = ?';
-			$this->db->query($query,array( $tag_id, $user_id));
-			$query = 'UPDATE Tags set user_count = user_count-1 where tag_id = ?';
-			$this->db->query($query,array($user_id));
-		}*/
 	}
 ?>

@@ -7,9 +7,6 @@ $(document).ready(function() {
     var question_id = $('#answer_question').val();
 
     $(window).on('scroll',function(){
-      /*console.log($(window).height());
-      console.log($(document).height());
-      console.log($(window).scrollTop());*/
       if( Math.round($(window).scrollTop()) == ($(document).height() - $(window).height() )){
           addMoreAnswers();
       }
@@ -18,7 +15,6 @@ $(document).ready(function() {
 
     //allowing follow-unfollow
     $('#follow').click(function(){
-      //console.log($('#changestatus').serialize());
       $.ajax({
         data: $('#changestatus').serialize(),
         type: "post",
@@ -56,8 +52,6 @@ $(document).ready(function() {
       }
     });
 
-    //console.log($('#answer_count').text());
-
     $("#submit-answer").click(function(event){
       var data = {};
       
@@ -71,9 +65,7 @@ $(document).ready(function() {
           data : data,
           type : "POST",
           success: function(response){
-            console.log('success');
             var answer_count = parseInt($('#answer_count').text());
-            //console.log($('#answer_count').val());
             $('#answer_count').text(answer_count+1);
             if( answer_count == 1 )
               $('#answer_noun').text('Answers');
@@ -82,14 +74,12 @@ $(document).ready(function() {
         data['answer_content']+ '</h3></div><br/><h6>Posted on' + time +' Posted by You</h6><div class="partition"></div>'
 
             
-            console.log(content);
             $('#answers-0').prepend(content);
 
             send_activity_mail(data);
 
           },
           error: function(response){
-            console.log(response);
           }
       });
 
@@ -102,10 +92,8 @@ $(document).ready(function() {
         type: "POST",
         data: data,
         success: function(){
-          console.log('mail sent');
         },
         error:function(){
-          console.log(response);
         }
       });
     }
@@ -125,13 +113,11 @@ $(document).ready(function() {
           offset: offset,
           limit: limit
         }  ; 
-        console.log(data);
         $.ajax({
           url: '/index.php/answer/loadanswers',
           data:data,
           type : "post",
           success: function( response ){
-            console.log(response);
             response.trim();
             if( response == '"></div>'){
               $(window).off('scroll');
@@ -141,7 +127,6 @@ $(document).ready(function() {
             response = '<div id="answers-'+(offset/limit)+response;
             $(response).insertAfter($('#answers-'+((offset/limit)-1)));
             offset = offset + limit;
-            console.log(response);
             
           },
           error: function( response ){

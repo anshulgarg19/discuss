@@ -8,7 +8,6 @@ jQuery(document).ready(function($) {
 			data: {offset: offset, tag: $('#tagid').val()}
 		})
 		.success(function(response) {
-			console.log(response);
 			$('#questionsfortag').append(response);
 		})
 		.error(function(response) {

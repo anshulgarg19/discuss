@@ -7,20 +7,10 @@ $(document).ready(function(){
 
 	var answer_offset = 10;
 	var answer_limit = 10;
-	/*$(window).on('scroll', function(){
-		if( Math.round( $(window).scrollTop()) == ($(document).height() - $(window).height())){
-			addMoreQuestions();
-		}
-	});*/
 
 	$(window).on('scroll',function(){
-      /*console.log($(window).height());
-      console.log($(document).height());*/
-      //console.log($(window).scrollTop());
       if( Math.ceil($(window).scrollTop()) == ($(document).height() - $(window).height() )){
-          //addMoreQuestions();
           var active = $('.nav-tabs .active').attr("id");
-          console.log('active is '+active);
           if( active == "question-tab"){
           	addMoreQuestions();
           }
@@ -34,7 +24,6 @@ $(document).ready(function(){
 
 	$(".unfollow-tag").click(function(event){
 		var tag_id = this.id.substring(4);
-		console.log(tag_id);
 		var data = {
 			tag_id : tag_id,
 		}
@@ -52,10 +41,8 @@ $(document).ready(function(){
 	});
 
 	$("#change-photo-button").on('click', function(event) {
-		//console.log('success');
 
         $("#change_photo_form").submit();
-        //console.log('success');
     });
 
 	//Function to add more question
@@ -65,8 +52,6 @@ $(document).ready(function(){
 			offset : question_offset,
 			limit : question_limit
 		};
-		//console.log(data);
-		//console.log('insie');
 		$.ajax({
 			url : '/index.php/question/loadquestions',
 			data: data,
@@ -76,18 +61,15 @@ $(document).ready(function(){
 				response.trim();
 				if( response == "</div>")
 				{
-					console.log('empty response');
-					//$(window).off('scroll');
+					return;
 				}
 				else{
 					response = '<div id="my-questions-'+(question_offset/question_limit)+'">'+response;
 					$(response).insertAfter("#my-questions-"+((question_offset/question_limit)-1));
 					question_offset = question_offset + question_limit;
-					console.log(response);
 				}	
 			},
 			error: function(response){
-				console.log(response.responseText);
 			}
 		});
 	}
@@ -105,11 +87,8 @@ $(document).ready(function(){
 			type:"post",
 			success: function(response){
 				response.trim();
-				console.log(response);
 				if( response == "</div>")
 				{
-					console.log("answers finished");
-					//$(window).off('scroll');
 					return;
 				}
 				else
@@ -117,7 +96,6 @@ $(document).ready(function(){
 					response = '<div role="tabpanel" class="tab-pane" id="my-answers-'+(answer_offset/answer_limit)+'">'+response;
 					$(response).insertAfter("#my-answers-"+((answer_offset/answer_limit)-1));
 					answer_offset += answer_limit;
-					console.log(response);
 				}
 			},
 			error: function(response){
