@@ -82,9 +82,9 @@
 	      <form method="POST" action="/index.php/question/postquestion" id="question_form">
 		      <div class="modal-body">
 		        <!--<input class="noEnterSubmit" type="text" id="answer_content" onsubmit="return false;" placeholder="Enter your answer here :") />-->
-		        <label for="question_title">Title: </label><input type="text" name="question_title" id="question_title" class="form-field" /><br/>
+		        <label for="question_title">Title: </label><input type="text" name="question_title" id="question_title" class="form-control" /><br/>
 		        <div id="error-question-title"></div>
-		        <label for="question_content">Question: </label><textarea name="question_content" placeholder="Enter your question here" id="question_content" class="content"></textarea><br/>
+		        <label for="question_content">Question: </label><textarea name="question_content" placeholder="Enter your question here" id="question_content" rows="10" class="form-control"></textarea><br/>
 		        <div id="error-question-content"></div>
 		        <label for="question_tags">Tags: </label>
 		        <select style="width:100%;" name="tag_select[]" class="form-control" id="tag_select" multiple>
