@@ -35,46 +35,53 @@
 		<div class="col-md-8 ">
 			<!-- navbar -->
 			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" id="question-tab" class="active"><a href="#my-questions-0" aria-controls="home" role="tab" data-toggle="tab">Questions</a>
+				<li role="presentation" id="question-tab" class="active"><a href="#my-questions" aria-controls="home" role="tab" data-toggle="tab">Questions</a>
 				</li>
-				<li role="presentation" id="answers-tab"><a href="#my-answers-0" aria-controls="profile" role="tab" data-toggle="tab">Answers</a>
+				<li role="presentation" id="answer-tab"><a href="#my-answers" aria-controls="profile" role="tab" data-toggle="tab">Answers</a>
 				</li>
 			</ul>
 
 			<!-- questions nav bar-->
 			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="my-questions-0">
-						
-					<?php if( count($questions) == 0 ) 
-							echo '<br/>You have not posted any quesitons yet.'; 
-						else{
-							foreach($questions as $question){?> 
-								<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank" class="link"><?php echo $question->title; ?></a></h5><br/>
-									<?php echo $question->answer_count.' '; ?>Answers<br/> 
-								</div><br/>
-					<?php }
-					}?>		
-						
-				</div>
-
+				
+					<div role="tabpanel" class="tab-pane active" id="my-questions">
+						<div id="my-questions-0">
+							<?php 
+								if( count($questions) == 0 ) 
+									echo '<br/>You have not posted any quesitons yet.'; 
+								else{
+									foreach($questions as $question){?> 
+										<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank" class="link"><?php echo $question->title; ?></a></h5><br/>
+											<?php echo $question->answer_count.' '; ?>Answers<br/> 
+										</div><br/>
+							<?php }
+							}?>		
+						</div>
+					</div>
+				
 				<!-- answers nav bar -->
-				<div role="tabpanel" class="tab-pane" id="my-answers-0">
-					<?php if( count($answers) == 0 )
-							echo '<br/>You have not answered any question yet.';
-						  else{
-						  	foreach ($answers as $answer) {?>
-						  		<div class="panel-default panel-heading"><h3>
-						  				<a href="/index.php/question/questiondetails?question=<?php echo $answer->question_id; ?>" class="link"><?php echo $answer->title; ?>
-						  				</a>
+				
+					<div role="tabpanel" class="tab-pane" id="my-answers">
+						<div id="my-answers-0">
+							<?php 
+							  if( count($answers) == 0 )
+								echo '<br/>You have not answered any question yet.';
+							  else{
+							  	foreach ($answers as $answer) {?>
+							  		<div class="panel-default panel-heading"><h3>
+							  				<a href="/index.php/question/questiondetails?question=<?php echo $answer->question_id; ?>" class="link"><?php echo $answer->title; ?>
+							  				</a>
 
-						  			</h3><br/>
-						  			<?php echo $answer->answer_content; ?>
-						  		</div>
-						  		<div class="partition">
-						  		</div>
-						  	<?php }
-						  	}?>
-				</div>
+							  			</h3><br/>
+							  			<?php echo $answer->answer_content; ?>
+							  		</div>
+							  		<div class="partition">
+							  		</div>
+							  	<?php }
+							  	}?>
+						</div>	
+					</div>
+
 			</div>	
 		</div>
 	

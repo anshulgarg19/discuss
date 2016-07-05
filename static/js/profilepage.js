@@ -5,6 +5,8 @@ $(document).ready(function(){
 	var question_offset = 10;
 	var question_limit = 10;
 
+	var answer_offset = 10;
+	var answer_limit = 10;
 	/*$(window).on('scroll', function(){
 		if( Math.round( $(window).scrollTop()) == ($(document).height() - $(window).height())){
 			addMoreQuestions();
@@ -16,7 +18,16 @@ $(document).ready(function(){
       console.log($(document).height());*/
       //console.log($(window).scrollTop());
       if( Math.ceil($(window).scrollTop()) == ($(document).height() - $(window).height() )){
-          addMoreQuestions();
+          //addMoreQuestions();
+          var active = $('.nav-tabs .active').attr("id");
+          console.log('active is '+active);
+          if( active == "question-tab"){
+          	addMoreQuestions();
+          }
+          else if( active == "answer-tab"){
+          	addMoreAnswers();
+          }
+          //to extend for following: else
       }
 
     });
@@ -47,8 +58,7 @@ $(document).ready(function(){
 				if( response == "</div>")
 				{
 					console.log('empty response');
-					$(window).off('scroll');
-					return 0;
+					//$(window).off('scroll');
 				}
 				else{
 					response = '<div id="my-questions-'+(question_offset/question_limit)+'">'+response;
@@ -59,6 +69,40 @@ $(document).ready(function(){
 			},
 			error: function(response){
 				console.log(response.responseText);
+			}
+		});
+	}
+
+	function addMoreAnswers(){
+		var data = {
+			user_id : user_id,
+			offset : answer_offset,
+			limit: answer_limit
+		};
+		
+		$.ajax({
+			url : '/index.php/answer/getuseranswers',
+			data: data,
+			type:"post",
+			success: function(response){
+				response.trim();
+				console.log(response);
+				if( response == "</div>")
+				{
+					console.log("answers finished");
+					//$(window).off('scroll');
+					return;
+				}
+				else
+				{
+					response = '<div role="tabpanel" class="tab-pane" id="my-answers-'+(answer_offset/answer_limit)+'">'+response;
+					$(response).insertAfter("#my-answers-"+((answer_offset/answer_limit)-1));
+					answer_offset += answer_limit;
+					console.log(response);
+				}
+			},
+			error: function(response){
+
 			}
 		});
 	}
