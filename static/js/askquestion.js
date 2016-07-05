@@ -128,6 +128,43 @@ $(document).ready(function(){
 			return;
         //$("#question_form").submit();
     });*/
+    $('#tag_select').select2({
+    	tags: true,
+    	tokenSeparators: [",", " "],
+    	maximumSelectionSize: 5,
+    	placeholder: "Enter the tags",
+    	createSearchChoice: function(term, data) {
+    	    if ($(data).filter(function() {
+    	      return this.text === term;
+    	    }).length === 0) {
+    	      return {
+    	        id: term,
+    	        text: term
+    	      };
+    	    }
+    	 },
+    	results: function(data) {
+    		return {
+    			results: data
+    		};
+    	},
+    	ajax: {
+    	  url: 	function(params) {
+    	  	return '/index.php/search/suggestForTags?term=' + params.term;
+    	  },
+    	  dataType:'json',
+    	  processResults: function (data) {
+    	  	console.log(data);
+    	    return {
+    	      results: data,
+    	      more: false
+    	    };
+    	  },
+    	  error: function(response) {
+    	  	$('#error-question-tags').html(response.responseText);
+    	  }
+    	}
+    });	
 
 	$('#post-question-button').click(function(event){
 
@@ -170,7 +207,7 @@ $(document).ready(function(){
 		var data = {
 			questionTitle : question_title,
 			questionContent : question_content,
-			questionTags : question_tags
+			questionTags : $('#tag_select').select2("val")
 		};
 
 		$.ajax({
@@ -198,6 +235,7 @@ $(document).ready(function(){
 				console.log(response.responseText);
 			}
 		});
+		console.log(data);
 	});
 
 	//action on empty question title
