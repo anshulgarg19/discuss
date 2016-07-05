@@ -63,5 +63,9 @@
 		function getUserTags($user){
 			return $this->tag_model->get_user_tags($user);
 		}
+
+		function unfollowTag($tag_id, $user_id){
+			$this->tag_model->unfollowTag($tag_id,$user_id);
+		}
 	}
 ?>

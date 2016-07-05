@@ -32,6 +32,25 @@ $(document).ready(function(){
 
     });
 
+	$(".unfollow-tag").click(function(event){
+		var tag_id = this.id.substring(4);
+		console.log(tag_id);
+		var data = {
+			tag_id : tag_id,
+		}
+		$.ajax({
+			data: data,
+			type: "POST",
+			url: "/index.php/userprofile/unfollowtag",
+			success: function(){
+				$("#tag-div-"+tag_id).remove();
+			},
+			error: function(){
+
+			}
+		});
+	});
+
 	$("#change-photo-button").on('click', function(event) {
 		//console.log('success');
 
