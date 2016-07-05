@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 
 		<form id="changestatus">
 			<input type="hidden" id="questionid" name="question_id" value="<?php echo $question_id; ?>">
-			<?php if( $posted ){ 
+			<?php if( !$posted ){ 
 					if( $following ){ ?>
 						<button id="follow" type="button" class="btn btn-sm btn-danger">Unfollow</button>
 				<?php }else {?>

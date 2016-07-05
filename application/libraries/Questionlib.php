@@ -17,9 +17,11 @@ class Questionlib{
 		if(count($questions) == 0)
 			return array();
 
+		// var_dump($questions);
 		$tags = $this->_ci->tag_model->getTagsForRecentsFromSolr($questions);
 
 		foreach($tags->response->docs as $tag) {
+			// var_dump($tag->id);
 			$questions[(int)$tag->id]["tag_names"] = $tag->tag_names;
 			$questions[(int)$tag->id]["id_list"] = $tag->id_list;
 
@@ -72,7 +74,7 @@ class Questionlib{
 	}
 
 	public function change_follow_status($data,$user_id){
-		return $this->question_model->changeFollowStatus($data, $user_id);
+		return $this->_ci->question_model->changeFollowStatus($data, $user_id);
 	}
 };
 

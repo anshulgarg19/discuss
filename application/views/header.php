@@ -32,7 +32,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand" href="/index.php/userhome" target="_blank">Discuss.io</a>
+	      <a class="navbar-brand" href="/index.php/userhome">Discuss.io</a>
 	    </div>
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->
@@ -61,7 +61,7 @@
 	        <button type="submit" class="btn btn-default">Submit</button>
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="/index.php/userprofile/showprofile" target="_blank"><?php echo $_SESSION['firstname'];?></a></li>
+	        <li><a href="/index.php/userprofile/showprofile"><?php echo $_SESSION['firstname'];?></a></li>
 			<li><a href="" data-toggle="modal" data-target="#question-modal">Ask Question</a></li>
 			<li><a href="/index.php/userhome/logout">Logout</a></li>
 	      </ul>
