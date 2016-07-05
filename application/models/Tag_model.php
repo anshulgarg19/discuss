@@ -58,7 +58,7 @@
 
 		public function getFollowing($tag, $userid)
 		{
-			$result = $this->db->query("SELECT * FROM Users_Tags WHERE user_id=? AND tag_id=?", array($userid, $tag));
+			$result = $this->db->query("SELECT user_id,tag_id FROM Users_Tags WHERE user_id=? AND tag_id=?", array($userid, $tag));
 
 			if($result->num_rows())
 				return true;
@@ -68,7 +68,6 @@
 
 		public function unfollowTag($tag, $userid)
 		{
-			//$tagid = $this->db->query("SELECT tag_id FROM Tags WHERE tag_id=?", array($tag));
 			$result = $this->db->query("DELETE FROM Users_Tags WHERE user_id=? AND tag_id=?",
 				array($userid, $tag));
 			$this->db->query('UPDATE Tags SET user_count = user_count-1 WHERE tag_id=?',array($tag));
@@ -85,7 +84,7 @@
 		// Utility function to check whether user is following any tags at all
 		function isFollowingTags($user_id) {
 
-			if($this->db->query("SELECT * FROM Users_Tags WHERE user_id=?", array($user_id))->num_rows() > 0) {
+			if($this->db->query("SELECT user_id FROM Users_Tags WHERE user_id=?", array($user_id))->num_rows() > 0) {
 				return true;
 			}
 			else
@@ -100,7 +99,7 @@
 		}
 
 		function getTagName($tag){
-			$query = 'select tag_name from Tags where tag_id=?';
+			$query = 'SELECT tag_name from Tags where tag_id=?';
 			$result = $this->db->query($query,array($tag));
 			if( !$result->num_rows() )
 				return BAD_REQUEST;
