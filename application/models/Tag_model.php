@@ -41,15 +41,14 @@
 			}
 		}
 
-		public function getQuestionsForTag($tag)
+		public function getQuestionsForTagSolr($tag, $offset)
 		{
-			$q = "SELECT Questions.question_id, title, Questions.created_on, question_content, answer_count FROM Tags_Questions INNER JOIN Questions on Questions.question_id=Tags_Questions.question_id INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id WHERE Tags.tag_id=? ORDER BY Questions.created_on DESC LIMIT 10";
-			$result = $this->db->query($q, array($tag));
-			if(!$result) {
-				return $this->error();
-			}
-
-			return $result->result_array();
+			// $q = "SELECT Questions.question_id, title, Questions.created_on, question_content, answer_count FROM Tags_Questions INNER JOIN Questions on Questions.question_id=Tags_Questions.question_id INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id WHERE Tags.tag_id=? ORDER BY Questions.created_on DESC LIMIT 10";
+			// $result = $this->db->query($q, array($tag));
+			// if(!$result) {
+			// 	return $this->error();
+			// }
+			return curlFetchArray(SOLR_URL."q=id_list%3A".$tag."&sort=last_modified+desc&start=".$offset."&rows=10&wt=json");
 		}
 
 		public function getFollowers($tagid) {
