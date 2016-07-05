@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<label class="sr-only" for="last_name">Last Name </label><input placeholder="Lastname" class="form-control" type="text" name="lname" id="last_name">						
 						<label class="sr-only" for="phone_num">Phone Num </label><input placeholder="phone number" class="form-control" type="text" name="pnum" id="phone_num">
 						<div id="error-pnum" class="error-div"></div>
-						<label class="sr-only" for="register_email">Email </label><input placeholder="email address" class="form-control" type="text" name="email" id="register_email">
+						<label class="sr-only" for="register_email">Email</label><input placeholder="email address" class="form-control" type="text" name="email" id="register_email">
 						<div id="error-register_email" class="error-div"></div>
 						<label class="sr-only" for="register_password">Password </label><input placeholder="password" class="form-control" type="password" name="password" id="register_password">
 						<div id="error-register_password" class="error-div"></div>
@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 				<div role="tabpanel" class="tab-pane active" id="login">
 					<form class="form-signin">
-						<label class="sr-only" for="login_email">E-mail </label><input placeholder="Email id" class="form-control" type="email" name="email" id="login_email" required autofocus>
+						<label class="sr-only" for="login_email">E-mail id or phone number</label><input placeholder="Email id or phone number" class="form-control" type="text" name="email" id="login_email" required autofocus>
 						<div id="error-login_email"></div>
 						<label class="sr-only" for="login_password">Password </label><input required placeholder="Password" class="form-control" type="password" name="password" id="login_password">
 						<button type="button" class="btn btn-default" id="login_submit">Submit</button>

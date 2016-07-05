@@ -35,8 +35,11 @@ $(document).ready(function(){
 		//validate login email
 		if( !validate_email(login_email) )
 		{
-			action_invalid_login_email();
-			invalid = true;
+
+			if(!validate_phonenumber(login_email)) {
+				action_invalid_login_email();
+				invalid = true;
+			}
 		}
 
 		if( invalid )
@@ -64,7 +67,7 @@ $(document).ready(function(){
 		})
 		.error(function(response) {
 			if(response.status == 401) {
-				$('#loginerror').html("Wrong username and/or password");
+				$('#loginerror').html("Wrong email-id/phone number and password combo, if you have not registered please do the same now.");
 				$('#loginerror').show();
 			}
 			else if(response.status == 403) {
@@ -306,6 +309,6 @@ $(document).ready(function(){
     //action to take if login email invalid
     function action_invalid_login_email(){
     	$("#error-login_email").css("color","red");
-		$("#error-login_email").html("Invalid Email format");
+		$("#error-login_email").html("Invalid Email or mobile number format");
     }
 });

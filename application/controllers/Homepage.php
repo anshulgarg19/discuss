@@ -150,16 +150,25 @@ class Homepage extends CI_Controller {
 		$this->load->model("Tag_model");
 
 		$validation_errors = array();
+		$type = null;
 
 		if( !validate_email($_POST['email']))
 		{
 			$validation_errors['error-login_email'] = true;
-			echo json_encode($validation_errors);
-			//die();
-			return;
+			
+			if(!validate_phonenumber($_POST['email'])) {
+				echo json_encode($validation_errors);
+				return;
+			}
+			else {
+				$type = "phone_num";
+			}
+		}
+		else {
+			$type = "email";
 		}
 
-		if (!$this->userfactory->verifyLogin($_POST)) {
+		if (!$this->userfactory->verifyLogin($_POST, $type)) {
 			return;
 		}
 
