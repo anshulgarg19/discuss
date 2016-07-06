@@ -34,7 +34,7 @@ class Suggesterlib
 			return $retval;
 		}
 		else
-			return array("query" => $data, "suggestions" => array());
+			return array();
 	}
 
 }
