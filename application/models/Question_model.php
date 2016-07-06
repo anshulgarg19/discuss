@@ -135,7 +135,8 @@
 
 	    // Function to return a collection of the ten most recent questions
 	    public function getRecentQuestions($offset) {
-	    	$q = "SELECT * FROM Questions ORDER BY last_modified_on DESC LIMIT ?,10";
+	    	
+	    	$q = "SELECT question_id,question_content,title,last_modified_on,created_on,answer_count FROM Questions ORDER BY last_modified_on DESC LIMIT ?,10";
 	    	$result = $this->db->query($q, array($offset));
 	    	$retval = array();
 	    	foreach($result->result_array() as $row) {
@@ -161,7 +162,6 @@
 	    //Function to store question into database
 	    public function postQuestion( $data ){
 	    	$tags = $data['questionTags'];
-	    	//explode(',', $data['questionTags']);
 
 	    	//insert question
 
@@ -173,9 +173,6 @@
 	    	$this->db->insert('Questions',$insertData);
 	    	$insertedID = $this->db->insert_id();
 
-	    	//
-	    	//TO DO: change the user id from session id
-	    	//
 
 	    	//inserting in user question relation
 	    	$query = 'INSERT into Users_Questions(user_id,question_id,type) values(?,?,"POST")';
@@ -193,9 +190,7 @@
 
 	    	$new_question = array();
 
-	    	//var_dump($followed_tags);
 	    	foreach ($followed_tags as $followed_tag) {
-	    		//var_dump($followed_tag);
 	    		$followed_tags_assoc[$followed_tag['tag_id']]	= 1;
 	    	}
 
@@ -216,8 +211,6 @@
 	    			$query = 'UPDATE Tags set question_count = question_count+1 where tag_id=?';
 	    			$this->db->query($query, array($tag_id));
 
-	    			
-	    			//INSERT INTO Users_Tags VALUES (1, 1), (1, 2);
 
 	    		}
 	    		//tag not present
@@ -226,8 +219,6 @@
 	    			$tagData['tag_id'] = '';
 	    			$tagData['tag_name'] = $tag;
 	    			$tagData['question_count'] = 1;
-	    			//$tagData['user_count'] = 1;
-	    			//insert new tag in Tags table
 	    			$this->db->insert('Tags',$tagData);
 	    			$tag_id = $this->db->insert_id();
 	    		}
@@ -263,7 +254,6 @@
 	    	$question_id = (int)$data['question'];
 	    	$results = array();
 
-	    	//$query = 'SELECT Users.user_id,firstname from Users INNER JOIN Users_Questions on Users.user_id = Users_Questions.user_id where question_id=?';
 	    	$query = 'SELECT Users.user_id,firstname from Users INNER JOIN Users_Questions on Users.user_id = Users_Questions.user_id where question_id=? and type="POST"';
 
 	    	$result = $this->db->query($query, array($question_id));
@@ -297,7 +287,7 @@
 	    	$results['created_on'] = $result->created_on;
 	    	$results['answer_count'] = $result->answer_count;
 
-	    	$query = 'select Tags.tag_id,Tags.tag_name from Tags_Questions INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id where Tags_Questions.question_id=?';	//change 19 to $_SESSION['id']
+	    	$query = 'select Tags.tag_id,Tags.tag_name from Tags_Questions INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id where Tags_Questions.question_id=?';	
 
 	    	$result = $this->db->query($query, array($question_id));
 	    	$result = $result->result();
@@ -306,8 +296,7 @@
 
 	    	return $results;
 
-	    	/*$query = 'SELECT Tags.tag_name from Questions INNER JOIN Tags_Questions on Questions.question_id = Tags_Questions.question_id INNER JOIN Tags on Tags.tag_id = Tags_Questions.tag_id where Tags_Questions.question_id = ?';
-	    	$result = $this->db->query($query, array($question_id));	*/
+	    	
 
 	    }
 
@@ -364,22 +353,6 @@
 	    		$this->db->query($query, array($user_id, (int)$data['question_id']));
 	    	}
 
-	    	/*$query = 'SELECT type from Users_Questions where question_id=? and user_id=?';
-	    	$result = $this->db->query($query, array($question_id,$user_id));
-
-	    	if( $result->num_rows() )
-	    	{
-	    		$result = $result->row();
-	    		if( $result->type == "FOLLOW"){
-	    			$query = 'DELETE from Users_Questions where user_id=? and question_id=?';
-	    			$this->db->query($query, array($user_id, $question_id));
-	    		}
-	    	}
-	    	else
-	    	{
-	    		$query = 'INSERT into Users_Questions(user_id,question_id,type) VALUES(?,?,"FOLLOW")';
-	    		$this->db->result($query, array($user_id, $question_id));
-	    	}*/
 	    }
 	};
 	/* End of file Question_model.php */

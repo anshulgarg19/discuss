@@ -86,9 +86,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    //model to mark user activated
 	    public function _setActivated(){
-	    	$query = 'select reset_link,activated from Users where email_id=?';
+	    	$query = 'SELECT reset_link,activated from Users where email_id=?';
 	    	$result = $this->db->query($query, array($_GET['email']));
-	    	//var_dump($result->result());
+	    	
 	    	//bad activation request
 	    	if( !$result->num_rows() )
 	    		return BAD_REQUEST.' : no result found';
@@ -139,7 +139,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    //Function to retrieve user profile
 	    public function retrieveUser($user_id){
-	    	$query = 'select * from Users where user_id=?';
+	    	$query = 'SELECT user_id,firstname,lastname,email_id,phone_num,profile_pic from Users where user_id=?';
 	    	$result = $this->db->query($query,array($user_id));
 	    	return $result->row();
 			
@@ -147,55 +147,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	    // Function to create a database entry for a new user
 	    public function registerUser($data, $activation_key) {
-	    	/*$query = 'select * from Users where phone_num=?';
-	    	$result = $this->db->query($query, array($_POST['pnum']));
-
-	    	$already_exists = false;
-	    	$error_data = array();
-
-	    	if($result->num_rows() )
-	    	{
-	    		$error_data['phone-exists'] = true;
-	    		$already_exists = true;
-	    	}
-
-	    	$query = 'select * from Users where email_id=?';
-	    	$result = $this->db->query($query,array($_POST['email']));
-	    	if($result->num_rows() )
-	    	{
-	    		$error_data['email-exists'] = true;
-	    		$already_exists = true;
-	    	}
-
-	    	if( !$already_exists )
-	    	{*/
-	    		/*if( strlen($profile_pic) == 0 )
-	    			$profile_pic = DEFAULT_PIC;
-
-		    	$query = 'insert into Users(firstname,lastname,phone_num,email_id,profile_pic,reset_link,password) values(?,?,?,?,?,?,?)';
-		    	$result = $this->db->query($query, array($data['fname'],$data['lname'],$data['phone_num'],$data['email'],$profile_pic,$activation_key,sha1($data['password'])));*/
-		    	$insert_data['firstname'] = $data['fname'];
-		    	if(!isset($data['lname']))
-		    		$data['lname'] = '';
-		    	$insert_data['lastname'] = $data['lname'];
-		    	$insert_data['phone_num'] = $data['pnum'];
-		    	$insert_data['email_id'] = $data['email'];
-		    	$insert_data['reset_link'] = $activation_key;
-		    	$insert_data['password'] = sha1($data['password']);
-		    	$this->db->insert('Users',$insert_data);
-		    	$request['user_id'] = $this->db->insert_id();
-		    	
-
-		    	return $request;
-		    //}
-		    
-		    //return $error_data;	
 	    	
-//	    	var_dump($this->db->_error_message());
+	    	$insert_data['firstname'] = $data['fname'];
+	    	if(!isset($data['lname']))
+	    		$data['lname'] = '';
+	    	$insert_data['lastname'] = $data['lname'];
+	    	$insert_data['phone_num'] = $data['pnum'];
+	    	$insert_data['email_id'] = $data['email'];
+	    	$insert_data['reset_link'] = $activation_key;
+	    	$insert_data['password'] = sha1($data['password']);
+	    	$this->db->insert('Users',$insert_data);
+	    	$request['user_id'] = $this->db->insert_id();
+	    	return $request;
+	    
 	    }
 
 	    public function checkPhoneNumEmail($phone_num,$email){
-			$query = 'select * from Users where phone_num=?';
+			$query = 'SELECT user_id from Users where phone_num=?';
 	    	$result = $this->db->query($query, array($phone_num));
 
 	    	$error_data = array();
@@ -205,7 +173,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    		$error_data['phone-exists'] = true;
 	    	}
 
-	    	$query = 'select * from Users where email_id=?';
+	    	$query = 'SELECT user_id from Users where email_id=?';
 	    	$result = $this->db->query($query,array($email));
 	    	if( $result->num_rows() )
 	    	{
