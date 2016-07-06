@@ -1,4 +1,4 @@
-<di	v class="container">
+<div id="tagpagecontainer" class="container">
 	<div id="questionsfortag" class="col-md-10 col-md-offset-1">
 		<h3>Showing recent questions tagged with: <?php echo $tag_name;	?></h3>
 		<form id="changestatus">
@@ -10,7 +10,9 @@
 			<?php }?>
 				<input type="hidden" name="followstatus" id="change" value="<?php echo $following; ?>">
 		</form>
-		<span id="numfollowerscontainer">No. of users following this tag: <span id="numfollowers"><?php echo $num_followers;?></span></span>
+		<div class="row">
+			<span id="numfollowerscontainer">No. of users following this tag: <span id="numfollowers"><?php echo $num_followers;?></span></span>
+		</div>
 		<?php foreach($questions as $question) {?>
 			<div class="panel panel-default">
 			  <div class="panel-heading"><a href="question/questiondetails?question=<?php echo $question->id;?>"><strong><?php echo $question->title; ?></strong></a></div>
