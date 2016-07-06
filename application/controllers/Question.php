@@ -14,7 +14,7 @@ class Question extends CI_Controller{
 	}
 
 	public function loadquestions(){
-		$data["questions"] = $this->questionlib->get_questions_for_user((int)$_POST['user_id'],(int)$_POST['offset'],(int)$_POST['limit']);
+		$data["questions"] = $this->questionlib->get_questions_for_user((int)$_POST['user_id'],(int)$_POST['offset'],(int)$_POST['limit'],$_POST['type']);
 		$this->load->view('loadquestions',$data);
 	}
 

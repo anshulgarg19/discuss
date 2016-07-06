@@ -25,13 +25,13 @@ $(document).ready(function() {
             $('#follow').removeClass('btn-success');
             $('#follow').addClass('btn-danger');
             $('#follow').html('Unfollow');
-            $('#follow_status').val(true);
+            $('#follow_status').val(1);
           }
           else{
             $('#follow').removeClass('btn-danger');
             $('#follow').addClass('btn-success');
             $('#follow').html('Follow');
-            $('#follow_status').val(false);
+            $('#follow_status').val(0);
           }
         },
         error: function(response){

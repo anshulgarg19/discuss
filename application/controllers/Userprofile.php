@@ -26,10 +26,12 @@ class Userprofile extends CI_controller{
 			"user_id" => $user,
 			"user" => $this->userfactory->getUser($user),
 			"tags" => $this->taglib->getUserTags($user),
-			"questions" => $this->questionlib->get_questions_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT),
-			"answers" => $this->answerlib->get_answers_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT)
+			"questions" => $this->questionlib->get_questions_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT,"POST"),
+			"answers" => $this->answerlib->get_answers_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT),
+			"followed_questions" => $this->questionlib->get_questions_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT,"FOLLOW")
 			);
 
+		
 		$this->load->view("header");
 		$this->load->view("show_profile",$data);
 		$this->load->view("footer");

@@ -49,6 +49,7 @@
 				</li>
 				<li role="presentation" id="answer-tab"><a href="#my-answers" aria-controls="profile" role="tab" data-toggle="tab">Answers</a>
 				</li>
+				<li role="presentation" id="followed-tab"><a href="#my-followed" aria-controls="profile" role="tab" data-toggle="tab">Followed</a>
 			</ul>
 
 			<!-- questions nav bar-->
@@ -58,7 +59,7 @@
 						<div id="my-questions-0">
 							<?php 
 								if( count($questions) == 0 ) 
-									echo '<br/>You have not posted any quesitons yet.'; 
+									echo '<br/>Not posted any quesitons yet.'; 
 								else{
 									foreach($questions as $question){?> 
 										<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank" class="link"><?php echo $question->title; ?></a></h5><br/>
@@ -75,7 +76,7 @@
 						<div id="my-answers-0">
 							<?php 
 							  if( count($answers) == 0 )
-								echo '<br/>You have not answered any question yet.';
+								echo '<br/>Not answered any question yet.';
 							  else{
 							  	foreach ($answers as $answer) {?>
 							  		<div class="panel-default panel-heading"><h3>
@@ -92,6 +93,22 @@
 						</div>	
 					</div>
 
+				<!-- followed question nav bar -->	
+
+				<div role="tabpanel" class="tab-pane" id="my-followed">
+					<div id="my-followed-0">
+						<?php 
+							if( count($followed_questions) == 0 )
+								echo '<br/>Not followed any question yet.';
+							else{
+								foreach($followed_questions as $followed_question){?> 
+										<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $followed_question->question_id; ?>" target="_blank" class="link"><?php echo $followed_question->title; ?></a></h5><br/>
+											<?php echo $followed_question->answer_count.' '; ?>Answers<br/> 
+										</div><br/>
+							<?php }
+							}?>
+					</div>
+				</div>
 			</div>	
 		</div>
 	

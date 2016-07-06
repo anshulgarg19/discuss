@@ -8,6 +8,9 @@ $(document).ready(function(){
 	var answer_offset = 10;
 	var answer_limit = 10;
 
+	var followed_question_offset = 10;
+	var followed_question_limit = 10;
+
 	$(window).on('scroll',function(){
       if( Math.ceil($(window).scrollTop()) == ($(document).height() - $(window).height() )){
           var active = $('.nav-tabs .active').attr("id");
@@ -16,6 +19,9 @@ $(document).ready(function(){
           }
           else if( active == "answer-tab"){
           	addMoreAnswers();
+          }
+          else{
+          	addMoreFollowedQuestions();
           }
           //to extend for following: else
       }
@@ -47,10 +53,12 @@ $(document).ready(function(){
 
 	//Function to add more question
 	function addMoreQuestions(){
+		
 		var data = {
 			user_id : user_id,
 			offset : question_offset,
-			limit : question_limit
+			limit : question_limit,
+			type: "POST"
 		};
 		$.ajax({
 			url : '/index.php/question/loadquestions',
@@ -100,6 +108,35 @@ $(document).ready(function(){
 			},
 			error: function(response){
 
+			}
+		});
+	}
+
+	function addMoreFollowedQuestions(){
+		var data = {
+			user_id : user_id,
+			offset : followed_question_offset,
+			limit : followed_question_limit,
+			type: "FOLLOW"
+		};
+		$.ajax({
+			url : '/index.php/question/loadquestions',
+			data: data,
+			type: "POST",
+			
+			success: function(response){
+				response.trim();
+				if( response == "</div>")
+				{
+					return;
+				}
+				else{
+					response = '<div id="my-followed-'+(followed_question_offset/followed_question_limit)+'">'+response;
+					$(response).insertAfter("#my-followed-"+((followed_question_offset/followed_question_limit)-1));
+					followed_question_offset = followed_question_offset + followed_question_limit;
+				}	
+			},
+			error: function(response){
 			}
 		});
 	}

@@ -6,7 +6,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 	  <div class="row">
 		
 			<?php foreach($tags as $row) {?>
-				<div id="question-tag" class="badge"><a class="tag" href="/index.php/tagdetails?tag=<?php echo $row->tag_id?>" target="_blank"><?php echo $row->tag_name; ?></a></div>
+				<div id="question-tag" class="badge"><a class="tag" href="/index.php/tagdetails?tag=<?php echo $row->tag_id?>" ><?php echo $row->tag_name; ?></a></div>
 				<?php echo '   ';}?>
 		
 
@@ -50,7 +50,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 				
 				<div id="answer-content"><h3><?php echo $row['answer_content']; ?></h3></div><br/>
 				<h6>Posted on <?php echo $row['created_on']; ?>
-				by <a target="_blank" href='/index.php/userprofile/showprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a>
+				by <a  href='/index.php/userprofile/showprofile?user=<?php echo $row["user_id"]; ?>'><?php echo $row['firstname']; ?> </a>
 				</h6>
 				<div class="partition"></div>
 			<?php } ?>
