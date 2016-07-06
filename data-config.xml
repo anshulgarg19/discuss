@@ -7,7 +7,10 @@
  	batchSize="1" /> 
  
  <document name="questions">   
-  	<entity name="question" pk="id" query="SELECT question_id, question_content, title,last_modified_on, answer_count FROM Questions">
+  	<entity name="question" pk="id" query="SELECT question_id, question_content, title,last_modified_on, answer_count FROM Questions"
+    deltaImportQuery="SELECT question_id, question_content, title,last_modified_on, answer_count FROM Questions WHERE question_id=${dih.delta.id} limit 200000;"
+               deltaQuery="select question_id as id from Questions WHERE last_modified_on &gt; '${dih.last_index_time}'"
+      >
    		<field column="question_id" name="id"/>
    		<field column="question_content" name="question_content"/>    
 		<field column="title" name="title"/>
