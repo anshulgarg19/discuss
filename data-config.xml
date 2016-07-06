@@ -7,14 +7,20 @@
  	batchSize="1" /> 
  
  <document name="questions">   
-  	<entity name="question" pk="id" query="SELECT question_id, question_content, title, answer_count FROM Questions">
+  	<entity name="question" pk="id" query="SELECT question_id, question_content, title,last_modified_on, answer_count FROM Questions">
    		<field column="question_id" name="id"/>
    		<field column="question_content" name="question_content"/>    
-   		<field column="title" name="title"/>    
+		<field column="title" name="title"/>
+		<field column="last_modified_on" name="last_modified"/>
    		<field column="answer_count" name="answer_count"/>    
   		<entity name="tag_list" query="SELECT Tags.tag_id AS tag_id, tag_name FROM Tags_Questions INNER JOIN Tags ON Tags.tag_id=Tags_Questions.tag_id WHERE question_id=${question.question_id}">
   			<field column="tag_name" name="tag_names"/>
+			<field column="tag_id" name="id_list"/>
   		</entity>
+		<entity name="poster" query="SELECT firstname, Users.user_id AS user_id FROM Users_Questions JOIN Users on Users.user_id=Users_Questions.user_id WHERE Users_Questions.type='POST' AND Users_Questions.question_id=${question.question_id}">
+			<field column="firstname" name="name"/>
+			<field column="user_id" name="user_id"/>
+		</entity>
   	</entity>
  </document>
 </dataConfig>
