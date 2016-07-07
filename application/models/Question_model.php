@@ -301,9 +301,9 @@
 	    }
 
 	    //Function to return questions posted by a user
-	    public function getQuestionsForUser($user_id,$offset,$limit){
-	    	$query = 'SELECT Questions.question_id, Questions.title, Questions.answer_count from Questions INNER JOIN Users_Questions on Questions.question_id = Users_Questions.question_id where Users_Questions.user_id =? order by Questions.created_on desc LIMIT ?,?';
-	    	$result = $this->db->query($query, array($user_id,$offset,$limit));
+	    public function getQuestionsForUser($user_id,$offset,$limit,$type){
+	    	$query = 'SELECT Questions.question_id, Questions.title, Questions.answer_count from Questions INNER JOIN Users_Questions on Questions.question_id = Users_Questions.question_id where Users_Questions.user_id =? and type=? order by Users_Questions.created_on desc LIMIT ?,?';
+	    	$result = $this->db->query($query, array($user_id,$type,$offset,$limit));
 	    	return $result->result();
 	    }
 
@@ -342,7 +342,7 @@
 	    }
 
 	    public function changeFollowStatus($data, $user_id){
-	    	if( $data['following_question'] )
+	    	if( $data['following_question'] == 1)
 	    	{
 	    		$query = 'DELETE from Users_Questions where user_id=? and question_id=? and type="FOLLOW"';
 	    		$this->db->query($query, array($user_id, (int)$data['question_id']));
@@ -354,6 +354,8 @@
 	    	}
 
 	    }
+
+	    
 	};
 	/* End of file Question_model.php */
 	/* Location: ./application/models/Question_model.php */
