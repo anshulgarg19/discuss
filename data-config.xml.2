@@ -8,8 +8,8 @@
  
  <document name="tags">   
   	<entity name="tags" pk="tag_id" query="SELECT tag_id, tag_name FROM Tags"
-    deltaImportQuery="SELECT tag_id, tag_name FROM Tags WHERE tag_id=${dih.delta.id} limit 200000;"
-               deltaQuery="select tag_id as id from Tags WHERE last_modified_on &gt; '${dih.last_index_time}'"
+    deltaImportQuery="SELECT tag_id, tag_name FROM Tags WHERE tag_id=${dih.delta.tag_id} limit 200000;"
+               deltaQuery="select tag_id from Tags WHERE last_modified_on &gt; '${dih.last_index_time}'"
       >
    		<field column="tag_id" name="id"/>
    		<field column="tag_id" name="tag_id"/>
