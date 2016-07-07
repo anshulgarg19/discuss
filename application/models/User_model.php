@@ -200,7 +200,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    // Function to reset the password stored in the database
 	    public function resetPass($token, $email, $password) {
 
-	    	$q = "SELECT reset_link FROM Users WHERE email_id=?";
+	    	$q = "SELECT reset_link FROM Users WHERE email_id=? AND activated=1";
 	    	$tokenres = $this->db->query($q, array($email));
 
 	    	if(!$tokenres) {

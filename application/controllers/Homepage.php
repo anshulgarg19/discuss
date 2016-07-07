@@ -193,9 +193,7 @@ class Homepage extends CI_Controller {
 	public function PasswordReset() {
 
 		if (array_key_exists('token',$_GET)) {
-			$this->load->view("header");
 			$this->load->view("password_reset");
-			$this->load->view("footer");
 		}
 		else {
 			echo "Password cannot be reset without a valid activation link";
