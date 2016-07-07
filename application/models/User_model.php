@@ -185,16 +185,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    // Save the reset link to the database
 	    public function saveResetToken($token, $email_id) {
 
-	    	$q = "UPDATE Users SET reset_link=? WHERE email_id=?";
+	    	$query = "SELECT user_id FROM Users WHERE email_id=? AND activated=1";
+	    	$result = $this->db->query($query, array($email_id));
+	    	
+	    	if($result->num_rows() == 0)
+	    		return false;
+
+	    	$q = "UPDATE Users SET reset_link=? WHERE email_id=? AND activated=1";
 	    	$result = $this->db->query($q, array($token, $email_id));
 
 	    	if (!$result) {
 	    		return $result->error();
 	    	}
 
-	    	else {
-	    		return true;
-	    	}
+    		return true;
 	    }
 
 	    // Function to reset the password stored in the database

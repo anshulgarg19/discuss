@@ -208,7 +208,7 @@ $(document).ready(function(){
 			$('#pwresetmodalbody').html('<span style="color:green;">A reset e-mail was successfully sent.</span>');
 		})
 		.error(function(response) {
-			$('#pwresetmodalbody').html('<span style="color:red;">A reset e-mail could not be sent. Please try again. Perhaps the email you entered is wrong?</<s></s>pan>');
+			$('#pwresetmodalbody').html('<span style="color:red;">A reset e-mail could not be sent. The email you entered is either not registered or your account has not been activated.</span>');
 		});
 		
 	});
