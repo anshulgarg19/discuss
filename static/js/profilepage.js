@@ -1,5 +1,7 @@
 
+	
 $(document).ready(function(){
+
 
 	var user_id = $("#user_id").val();
 	var question_offset = 10;
@@ -28,6 +30,45 @@ $(document).ready(function(){
 
     });
 
+
+	$("#edit-name").click(function(){
+		$('#edit-name-form').show();
+	});
+
+	$("#update-name").click(function(){
+		var new_firstname = $("#new-firstname").val();
+		var new_lastname = $("#new-lastname").val();
+
+		if( new_firstname.length == 0 )
+		{
+			window.alert("First Name can't be empty.")
+			return;
+		}
+
+		var data = {
+			firstname: new_firstname,
+			lastname : new_lastname
+		}
+
+		$.ajax({
+			data: data,
+			type: "post",
+			url: "/index.php/userprofile/changename",
+			success: function(response){
+				$("#edit-name-form").hide();
+				$("#first_name").html(new_firstname+" "+new_lastname);
+				$("#link_first_name").html(new_firstname);
+				$("#new-firstname").val("");
+				$("#new-firstname").attr("placeholder",new_firstname);
+				$("#new-lastname").val("");
+				$("#new-lastname").attr("placeholder",new_lastname);
+			},
+			error: function(response){
+
+			}
+		});
+	});
+
 	$(".unfollow-tag").click(function(event){
 		var tag_id = this.id.substring(4);
 		var data = {
@@ -50,6 +91,11 @@ $(document).ready(function(){
 
         $("#change_photo_form").submit();
     });
+
+	function action_empty_first_name(){
+		$("#error-new-firstname").css("color","red");
+		$("#error-new-firstname").html("First name cant be empty");
+	}
 
 	//Function to add more question
 	function addMoreQuestions(){

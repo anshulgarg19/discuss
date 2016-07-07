@@ -1,6 +1,7 @@
 <?php
  defined('BASEPATH') or exit('No direct access to script allowed');
 ?>
+<script type="text/javascript" src="/static/js/profilepage.js"></script>
 <div id="personal_detail" class="container">
 	<div class="row">
 		<div id="profile_pic" class="col-md-1 col-md-offset-1">
@@ -11,11 +12,28 @@
 			<?php }?>	
 		</div>
 
-		<div class="col-md-offset-2 col-md-5">
+		<div class="col-md-offset-2 col-md-7">
 			<input id="current_user_id" type="hidden" name="current_user_id" value="<?php echo $current_user; ?>">
 			<input id="user_id" type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-			<div id="name"><h3><?php echo $user->getFirstname().' '.$user->getLastname() ?>
-			<i class="glyphicon glyphicon-pencil"></i></h3></div><br/>
+			<div id="name"><h3><span id="first_name"><?php echo $user->getFirstname().' '.$user->getLastname() ?></span>
+			<?php if($current_user == $user_id){ ?>
+			<button type="button" id="edit-name" style="font-size:20px" class="glyphicon glyphicon-pencil"></button></h3></div><br/>
+				<!-- edit first and last name form-->
+				<form id="edit-name-form" class="form-inline" style="display:none">
+				  <div class="form-group">
+				    <label for="new-firstname">First Name</label>
+				    <input type="text" class="form-control" id="new-firstname" placeholder="<?php echo $user->getFirstname();?>">
+		    		<div id="error-new-firstname"></div>
+				  </div>
+				  <div class="form-group">
+				    <label for="new-lastname">Last Name</label>
+				    <input type="text" class="form-control" id="new-lastname" placeholder="<?php echo $user->getLastname(); ?>">
+				  </div>
+				  <button id="update-name" type="button" class="btn btn-default">Update</button>
+				</form><br/>
+			<?php }else{?>
+				</h3></div><br/>
+			<?php }?>	
 			<p><i class="glyphicon glyphicon-envelope"></i><?php echo '  '.$user->getEmail() ?><br/>
 			<i class="glyphicon glyphicon-earphone"></i><?php echo '  '.$user->getPhone() ?><br/></p>
 		</div>
@@ -145,4 +163,3 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="/static/js/profilepage.js"></script>

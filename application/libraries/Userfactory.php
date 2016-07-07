@@ -98,5 +98,9 @@ class Userfactory{
 	public function updateProfilePicURI($user_id, $filename ){
 		$this->_ci->user_model->_updateProfilePicURL($user_id,$filename);
 	}
+
+	public function changeName($user_id,$firstname, $lastname){
+		$this->_ci->user_model->changeName($user_id,$firstname,$lastname);
+	}
 };
 ?>

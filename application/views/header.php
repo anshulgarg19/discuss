@@ -43,7 +43,7 @@
 	        <button type="submit" class="btn btn-default">Submit</button>
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="/index.php/userprofile/showprofile"><?php echo $_SESSION['firstname'];?></a></li>
+	        <li><a id="link_first_name" href="/index.php/userprofile/showprofile"><?php echo $_SESSION['firstname'];?></a></li>
 			<li><a href="" data-toggle="modal" data-target="#question-modal">Ask Question</a></li>
 			<li><a href="/index.php/userhome/logout">Logout</a></li>
 	      </ul>

@@ -12,6 +12,7 @@ class Userprofile extends CI_controller{
 		$this->load->library("Taglib");
 		$this->load->library("session");
 		$this->load->helper("url");
+		$this->load->helper("validations_helper");
 	}
 
 	//method for a new user
@@ -72,6 +73,17 @@ class Userprofile extends CI_controller{
 		$this->load->view("activation_status",$data);
 	}
 
+	public function changename(){
+		if( !isset($_SESSION['user_id']))		
+		{
+			action_invalid_user();
+			return;
+		}
+
+		$this->userfactory->changeName($_SESSION['user_id'],$_POST['firstname'],$_POST['lastname']);
+		$_SESSION['firstname'] = $_POST['firstname'];
+	}
+
 	public function changepic(){
 		
 		$filename = $_SESSION['user_id'];
@@ -101,6 +113,7 @@ class Userprofile extends CI_controller{
 			redirect('/userprofile/showprofile');
 		}
 	}
+
 
 	public function unfollowtag(){
 		$this->taglib->unfollowTag((int)$_POST['tag_id'], $_SESSION['user_id']);

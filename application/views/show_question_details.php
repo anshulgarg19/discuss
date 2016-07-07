@@ -24,13 +24,13 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 			echo '?'; ?></h1></div><br/>
 			<div id="question-content" class="question-content"><?php echo $question_content; ?></div><br/>
 			<?php echo 'Posted on: '.date("F j, Y, g:i a",strtotime($created_on));			?>
-			by <a href="/index.php/userprofile/showprofile?user=<?php echo $user_id; ?>"><?php echo $user_name;?></a><img height="35" width="35" src="<?php echo $profile_pic; ?>">
+			by <a href="/index.php/userprofile/showprofile?user=<?php echo $user_id; ?>"><?php echo $user_name;?></a> <img class="img-circle" height="35" width="35" src="<?php echo $profile_pic; ?>">
 			<br/><br/>
 			
 			<?php foreach($tags as $row) {?>
 			<div id="question-tag" class="badge"><a class="tag" href="/index.php/tagdetails?tag=<?php echo $row->tag_id?>" ><?php echo $row->tag_name; ?></a></div>
-			<?php echo '   ';}?>
-			<br/>
+			<?php }?>
+			<br/><br/>
 			<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#answer-modal">Answer</button>
 			<br/><br/>
 			

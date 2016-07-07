@@ -230,5 +230,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	    	}
 
 	    }
+
+	    public function changeName($user_id,$firstname,$lastname){
+	    	$query = 'UPDATE Users set Users.firstname=? , Users.lastname=? where user_id=?';
+	    	
+	    	$this->db->query($query, array($firstname,$lastname,(int)$user_id));
+	    }
 }	
 ?>
