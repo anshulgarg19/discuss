@@ -38,6 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div id="error-register_password" class="error-div"></div>
 						<label class="sr-only" for="confirm_password">Confirm Password</label><input placeholder="confirm password" class="form-control" type="password" name="confirm_pw" id="confirm_password">
 						<div id="error-confirm_password" class="error-div"></div>
+						Choose your profile picture:
 						<input type="file" name="userfile"/>
 						<button type="button" class="btn btn-default" id="register_submit">Register</button>
 					</form>

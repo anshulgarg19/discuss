@@ -61,13 +61,14 @@
 						}?>
 					</div>
 					<div class="row">
-						<?php for($i=0; $i < count($question['tag_names']); $i++) { ?>
+						<?php if(array_key_exists("tag_names", $question)) { 
+							for($i=0; $i < count($question['tag_names']); $i++) { ?>
 						<a href="tagdetails?tag=<?php echo $question['id_list'][$i]; ?>">
 							<div class="badge">
 								<?php echo $question['tag_names'][$i]; ?>
 							</div>
 						</a>
-						<?php } ?>
+						<?php }} ?>
 					</div>
 					<div class="pull-left">
 						<a href="question/questiondetails?question=<?php echo $question['question_id']; ?>">No. of Answers: <?php echo $question['answer_count']; ?></a>

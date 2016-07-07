@@ -17,7 +17,7 @@ defined('SOLR_URL') OR define('SOLR_URL', 'http://localhost:8983/solr/collection
 defined( 'ACTIVITY_SUBJECT') or define('ACTIVITY_SUBJECT','Activity on Question you follow');
 defined('ACTIVITY_MESSAGE') or define('ACTIVITY_MESSAGE','Answer has been posted on ');
 defined('QUESTION_URI') or define('QUESTION_URI','www.discuss.io/index.php/question/questiondetails');
-defined('SOLR_SUGGEST_URL') OR define('SOLR_SUGGEST_URL', 'http://localhost:8983/solr/suggest?suggest.dictionary=mySuggester&suggest=true&suggest.build=true&wt=json&suggest.q=');
+defined('SOLR_SUGGEST_URL') OR define('SOLR_SUGGEST_URL', 'http://localhost:8983/solr/collection2/suggest?suggest.dictionary=mySuggester&suggest=true&suggest.build=true&wt=json&suggest.q=');
 
 defined('DEFAULT_OFFSET') or define('DEFAULT_OFFSET',0);
 defined('DEFAULT_LIMIT') or define('DEFAULT_LIMIT',10);

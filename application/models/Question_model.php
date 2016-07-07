@@ -254,7 +254,7 @@
 	    	$question_id = (int)$data['question'];
 	    	$results = array();
 
-	    	$query = 'SELECT Users.user_id,firstname from Users INNER JOIN Users_Questions on Users.user_id = Users_Questions.user_id where question_id=? and type="POST"';
+	    	$query = 'SELECT Users.user_id,firstname, profile_pic from Users INNER JOIN Users_Questions on Users.user_id = Users_Questions.user_id where question_id=? and type="POST"';
 
 	    	$result = $this->db->query($query, array($question_id));
 
@@ -268,7 +268,7 @@
 
 	    	$results['user_id'] = $result->user_id;
 	    	$results['user_name'] = $result->firstname;
-
+	    	$results['profile_pic'] = "/uploads/".$result->profile_pic;
 	    	
 	    	$results['posted'] = ($result->user_id == $current_user);
 
@@ -309,9 +309,10 @@
 
 	    public function getQuestionsForFollowedTags($taglist, $offset) {
 
-	    	$q = "SELECT DISTINCT Questions.question_id as question_id, Questions.question_content, title, Questions.last_modified_on, Questions.created_on as created_on, Questions.answer_count FROM Questions INNER JOIN Tags_Questions ON Questions.question_id=Tags_Questions.question_id WHERE Tags_Questions.tag_id IN(?)ORDER BY Questions.last_modified_on DESC LIMIT ?,10";
-
-	    	$result = $this->db->query($q, array(implode(',', $taglist), $offset));
+	    	$q = "SELECT DISTINCT Questions.question_id as question_id, Questions.question_content, title, Questions.last_modified_on, Questions.created_on as created_on, Questions.answer_count FROM Questions INNER JOIN Tags_Questions ON Questions.question_id=Tags_Questions.question_id WHERE Tags_Questions.tag_id IN(".implode(',', $taglist).")ORDER BY Questions.last_modified_on DESC LIMIT ?,10";
+	    	// echo $q;
+	    	$result = $this->db->query($q, array($offset));
+	    	// echo $result->num_rows();
 	    	$retval = array();
 	    	foreach($result->result_array() as $row) {
 	    		$retval[$row['question_id']] = array(

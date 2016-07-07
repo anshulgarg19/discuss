@@ -15,6 +15,7 @@
     top: 110px;
 }
 
+
 #recents > ul > li {
 	padding: 50px;
 }
@@ -177,4 +178,9 @@ body {
     right: 30px;
     bottom: 30px;
   }
+}
+
+.answer-content > h5{
+  font-family: Lato;
+  font-size: 1.2em;
 }

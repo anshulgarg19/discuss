@@ -9,7 +9,7 @@
 
 		<!-- Optional theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
+		<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<!-- Select 2-->
 		<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -63,12 +63,13 @@
 	      </div>
 	      <form method="POST" action="/index.php/question/postquestion" id="question_form">
 		      <div class="modal-body">
-		        <label for="question_title">Title: </label><input type="text" name="question_title" id="question_title" class="form-control" /><br/>
+		      <h5 class="alert alert-info">There will be some delay before the posted question is visible on its tag page</h5>
+		        <label for="question_title">Title: </label><input type="text" name="questionTitle" id="question_title" class="form-control" /><br/>
 		        <div id="error-question-title"></div>
-		        <label for="question_content">Question: </label><textarea name="question_content" placeholder="Enter your question here" id="question_content" rows="10" class="form-control"></textarea><br/>
+		        <label for="question_content">Question: </label><textarea name="questionContent" placeholder="Enter your question here" id="question_content" rows="7" class="form-control"></textarea><br/>
 		        <div id="error-question-content"></div>
 		        <label for="question_tags">Tags: </label>
-		        <select style="width:100%;" name="tag_select[]" class="form-control" id="tag_select" multiple>
+		        <select style="width:100%;" required name="questionTags[]" class="form-control" id="tag_select" multiple>
 		        	<option value=""></option>
 		        </select>
 		        <div id="error-question-tags"></div><br/>

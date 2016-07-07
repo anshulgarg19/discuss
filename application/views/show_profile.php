@@ -6,12 +6,16 @@
 		<div id="profile_pic" class="col-md-1 col-md-offset-1">
 			<img src="/uploads/<?php echo $user->getProfilePicUrl() ?>" alt="Profile Picture"  height="140" width="140" class=" img-circle" id="photo">
 			<!--<img src="/static/img/default.png" alt="Profile Picture" height="42" width="42">-->
-			<p class="edit-link"><a data-toggle="modal" data-target="#photo-modal" >Edit Photo</a></p>
+			<?php if( $current_user == $user_id){?>
+				<p class="edit-link"><a data-toggle="modal" data-target="#photo-modal" >Edit Photo</a></p>
+			<?php }?>	
 		</div>
 
 		<div class="col-md-offset-2 col-md-5">
+			<input id="current_user_id" type="hidden" name="current_user_id" value="<?php echo $current_user; ?>">
 			<input id="user_id" type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-			<div id="name"><h3><?php echo $user->getFirstname().' '.$user->getLastname() ?></h3></div><br/>
+			<div id="name"><h3><?php echo $user->getFirstname().' '.$user->getLastname() ?>
+			<i class="glyphicon glyphicon-pencil"></i></h3></div><br/>
 			<p><i class="glyphicon glyphicon-envelope"></i><?php echo '  '.$user->getEmail() ?><br/>
 			<i class="glyphicon glyphicon-earphone"></i><?php echo '  '.$user->getPhone() ?><br/></p>
 		</div>
@@ -30,10 +34,10 @@
 										<div id="tag-div-<?php echo $tag->tag_id; ?>">	
 											
 												<form id="changestatus-<?php echo $tag->tag_id; ?>">
-													<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" target="_blank" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.')'; ?></a>
-
-													<button style="float:right" id="tag-<?php echo $tag->tag_id?>" type="button" class="btn btn-sm unfollow-tag" value="<?php echo $tag->tag_id;?>">Unfollow</button>
-													
+													<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.')'; ?></a>
+													<?php if($current_user == $user_id){ ?>	
+														<button style="float:right" id="tag-<?php echo $tag->tag_id?>" type="button" class="btn btn-sm unfollow-tag" value="<?php echo $tag->tag_id;?>">Unfollow</button>
+													<?php }?>
 												</form><br/>
 
 										</div>
@@ -62,7 +66,7 @@
 									echo '<br/>Not posted any quesitons yet.'; 
 								else{
 									foreach($questions as $question){?> 
-										<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>" target="_blank" class="link"><?php echo $question->title; ?></a></h5><br/>
+										<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $question->question_id; ?>"  class="link"><?php echo $question->title; ?></a></h5><br/>
 											<?php echo $question->answer_count.' '; ?>Answers<br/> 
 										</div><br/>
 							<?php }
@@ -79,11 +83,11 @@
 								echo '<br/>Not answered any question yet.';
 							  else{
 							  	foreach ($answers as $answer) {?>
-							  		<div class="panel-default panel-heading"><h3>
+							  		<div class="panel-default panel-heading"><h5>
 							  				<a href="/index.php/question/questiondetails?question=<?php echo $answer->question_id; ?>" class="link"><?php echo $answer->title; ?>
 							  				</a>
 
-							  			</h3><br/>
+							  			</h5><br/>
 							  			<?php echo $answer->answer_content; ?>
 							  		</div>
 							  		<div class="partition">
@@ -102,7 +106,7 @@
 								echo '<br/>Not followed any question yet.';
 							else{
 								foreach($followed_questions as $followed_question){?> 
-										<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $followed_question->question_id; ?>" target="_blank" class="link"><?php echo $followed_question->title; ?></a></h5><br/>
+										<div class="panel-default panel-heading"><h5><a href="/index.php/question/questiondetails?question=<?php echo $followed_question->question_id; ?>"  class="link"><?php echo $followed_question->title; ?></a></h5><br/>
 											<?php echo $followed_question->answer_count.' '; ?>Answers<br/> 
 										</div><br/>
 							<?php }

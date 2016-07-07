@@ -39,6 +39,7 @@ class Questionlib{
 			$ids[] = $tag->tag_id;
 		}
 		$questions = $this->_ci->question_model->getQuestionsForFollowedTags($ids, $offset);
+		// var_dump($questions);
 		if(count($questions) == 0)
 			return array();
 

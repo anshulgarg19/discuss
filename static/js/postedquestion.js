@@ -70,8 +70,8 @@ $(document).ready(function() {
             if( answer_count == 1 )
               $('#answer_noun').text('Answers');
 
-            var content = '<div id="answer-content"><h3>'+
-        data['answer_content']+ '</h3></div><br/><h6>Posted on' + time +' Posted by You</h6><div class="partition"></div>'
+            var content = '<div id="answer-content"><h6>'+
+        data['answer_content']+ '</h6></div><br/><h6>Posted on' + time +' Posted by You</h6><div class="partition"></div>'
 
             
             $('#answers-0').prepend(content);

@@ -23,7 +23,7 @@ $(document).ready(function(){
           else{
           	addMoreFollowedQuestions();
           }
-          //to extend for following: else
+          
       }
 
     });

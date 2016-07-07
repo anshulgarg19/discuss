@@ -22,7 +22,10 @@ class Userprofile extends CI_controller{
 		else{
 			$user = $_GET['user'];
 		}
+
+
 		$data = array(
+			"current_user" => $_SESSION['user_id'],
 			"user_id" => $user,
 			"user" => $this->userfactory->getUser($user),
 			"tags" => $this->taglib->getUserTags($user),

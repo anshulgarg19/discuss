@@ -53,7 +53,7 @@ $(document).ready(function(){
 		var invalid = false;
 
 
-		if( question_title.length == 0)
+		if( question_title.length == 0 || question_title.length > 200)
 		{
 			action_question_title_empty();
 			invalid = true;
@@ -65,39 +65,32 @@ $(document).ready(function(){
 			invalid = true;
 		}
 		
+		if($('#tag_select').select2("val") == null) {
+			action_question_tag_empty();
+			invalid = true;
+		}
 		//TODO: validation for tags
 		if( invalid )
 			return;
 
-		var data = {
-			questionTitle : question_title,
-			questionContent : question_content,
-			questionTags : $('#tag_select').select2("val")
-		};
-
-		$.ajax({
-			url : '/index.php/question/postquestion',
-			data : data,
-			type : 'POST',
-			success: function(response) {
-				$('#questionmodal').modal('hide');
-				$('body').html(response);
-			},
-			error: function( response ){
-				$('#question-response').html(response.responseText);
-			}
-		});
+		$('#question_form').submit();
 	});
 
 	//action on empty question title
 	function action_question_title_empty(){
 		$('#error-question-title').css("color","red");
-		$('#error-question-title').html("Title cannot be empty");
+		$('#error-question-title').html("Title should be between one and 200 characters");
 	}
 
 	//action on empty question content
 	function action_question_content_empty(){
 		$('#error-question-content').css("color","red");
 		$('#error-question-content').html("Content cannot be empty");
+	}
+
+	//action on empty tag content
+	function action_question_tag_empty(){
+		$('#error-question-tags').css("color","red");
+		$('#error-question-tags').html("Question should have at least one tag");
 	}
 });
