@@ -57,9 +57,9 @@ $(document).ready(function(){
 			if( response.indexOf('error-login_email') > -1 )
 			{
 				action_invalid_login_email();
+				return;
 			}
-			$('body').html(response);
-			$('body').removeAttr('id');
+			window.location.reload(true);
 		})
 		.error(function(response) {
 			if(response.status == 401) {
