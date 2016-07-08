@@ -40,12 +40,13 @@
 	          <input type="text" name="query" class="form-control" id="searchfield" placeholder="Search">
 	          <input type="hidden" name="value" class="form-control" id="hiddensearchinput">
 	        </div>
-	        <button type="submit" class="btn btn-default">Submit</button>
+	        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a id="link_first_name" href="/index.php/userprofile/showprofile"><?php echo $_SESSION['firstname'];?></a></li>
-			<li><a href="" data-toggle="modal" data-target="#question-modal">Ask Question</a></li>
-			<li><a href="/index.php/userhome/logout">Logout</a></li>
+	        <li><a href="/index.php/userprofile/showprofile"> <?php echo $_SESSION['firstname'];?> <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+	</li>
+			<li><a href="" data-toggle="modal" data-target="#question-modal">Ask Question <span class="glyphicon glyphicon-question-sign"> </span></a></li>
+			<li><a href="/index.php/userhome/logout">Logout <span class="glyphicon glyphicon-off"> </span></a></li>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->

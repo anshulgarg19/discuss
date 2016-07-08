@@ -180,7 +180,8 @@ body {
   }
 }
 
-.answer-content > h5{
-  font-family: Lato;
-  font-size: 1.2em;
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+  margin-bottom: 10px;
 }
