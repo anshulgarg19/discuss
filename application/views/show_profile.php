@@ -19,14 +19,14 @@
 				<form id="edit-name-form" class="form-inline" style="display:none">
 				  <div class="form-group">
 				    <label for="new-firstname">First Name</label>
-				    <input type="text" class="form-control" id="new-firstname" placeholder="<?php echo $user->getFirstname();?>">
+				    <input type="text" class="form-control" id="new-firstname" value="<?php echo $user->getFirstname();?>">
 		    		<div id="error-new-firstname"></div>
 				  </div>
 				  <div class="form-group">
 				    <label for="new-lastname">Last Name</label>
-				    <input type="text" class="form-control" id="new-lastname" placeholder="<?php echo $user->getLastname(); ?>">
+				    <input type="text" class="form-control" id="new-lastname" value="<?php echo $user->getLastname(); ?>">
 				  </div>
-				  <button id="update-name" type="button" class="btn btn-default">Update</button>
+				  <button id="update-name" type="button" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span></button>
 				</form><br/>
 			<?php }else{?>
 				</h3></div><br/>

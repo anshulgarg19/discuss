@@ -62,7 +62,7 @@ $(document).ready(function(){
 				$("#new-firstname").attr("placeholder",new_firstname);
 				$("#new-lastname").val("");
 				$("#new-lastname").attr("placeholder",new_lastname);
-				$("#header_first_name").html(new_firstname);
+				$("#header_first_name").html(new_firstname + '<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>');
 			},
 			error: function(response){
 
