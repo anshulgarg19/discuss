@@ -1,13 +1,17 @@
 <footer class="footer">
-	<div class="container">
-		<div class="pull-left">
-			Avishkar Gupta<br/>
-			Anshul Garg
-		</div>
-		<div class="pull-right">
-			Copyright 2016, discuss.io
-		</div>
-	</div>
+<div class="container">
+  <div class="row">
+  <hr>
+    <div class="col-lg-12">
+      <div class="col-md-8">
+        <a href="https://github.com/rootavish">Avishkar Gupta</a> | <a href="https://in.linkedin.com/in/anshul-garg-0a094759">Anshul Garg</a>    
+      </div>
+      <div class="col-md-4">
+        <p class="muted pull-right">&copy;	2016 Discuss.io. All rights reserved</p>
+      </div>
+    </div>
+  </div>
+</div>
 </footer>
 <a href="#0" class="cd-top">Top</a>
 <!-- Latest compiled and minified JavaScript -->
