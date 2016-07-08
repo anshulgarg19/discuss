@@ -4,9 +4,9 @@
 		<form id="changestatus">
 			<input type="hidden" id="tagid" name="tag" value="<?php echo $tag; ?>">
 			<?php if($following) {?>
-				<button id="follow" type="button" class="btn btn-danger">Unfollow</button>
+				<button id="follow" type="button" class="btn btn-danger">Unfollow Tag</button>
 			<?php } else {?>
-				<button id="follow" type="button" class="btn btn-success">Follow</button>
+				<button id="follow" type="button" class="btn btn-success">Follow Tag</button>
 			<?php }?>
 				<input type="hidden" name="followstatus" id="change" value="<?php echo $following; ?>">
 		</form>
@@ -42,7 +42,7 @@
 			  </div>
 			  <footer>
 			  	<a href="/index.php/question/questiondetails?question=<?php echo $question->id; ?>">
-			  		<?php echo $question->answer_count; ?> answers</a>
+			  		<?php echo $answer_count[$question->id]; ?> answers</a>
 			  	<div class="pull-right">
 			  		Last modified on <?php echo date("F j, Y, g:i a",strtotime($question->last_modified)); ?>
 			  	</div>

@@ -41,12 +41,22 @@
 
 		public function getQuestionsForTagSolr($tag, $offset)
 		{
-			// $q = "SELECT Questions.question_id, title, Questions.created_on, question_content, answer_count FROM Tags_Questions INNER JOIN Questions on Questions.question_id=Tags_Questions.question_id INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id WHERE Tags.tag_id=? ORDER BY Questions.created_on DESC LIMIT 10";
-			// $result = $this->db->query($q, array($tag));
-			// if(!$result) {
-			// 	return $this->error();
-			// }
-			return curlFetchObjectOrArray(SOLR_URL."q=id_list%3A".$tag."&sort=last_modified+desc&start=".$offset."&rows=10&wt=json", false);
+			$questions = curlFetchObjectOrArray(SOLR_URL."q=id_list%3A".$tag."&sort=last_modified+desc&start=".$offset."&rows=10&wt=json", false);
+			$answer_counts = array();
+
+			$ids = array();
+			foreach($questions->response->docs as $question) {
+				$ids[] = $question->id;
+			}
+
+			$query = "SELECT question_id, answer_count FROM Questions WHERE question_id IN (".implode(',', $ids).")";
+			$result = $this->db->query($query);
+
+			foreach($result->result_array() as $tuple) {
+				$answer_counts[$tuple['question_id']] = $tuple['answer_count'];
+			}
+
+			return array("questions" => (array)$questions->response->docs, "answer_count" => $answer_counts);
 		}
 
 		public function getFollowers($tagid) {

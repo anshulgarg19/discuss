@@ -8,9 +8,9 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 				<input type="hidden" id="questionid" name="question_id" value="<?php echo $question_id; ?>">
 				<?php if( !$posted ){
 				if( $following ){ ?>
-				<button id="follow" type="button" class="btn btn-sm btn-danger">Unfollow</button>
+				<button id="follow" type="button" class="btn btn-sm btn-danger">Unfollow Question</button>
 				<?php }else {?>
-				<button id="follow" type="button" class="btn btn-sm btn-success">Follow</button>
+				<button id="follow" type="button" class="btn btn-sm btn-success">Follow Question</button>
 				<?php }
 				}?>
 				<input type="hidden" id="follow_status" name="following_question" value="<?php echo $following; ?>">

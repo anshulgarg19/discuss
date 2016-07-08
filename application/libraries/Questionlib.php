@@ -17,16 +17,6 @@ class Questionlib{
 		if(count($questions) == 0)
 			return array();
 
-		// var_dump($questions);
-		$tags = $this->_ci->tag_model->getTagsForRecentsFromSolr($questions);
-
-		foreach($tags->response->docs as $tag) {
-			// var_dump($tag->id);
-			$questions[(int)$tag->id]["tag_names"] = $tag->tag_names;
-			$questions[(int)$tag->id]["id_list"] = $tag->id_list;
-
-		}
-
 		return $questions;
 	}
 

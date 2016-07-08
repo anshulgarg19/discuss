@@ -28,7 +28,7 @@
 	  </div>
 	  <footer class="footer">
 	  	<a href="/index.php/question/questiondetails?question=<?php echo $question->id;?>">
-	  		<?php echo $question->answer_count; ?> answers</a>
+	  		<?php echo $question->answer_count[$question->id]; ?> answers</a>
 	  	<div class="pull-right">
 	  		Last modified on <?php echo date("F j, Y, g:i a",strtotime($question->last_modified)); ?>
 	  	</div>

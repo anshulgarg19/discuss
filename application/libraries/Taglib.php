@@ -40,11 +40,7 @@
 		}
 
 		function getQuestionsForTag($tag, $offset) {
-			$result = $this->_ci->tag_model->getQuestionsForTagSolr($tag, $offset);
-			if(!$result->response->docs)
-				return array();
-
-			return (array)$result->response->docs;
+			return $this->_ci->tag_model->getQuestionsForTagSolr($tag, $offset);
 		}
 
 		function isFollowingTag($tag, $userid) {

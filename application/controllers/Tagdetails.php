@@ -20,9 +20,9 @@ class Tagdetails extends CI_Controller {
 			die();
 		}
 
+		$data = $this->taglib->getQuestionsForTag($_GET['tag'], 0);
 		$data['tag'] =  $_GET["tag"];
 		$data['tag_name'] =  $response;
-		$data['questions'] = $this->taglib->getQuestionsForTag($_GET['tag'], 0);
 		$data['num_followers'] = $this->taglib->getNumFollowers($_GET['tag']);
 		$data['following'] = $this->taglib->isFollowingTag($_GET['tag'], $_SESSION['user_id']);
 		$this->load->view("header");
@@ -34,7 +34,7 @@ class Tagdetails extends CI_Controller {
 
 		if(!isset($_GET['tag']) && !isset($_GET['offset']))
 			return;
-		$data['questions'] = $this->taglib->getQuestionsForTag($_GET['tag'], $_GET['offset']);
+		$data = $this->taglib->getQuestionsForTag($_GET['tag'], $_GET['offset']);
 		$this->load->view("more_questions_tagpage.php", $data);
 	}
 

@@ -24,13 +24,13 @@ $(document).ready(function() {
           if( current == 'Follow'){
             $('#follow').removeClass('btn-success');
             $('#follow').addClass('btn-danger');
-            $('#follow').html('Unfollow');
+            $('#follow').html('Unfollow Question');
             $('#follow_status').val(1);
           }
           else{
             $('#follow').removeClass('btn-danger');
             $('#follow').addClass('btn-success');
-            $('#follow').html('Follow');
+            $('#follow').html('Follow Question');
             $('#follow_status').val(0);
           }
         },

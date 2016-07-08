@@ -53,9 +53,9 @@
 										<div id="tag-div-<?php echo $tag->tag_id; ?>">	
 											
 												<form id="changestatus-<?php echo $tag->tag_id; ?>">
-													<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.')'; ?></a>
+													<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.') followers'; ?></a>
 													<?php if($current_user == $user_id){ ?>	
-														<button style="float:right" id="tag-<?php echo $tag->tag_id?>" type="button" class="btn btn-sm unfollow-tag" value="<?php echo $tag->tag_id;?>">Unfollow</button>
+														<button style="float:right" id="tag-<?php echo $tag->tag_id?>" type="button" class="btn btn-sm unfollow-tag" value="<?php echo $tag->tag_id;?>">Unfollow Tag</button>
 													<?php }?>
 												</form><br/>
 

@@ -34,7 +34,7 @@ jQuery(document).ready(function($) {
 			if (current == "Follow") {
 				$('#follow').removeClass('btn-success');
 				$('#follow').addClass('btn-danger');
-				$('#follow').html("Unfollow");
+				$('#follow').html("Unfollow Tag");
 				$('#numfollowerscontainer').html("No. of users following this tag:<span id=\"numfollowers\">" + (parseInt($('#numfollowers').html()) + 1).toString() + "</span>");
 				$('#change').val(1);				
 
@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
 			else {
 				$('#follow').removeClass('btn-danger');
 				$('#follow').addClass('btn-success');
-				$('#follow').html("Follow");
+				$('#follow').html("Follow Tag");
 				$('#numfollowerscontainer').html("No. of users following this tag:<span id=\"numfollowers\">" + (parseInt($('#numfollowers').html()) - 1).toString() + "</span>");
 				$('#change').val(0);
 				
