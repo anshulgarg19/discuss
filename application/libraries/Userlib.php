@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct scripts allowed');
 
-class Userfactory{
+class Userlib{
 	
 	function __construct(){
 		$this->_ci =& get_instance();

@@ -6,7 +6,7 @@ class Userprofile extends CI_controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->library("Userfactory");
+		$this->load->library("Userlib");
 		$this->load->library("Questionlib");
 		$this->load->library("Answerlib");
 		$this->load->library("Taglib");
@@ -28,7 +28,7 @@ class Userprofile extends CI_controller{
 		$data = array(
 			"current_user" => $_SESSION['user_id'],
 			"user_id" => $user,
-			"user" => $this->userfactory->getUser($user),
+			"user" => $this->userlib->getUser($user),
 			"tags" => $this->taglib->getUserTags($user),
 			"questions" => $this->questionlib->get_questions_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT,"POST"),
 			"answers" => $this->answerlib->get_answers_for_user($user,DEFAULT_OFFSET,DEFAULT_LIMIT),
@@ -51,8 +51,8 @@ class Userprofile extends CI_controller{
 			return;
 		}		
 
-		$this->load->library("Userfactory");
-		$response = $this->userfactory->activateProfile();
+		$this->load->library("userlib");
+		$response = $this->userlib->activateProfile();
 
 		
 		if( $response == ACK )
@@ -80,7 +80,7 @@ class Userprofile extends CI_controller{
 			return;
 		}
 
-		$this->userfactory->changeName($_SESSION['user_id'],$_POST['firstname'],$_POST['lastname']);
+		$this->userlib->changeName($_SESSION['user_id'],$_POST['firstname'],$_POST['lastname']);
 		$_SESSION['firstname'] = $_POST['firstname'];
 	}
 
@@ -109,7 +109,7 @@ class Userprofile extends CI_controller{
 		{
 			$filedata = $this->upload->data();
 			$filename = $filename.$filedata['file_ext'];
-			$this->userfactory->updateProfilePicURI($_SESSION['user_id'],$filename);
+			$this->userlib->updateProfilePicURI($_SESSION['user_id'],$filename);
 			redirect('/userprofile/showprofile');
 		}
 	}

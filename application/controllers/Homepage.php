@@ -25,6 +25,7 @@ class Homepage extends CI_Controller {
 		$this->load->helper('redirect_helper');
 		$this->load->helper('email_helper');
 		$this->load->helper('pic_helper');
+		$this->load->library("Userlib");
 	}
 
 	public function index()
@@ -38,10 +39,9 @@ class Homepage extends CI_Controller {
 	//method to initiate registration in controller
 	public function register() {
 		
-		$this->load->library("Userfactory");				
 
 		$activation_key = sha1($_POST['email'].ACTIVATE_STRING);
-		$response = $this->userfactory->createUser($_POST,$activation_key);
+		$response = $this->userlib->createUser($_POST,$activation_key);
 
 		$user_id = $response['user_id'];
 		$filename = $user_id;
@@ -59,7 +59,7 @@ class Homepage extends CI_Controller {
 			$filename = $filename.$filedata['file_ext'];			
 		}
 
-		$this->userfactory->updateProfilePicURI($user_id,$filename);	
+		$this->userlib->updateProfilePicURI($user_id,$filename);
 		$this->sendactivationmail($_POST,$activation_key);
 		$this->load->view('register_success');
 		
@@ -67,7 +67,6 @@ class Homepage extends CI_Controller {
 
 	//Function for server side validations
 	public function validateuser(){
-		$this->load->library("Userfactory");
 
 		$inputValid = true;
 		$validation_errors = array();
@@ -116,7 +115,7 @@ class Homepage extends CI_Controller {
 			return;
 		}		
 
-		$response = $this->userfactory->check_phone_num_email($_POST['phone_num'],$_POST['email']);
+		$response = $this->userlib->check_phone_num_email($_POST['phone_num'],$_POST['email']);
 		
 		if(isset($response['phone-exists']))
 		{
@@ -141,7 +140,6 @@ class Homepage extends CI_Controller {
 
 	public function login() {
 
-		$this->load->library("Userfactory");
 		$this->load->model("Tag_model");
 
 		$validation_errors = array();
@@ -163,7 +161,7 @@ class Homepage extends CI_Controller {
 			$type = "email";
 		}
 
-		if (!$this->userfactory->verifyLogin($_POST, $type)) {
+		if (!$this->userlib->verifyLogin($_POST, $type)) {
 			return;
 		}
 
@@ -172,8 +170,7 @@ class Homepage extends CI_Controller {
 
 	public function forgot() {
 
-		$this->load->library("Userfactory");
-		$this->userfactory->passwordResetInit($_POST['forgotmail']);
+		$this->userlib->passwordResetInit($_POST['forgotmail']);
 	}
 
 	public function sendactivationmail($data,$activation_key) {
@@ -201,8 +198,7 @@ class Homepage extends CI_Controller {
 	}
 
 	public function PasswordResetClose() {
-		$this->load->library("Userfactory");
-		if ($this->userfactory->PasswordResetClose($_POST['token'], $_POST['email'], $_POST['password'])) {
+		if ($this->userlib->PasswordResetClose($_POST['token'], $_POST['email'], $_POST['password'])) {
 			echo "Your password was reset successfully.";
 		}
 		else {
