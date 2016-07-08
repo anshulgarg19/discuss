@@ -149,7 +149,8 @@
 		      <div class="modal-body">
 		        <!--<input class="noEnterSubmit" type="text" id="answer_content" onsubmit="return false;" placeholder="Enter your answer here :") />-->
 		        <form method="POST" action="/index.php/userprofile/changepic" id="change_photo_form" enctype="multipart/form-data">
-		  			<input type="file" name="userfile"/>
+		  			<input type="file" name="userfile" id="userfile"/>
+		  			<div id="image-error"></div>
 				</form>		
 		      </div>
 		      <div class="modal-footer">

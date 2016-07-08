@@ -523,7 +523,7 @@ $config['allowed_types']        = 'gif|jpg|png|jpeg';
 $config['max_size']             = 2*1024;
 $config['max_width']            = 2000;
 $config['max_height']           = 2768;
-
+$config['overwrite']			= TRUE;
 
 /*
 **configurations for sending email

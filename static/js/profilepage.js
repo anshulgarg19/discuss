@@ -62,6 +62,7 @@ $(document).ready(function(){
 				$("#new-firstname").attr("placeholder",new_firstname);
 				$("#new-lastname").val("");
 				$("#new-lastname").attr("placeholder",new_lastname);
+				$("#header_first_name").html(new_firstname);
 			},
 			error: function(response){
 
@@ -87,10 +88,42 @@ $(document).ready(function(){
 		});
 	});
 
+	$("#change-photo-button").prop("disabled",true);
+
 	$("#change-photo-button").on('click', function(event) {
 
         $("#change_photo_form").submit();
     });
+
+    $("#userfile").change(function(){
+    	$("#image-error").html("");
+    	var file = this.files[0];
+
+    	var imagefile = file.type;
+    	var filesize = file.size;
+
+    	var match = ["image/jpeg","image/jpg","image/png","image/gif"];
+    	var error_message;
+
+    	if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2])))
+		{
+			error_message = "<p>Please Select valid File (Allowed:jpeg/jpg/png/gif)</p>";
+			action_invalid_profile_pic(error_message);
+			return false;
+		}
+		if(filesize > 2*1024*1024){
+			error_message = "<p>Max file size allowed is 2MB.</p>";
+			action_invalid_profile_pic(error_message);
+			return false;
+		}
+		$("#change-photo-button").prop("disabled",false);
+    	console.log(file);
+    });
+
+    function action_invalid_profile_pic(message){
+    	$("#change-photo-button").prop("disabled",true);
+		$("#image-error").html(message);
+    }
 
 	function action_empty_first_name(){
 		$("#error-new-firstname").css("color","red");

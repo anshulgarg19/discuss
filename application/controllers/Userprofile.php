@@ -13,6 +13,7 @@ class Userprofile extends CI_controller{
 		$this->load->library("session");
 		$this->load->helper("url");
 		$this->load->helper("validations_helper");
+		$this->load->helper("pic_helper");
 	}
 
 	//method for a new user
@@ -89,13 +90,15 @@ class Userprofile extends CI_controller{
 		$filename = $_SESSION['user_id'];
 
         //file config details
-        $fileconfig['upload_path'] 			= $this->config->item('upload_path');
+        /*$fileconfig['upload_path'] 			= $this->config->item('upload_path');
         $fileconfig['allowed_types']        = $this->config->item('allowed_types');
         $fileconfig['max_size']             = $this->config->item('max_size');
         $fileconfig['max_width']            = $this->config->item('max_width');
-        $fileconfig['max_height']           = $this->config->item('max_height');
-        $fileconfig['file_name'] 			= $filename;
+        $fileconfig['max_height']           = $this->config->item('max_height');*/
+        
 
+        $fileconfig = getfileconfigurations();
+        $fileconfig['file_name'] = $filename;
 
 	    $this->load->library('upload', $fileconfig);
 
@@ -103,7 +106,9 @@ class Userprofile extends CI_controller{
 
 		if(!$this->upload->do_upload('userfile'))
 		{
-		    echo "file upload failed";
+			http_response_code(400);
+		    echo $this->upload->display_errors();
+		    return;
 		}
 		else
 		{

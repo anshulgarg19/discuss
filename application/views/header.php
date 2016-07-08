@@ -43,7 +43,7 @@
 	        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="/index.php/userprofile/showprofile"> <?php echo $_SESSION['firstname'];?> <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+	        <li><a id="header_first_name" href="/index.php/userprofile/showprofile"> <?php echo $_SESSION['firstname'];?> <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
 	</li>
 			<li><a href="" data-toggle="modal" data-target="#question-modal">Ask Question <span class="glyphicon glyphicon-question-sign"> </span></a></li>
 			<li><a href="/index.php/userhome/logout">Logout <span class="glyphicon glyphicon-off"> </span></a></li>

@@ -196,6 +196,36 @@ $(document).ready(function(){
 		
 	});
 
+	$("#userfile").change(function(){
+		$("#register_submit").prop("disabled",false);
+    	$("#image-error").html("");
+    	var file = this.files[0];
+
+    	var imagefile = file.type;
+    	var filesize = file.size;
+
+    	var match = ["image/jpeg","image/jpg","image/png","image/gif"];
+    	var error_message;
+
+    	if(!((imagefile==match[0]) || (imagefile==match[1]) || (imagefile==match[2])))
+		{
+			error_message = "<p>Please Select valid File (Allowed:jpeg/jpg/png/gif)</p>";
+			action_invalid_profile_pic(error_message);
+			return false;
+		}
+		if(filesize > 2*1024*1024){
+			error_message = "<p>Max file size allowed is 2MB.</p>";
+			action_invalid_profile_pic(error_message);
+			return false;
+		}
+    	
+    });
+
+    function action_invalid_profile_pic(message){
+    	$("#register_submit").prop("disabled",true);
+		$("#image-error").html(message);
+    }
+
 	// Function for password reset submit
 	$('#reset_button').click(function(event) {
 		$('#reset_button').append('<span class="glyphicon glyphicon-refresh spinning"></span>');
