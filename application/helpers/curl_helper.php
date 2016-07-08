@@ -1,5 +1,5 @@
 <?php
-	function curlFetchArray($url) {
+	function curlFetchObjectOrArray($url,$array) {
 		$curl = curl_init();
 		// Set some options - we are passing in a useragent too here
 		curl_setopt_array($curl, array(
@@ -12,6 +12,6 @@
 		// Close request to clear up some resources
 		curl_close($curl);
 
-		return json_decode($resp);
+		return json_decode($resp, $array);
 	}
 ?>

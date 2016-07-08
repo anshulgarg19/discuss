@@ -12,7 +12,7 @@ class Suggesterlib
 	}
 
 	public function getSuggestions($data) {
-		$response = curlFetchArray(SOLR_SUGGEST_URL.$data)->suggest->mySuggester->$data;
+		$response = curlFetchObjectOrArray(SOLR_SUGGEST_URL.$data, false)->suggest->mySuggester->$data;
 		if($response->numFound) {
 			$retval = array("query" => $data, "suggestions" => array());
 			foreach($response->suggestions as $suggestion) {
@@ -25,7 +25,7 @@ class Suggesterlib
 	}
 
 	public function getTaggingSuggestions($data) {
-		$response = curlFetchArray(SOLR_SUGGEST_URL.$data)->suggest->mySuggester->$data;
+		$response = curlFetchObjectOrArray(SOLR_SUGGEST_URL.$data, false)->suggest->mySuggester->$data;
 		if($response->numFound) {
 			$retval = array();
 			foreach($response->suggestions as $suggestion) {

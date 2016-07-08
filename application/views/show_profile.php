@@ -6,10 +6,7 @@
 	<div class="row">
 		<div id="profile_pic" class="col-md-1 col-md-offset-1">
 			<img src="/uploads/<?php echo $user->getProfilePicUrl() ?>" alt="Profile Picture"  height="140" width="140" class=" img-circle" id="photo">
-			<!--<img src="/static/img/default.png" alt="Profile Picture" height="42" width="42">-->
-			<?php if( $current_user == $user_id){?>
-				<p class="edit-link"><a data-toggle="modal" data-target="#photo-modal" >Edit Photo</a></p>
-			<?php }?>	
+			<!--<img src="/static/img/default.png" alt="Profile Picture" height="42" width="42">-->	
 		</div>
 
 		<div class="col-md-offset-2 col-md-7">
@@ -37,13 +34,17 @@
 			<p><i class="glyphicon glyphicon-envelope"></i><?php echo '  '.$user->getEmail() ?><br/>
 			<i class="glyphicon glyphicon-earphone"></i><?php echo '  '.$user->getPhone() ?><br/></p>
 		</div>
-	</div><br/>
+	</div>
 	<div class="row">
-		<div class="col-md-offset-1 col-md-10 partition"></div>
+		<?php if( $current_user == $user_id){?>
+		<div class="col-md-3 col-md-offset-1" >
+			<p><a style="margin-left: 25px;" data-toggle="modal" data-target="#photo-modal" >Edit Photo</a></p>
+		</div>
+		<?php }?>
 	</div>
 	
 		<div class="col-md-3 col-md-offset-1" >
-			<span>Tags Followed</span>
+			<h4>Tags Followed</h4>
 			<div id="my-tags" style="height:350px;overflow-y:auto">
 			
 			<?php if( count($tags) == 0 ) echo 'No tags';

@@ -184,3 +184,7 @@ body {
   margin-left: 0px;
   margin-bottom: 10px;
 }
+
+#recentlist > li > div > div.pull-right {
+  margin-top: -15px;
+}

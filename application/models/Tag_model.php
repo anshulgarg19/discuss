@@ -46,7 +46,7 @@
 			// if(!$result) {
 			// 	return $this->error();
 			// }
-			return curlFetchArray(SOLR_URL."q=id_list%3A".$tag."&sort=last_modified+desc&start=".$offset."&rows=10&wt=json");
+			return curlFetchObjectOrArray(SOLR_URL."q=id_list%3A".$tag."&sort=last_modified+desc&start=".$offset."&rows=10&wt=json", false);
 		}
 
 		public function getFollowers($tagid) {
@@ -114,7 +114,7 @@
 			}
 			$qp = implode("+OR+id%3A", $idList);
 			$q = SOLR_URL."q=id%3A".$qp."&sort=last_modified+desc&fl=tag_names%2C+id%2C+id_list&wt=json&rows=2000";
-			return curlFetchArray($q);
+			return curlFetchObjectOrArray($q, false);
 		}
 	}
 ?>

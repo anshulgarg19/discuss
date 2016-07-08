@@ -7,22 +7,23 @@
  	batchSize="1" /> 
  
  <document name="questions">   
-  	<entity name="question" pk="id" query="SELECT question_id, question_content, title,last_modified_on, answer_count FROM Questions"
-    deltaImportQuery="SELECT question_id, question_content, title,last_modified_on, answer_count FROM Questions WHERE question_id=${dih.delta.id} limit 200000;"
+  	<entity name="question" pk="id" query="SELECT question_id, question_content, title,last_modified_on, created_on FROM Questions"
+    deltaImportQuery="SELECT question_id, question_content, title,last_modified_on, created_on FROM Questions WHERE question_id=${dih.delta.id} limit 200000;"
                deltaQuery="select question_id as id from Questions WHERE last_modified_on &gt; '${dih.last_index_time}'"
       >
    		<field column="question_id" name="id"/>
    		<field column="question_content" name="question_content"/>    
 		<field column="title" name="title"/>
 		<field column="last_modified_on" name="last_modified"/>
-   		<field column="answer_count" name="answer_count"/>    
+   		<field column="created_on" name="created_on"/>    
   		<entity name="tag_list" query="SELECT Tags.tag_id AS tag_id, tag_name FROM Tags_Questions INNER JOIN Tags ON Tags.tag_id=Tags_Questions.tag_id WHERE question_id=${question.question_id}">
   			<field column="tag_name" name="tag_names"/>
 			<field column="tag_id" name="id_list"/>
   		</entity>
-		<entity name="poster" query="SELECT firstname, Users.user_id AS user_id FROM Users_Questions JOIN Users on Users.user_id=Users_Questions.user_id WHERE Users_Questions.type='POST' AND Users_Questions.question_id=${question.question_id}">
+		<entity name="poster" query="SELECT firstname, Users.user_id AS user_id, Users.profile_pic FROM Users_Questions JOIN Users on Users.user_id=Users_Questions.user_id WHERE Users_Questions.type='POST' AND Users_Questions.question_id=${question.question_id}">
 			<field column="firstname" name="name"/>
 			<field column="user_id" name="user_id"/>
+      <field column="profile_pic" name="profile_pic"/>
 		</entity>
   	</entity>
  </document>

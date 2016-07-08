@@ -136,24 +136,32 @@
 	    // Function to return a collection of the ten most recent questions
 	    public function getRecentQuestions($offset) {
 	    	
-	    	$q = "SELECT question_id,question_content,title,last_modified_on,created_on,answer_count FROM Questions ORDER BY last_modified_on DESC LIMIT ?,10";
-	    	$result = $this->db->query($q, array($offset));
-	    	$retval = array();
-	    	foreach($result->result_array() as $row) {
-	    		$retval[$row['question_id']] = array(
-	    				"question_id" => $row['question_id'],
-	    				"question_content" => $row['question_content'],
-	    				"title" => $row['title'],
-	    				"last_modified_on" => $row['last_modified_on'],
-	    				"created_on" => $row['created_on'],
-	    				"answer_count" => $row['answer_count'] 
-	    			);
+	    	$result = curlFetchObjectOrArray(SOLR_URL."q=*%3A*&sort=last_modified+desc&start=".$offset."&rows=10&wt=json", true);
+	    	
+	    	// save the ids of the questions to get the answer count from the  database.
+	    	$ids = array();
+
+	    	foreach($result['response']['docs'] as $tuple) {
+	    		$ids[] = $tuple['id'];
 	    	}
-	    	return $retval;
+
+	    	$q = "SELECT question_id, answer_count FROM Questions WHERE question_id IN (".implode(',', $ids).")";
+	    	$response = $this->db->query($q);
+
+	    	if(!$response) {
+	    		http_response_code(500);
+	    		return array();
+	    	}
+
+	    	$ansCounts = array();
+	    	foreach($response->result_array() as $tuple) {
+	    		$ansCounts[$tuple['question_id']] = $tuple['answer_count'];
+	    	}
+
+	    	return array("questions" => $result['response']['docs'], "answer_counts" => $ansCounts);
 	    }
 
 	    // Function to return questions for tags that the user was following recently
-
 	    public function interestQuestion($user_id) {
 	    	$q = "SELECT DISTINCT Questions.question_id FROM Questions INNER JOIN Tags_Questions INNER JOIN Users_Tags ON Questions.question_id = Tags_Questions.question_id WHERE Tags_Questions.tag_id = Users_Tags.tag_id AND Users_Tags.user_id=?";
 	    	$result = $this->db->query($q, array($user_id));
