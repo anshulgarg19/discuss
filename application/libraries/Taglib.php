@@ -22,10 +22,12 @@
 		// A function to enter user tag relationships into the database
 		function saveUserTags($tags) {
 			$values = array();
-
+			
+			
 			foreach($tags as $tag) {
 				$values[] = '('.$tag.', '.$_SESSION['user_id'].')';
 			}
+
 			
 			if($this->_ci->tag_model->writeUserTags($values, $tags)) {
 				return true;

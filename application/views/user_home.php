@@ -36,7 +36,7 @@
 								Last activity: <?php echo date("F j, Y, g:i a",strtotime($question['last_modified']));?>
 							</div>
 							<div class="pull-right">
-								Posted by: <a href="<?php echo $question['user_id']; ?>"><?php echo $question['name']?></a> <img src="/uploads/<?php echo $question['profile_pic']; ?>" height="50" width="50">
+								Posted by: <a href="userprofile/showprofile?user=<?php echo $question['user_id']; ?>"><?php echo $question['name']?></a> <img src="/uploads/<?php echo $question['profile_pic']; ?>" height="50" width="50">
 								<br/><div style="margin-top:5px;">on: <?php echo date("F j, Y, g:i a",strtotime($question['created_on'])); ?></div><br/>
 							</div>
 						</div>
@@ -62,14 +62,16 @@
 						}?>
 					</div>
 					<div class="row">
-						<?php if(array_key_exists("tag_names", $question)) { 
-							for($i=0; $i < count($question['tag_names']); $i++) { ?>
-						<a href="tagdetails?tag=<?php echo $question['id_list'][$i]; ?>">
-							<div class="badge">
-								<?php echo $question['tag_names'][$i]; ?>
-							</div>
-						</a>
-						<?php }} ?>
+						<?php $tag_ids=array_keys($question['tag_list']); 
+								foreach($tag_ids as $tag_id){?>
+						
+								<a href="tagdetails?tag=<?php echo $tag_id; ?>">
+								<div class="badge">
+									<?php echo $question['tag_list'][$tag_id]; ?>
+								</div>
+								</a>
+						<?php }?>	
+
 					</div>
 					<div class="pull-left">
 						<a href="question/questiondetails?question=<?php echo $question['question_id']; ?>">No. of Answers: <?php echo $question['answer_count']; ?></a>

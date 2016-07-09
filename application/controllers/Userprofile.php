@@ -115,7 +115,7 @@ class Userprofile extends CI_controller{
 			$filedata = $this->upload->data();
 			$filename = $filename.$filedata['file_ext'];
 			$this->userlib->updateProfilePicURI($_SESSION['user_id'],$filename);
-			redirect('/userprofile/showprofile');
+			redirect('/userprofile/showprofile','location');
 		}
 	}
 

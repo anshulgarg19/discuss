@@ -30,7 +30,7 @@ class Questionlib{
 		}
 		$questions = $this->_ci->question_model->getQuestionsForFollowedTags($ids, $offset);
 		// var_dump($questions);
-		if(count($questions) == 0)
+		/*if(count($questions) == 0)
 			return array();
 
 		$tags = $this->_ci->tag_model->getTagsForRecentsFromSolr($questions);
@@ -38,7 +38,7 @@ class Questionlib{
 		foreach($tags->response->docs as $tag) {
 			$questions[(int)$tag->id]["tag_names"] = $tag->tag_names;
 			$questions[(int)$tag->id]["id_list"] = $tag->id_list;
-		}
+		}*/
 		return $questions;
 	}
 

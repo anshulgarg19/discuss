@@ -14,7 +14,7 @@
 
 			$data['tags'] = $tags;
 
-			$this->load->view("header");
+			$this->load->view("follow_tag_header");
 			$this->load->view("follow_tags", $data);
 			$this->load->view("footer");
 		}

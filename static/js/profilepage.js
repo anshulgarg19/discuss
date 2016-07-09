@@ -146,13 +146,12 @@ $(document).ready(function(){
 			
 			success: function(response){
 				response.trim();
-				if( response == "</div>")
+				if( response == "")
 				{
 					return;
 				}
 				else{
-					response = '<div id="my-questions-'+(question_offset/question_limit)+'">'+response;
-					$(response).insertAfter("#my-questions-"+((question_offset/question_limit)-1));
+					$("#my-questions").append(response);
 					question_offset = question_offset + question_limit;
 				}	
 			},
@@ -174,14 +173,14 @@ $(document).ready(function(){
 			type:"post",
 			success: function(response){
 				response.trim();
-				if( response == "</div>")
+				if( response == "")
 				{
+					console.log(answer_offset);
 					return;
 				}
 				else
 				{
-					response = '<div role="tabpanel" class="tab-pane" id="my-answers-'+(answer_offset/answer_limit)+'">'+response;
-					$(response).insertAfter("#my-answers-"+((answer_offset/answer_limit)-1));
+					$("#my-answers").append(response);
 					answer_offset += answer_limit;
 				}
 			},
@@ -205,13 +204,12 @@ $(document).ready(function(){
 			
 			success: function(response){
 				response.trim();
-				if( response == "</div>")
+				if( response == "")
 				{
 					return;
 				}
 				else{
-					response = '<div id="my-followed-'+(followed_question_offset/followed_question_limit)+'">'+response;
-					$(response).insertAfter("#my-followed-"+((followed_question_offset/followed_question_limit)-1));
+					$("#my-followed").append(response);
 					followed_question_offset = followed_question_offset + followed_question_limit;
 				}	
 			},

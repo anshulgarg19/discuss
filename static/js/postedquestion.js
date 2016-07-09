@@ -21,7 +21,7 @@ $(document).ready(function() {
         url : "/index.php/question/changefollowstatus",
         success: function(response){
           var current = $('#follow').html();
-          if( current == 'Follow'){
+          if( current == 'Follow Question'){
             $('#follow').removeClass('btn-success');
             $('#follow').addClass('btn-danger');
             $('#follow').html('Unfollow Question');
@@ -68,14 +68,14 @@ $(document).ready(function() {
             var answer_count = parseInt($('#answer_count').text());
             $('#answer_count').text(answer_count+1);
             if( answer_count == 1 )
-              $('#answer_noun').text('Answers');
+              $('#answer_noun').text(' Answers');
 
-            var content = '<div id="answer-content"><h6>'+
-        data['answer_content']+ '</h6></div><br/><h6>Posted on' + time +' Posted by You</h6><div class="partition"></div>'
+            var content = '<div class="answer-content">'+data['answer_content']+'</div><br/><div class="row">  <div class="pull-right">Posted by You <br/>on: '+time+'</div></div><div class="row"><div class="partition"></div>';
 
             
-            $('#answers-0').prepend(content);
+            $('#answers').prepend(content);
 
+            $("#answer_content").val('');
             send_activity_mail(data);
 
           },
@@ -119,13 +119,13 @@ $(document).ready(function() {
           type : "post",
           success: function( response ){
             response.trim();
-            if( response == '"></div>'){
+            if( response == ''){
               $(window).off('scroll');
               return;
             }
                 
-            response = '<div id="answers-'+(offset/limit)+response;
-            $(response).insertAfter($('#answers-'+((offset/limit)-1)));
+            
+            $("#answers").append(response);
             offset = offset + limit;
             
           },

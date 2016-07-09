@@ -7,15 +7,15 @@
 		}?>
 	</div>
 	<div class="row">
-		<?php
-		if(array_key_exists("tag_names", $question)) { 
-		for($i=0; $i < count($question['tag_names']); $i++) { ?>
-		<a href="tagdetails?tag=<?php echo $question['id_list'][$i]; ?>">
-			<div class="badge">
-				<?php echo $question['tag_names'][$i]; ?>
-			</div>
-		</a>
-		<?php }} ?>
+		<?php $tag_ids=array_keys($question['tag_list']); 
+			foreach($tag_ids as $tag_id){?>
+	
+				<a href="tagdetails?tag=<?php echo $tag_id; ?>">
+				<div class="badge">
+					<?php echo $question['tag_list'][$tag_id]; ?>
+				</div>
+				</a>
+		<?php }?>
 	</div>
 	<div class="pull-left">
 		<a href="question/questiondetails?question=<?php echo $question['question_id']; ?>">No. of Answers: <?php echo $question['answer_count']; ?></a>

@@ -11,13 +11,14 @@ jQuery(document).ready(function($) {
 
 		var tags = [];
 		$('#submit').click(function(event) {
-
+			
 			$(':checked').each(function() {
 				tags.push($(this).val());
 			});
-
+			
+			
 			if(tags.length < 3) {
-				window.alert("Choose atleast 3 tags");
+				
 				tags = [];
 				event.preventDefault();
 			}
@@ -40,13 +41,12 @@ jQuery(document).ready(function($) {
 				success: function(response){
 		            
 		            response.trim();
-		            if( response == '"></div>'){
+		            if( response == ''){
 		              $(window).off('scroll');
 		              return;
 		            }
 		                
-		            response = '<div id="tags-'+(offset/limit)+response;
-		            $(response).insertAfter($('#tags-'+((offset/limit)-1)));
+		            $("#tag_details").append(response);
 		            offset = offset + limit;
 		            
 

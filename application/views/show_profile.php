@@ -53,7 +53,7 @@
 										<div id="tag-div-<?php echo $tag->tag_id; ?>">	
 											
 												<form id="changestatus-<?php echo $tag->tag_id; ?>">
-													<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.') followers'; ?></a>
+													<a href="/index.php/tagdetails?tag=<?php echo $tag->tag_id; ?>" class="link link-tag"><?php echo $tag->tag_name.' ('.$tag->user_count.' followers)'; ?></a>
 													<?php if($current_user == $user_id){ ?>	
 														<button style="float:right" id="tag-<?php echo $tag->tag_id?>" type="button" class="btn btn-sm unfollow-tag" value="<?php echo $tag->tag_id;?>">Unfollow Tag</button>
 													<?php }?>
@@ -79,7 +79,7 @@
 			<div class="tab-content">
 				
 					<div role="tabpanel" class="tab-pane active" id="my-questions">
-						<div id="my-questions-0">
+						
 							<?php 
 								if( count($questions) == 0 ) 
 									echo '<br/>Not posted any quesitons yet.'; 
@@ -90,13 +90,12 @@
 										</div><br/>
 							<?php }
 							}?>		
-						</div>
+						
 					</div>
 				
 				<!-- answers nav bar -->
 				
 					<div role="tabpanel" class="tab-pane" id="my-answers">
-						<div id="my-answers-0">
 							<?php 
 							  if( count($answers) == 0 )
 								echo '<br/>Not answered any question yet.';
@@ -113,13 +112,12 @@
 							  		</div>
 							  	<?php }
 							  	}?>
-						</div>	
 					</div>
 
 				<!-- followed question nav bar -->	
 
 				<div role="tabpanel" class="tab-pane" id="my-followed">
-					<div id="my-followed-0">
+					
 						<?php 
 							if( count($followed_questions) == 0 )
 								echo '<br/>Not followed any question yet.';
@@ -130,7 +128,7 @@
 										</div><br/>
 							<?php }
 							}?>
-					</div>
+					
 				</div>
 			</div>	
 		</div>

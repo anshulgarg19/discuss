@@ -7,11 +7,11 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 			<form id="changestatus">
 				<input type="hidden" id="questionid" name="question_id" value="<?php echo $question_id; ?>">
 				<?php if( !$posted ){
-				if( $following ){ ?>
-				<button id="follow" type="button" class="btn btn-sm btn-danger">Unfollow Question</button>
-				<?php }else {?>
-				<button id="follow" type="button" class="btn btn-sm btn-success">Follow Question</button>
-				<?php }
+					if( $following ){ ?>
+					<button id="follow" type="button" class="btn btn-sm btn-danger">Unfollow Question</button>
+					<?php }else {?>
+					<button id="follow" type="button" class="btn btn-sm btn-success">Follow Question</button>
+					<?php }
 				}?>
 				<input type="hidden" id="follow_status" name="following_question" value="<?php echo $following; ?>">
 				
@@ -41,14 +41,8 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 			</div>
 		</div>
 		<div class="row">
-			<?php 
-				if($answer_count > 2) {
-					echo 'This question has not been answered yet.';
-				}
-				else {
-					echo 'No. of answers: '.$answer_count;
-				}
-			?>
+			
+		<span id="answer_count"><?php echo $answer_count; ?></span><span id="answer_noun"> Answers</span>
 			<!-- <div class="pull-right" id="#answerquestion">
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#answer-modal">Answer this question</button>
 			</div> -->
@@ -68,7 +62,7 @@ defined('BASEPATH') or exit('No direct access to script allowed');
 	</form>
 
 		<!--Answers for the question -->
-		<div id="answers-0">
+		<div id="answers">
 			<?php foreach($answers as $row) { ?>
 			
 			<div class="answer-content"><?php echo $row['answer_content']; ?></div><br/>

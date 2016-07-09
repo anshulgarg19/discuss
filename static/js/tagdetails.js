@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
 		})
 		.success(function(response) {
 			var current = $('#follow').html();
-			if (current == "Follow") {
+			if (current == "Follow Tag") {
 				$('#follow').removeClass('btn-success');
 				$('#follow').addClass('btn-danger');
 				$('#follow').html("Unfollow Tag");

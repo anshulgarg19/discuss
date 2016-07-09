@@ -8,9 +8,12 @@
 		private $answer_count;
 		private $title;
 
+		private $uncached_question_id;
+
 		function __construct() {
 			parent::__construct();
 			$this->load->library('session');
+			$this->load->driver('cache',['adapter' => 'redis' ]);
 		}
 
 
@@ -293,7 +296,7 @@
 	    	$results['title'] = $result->title;
 	    	$results['question_content'] = $result->question_content;
 	    	$results['created_on'] = $result->created_on;
-	    	$results['answer_count'] = $result->answer_count;
+	    	$results['answer_count'] = (int)$result->answer_count;
 
 	    	$query = 'select Tags.tag_id,Tags.tag_name from Tags_Questions INNER JOIN Tags on Tags_Questions.tag_id = Tags.tag_id where Tags_Questions.question_id=?';	
 
@@ -322,6 +325,10 @@
 	    	$result = $this->db->query($q, array($offset));
 	    	// echo $result->num_rows();
 	    	$retval = array();
+	    	$this->uncached_question_id = array();
+	    	$uncached_tag_list = array();
+
+	    	
 	    	foreach($result->result_array() as $row) {
 	    		$retval[$row['question_id']] = array(
 	    				"question_id" => $row['question_id'],
@@ -329,10 +336,47 @@
 	    				"title" => $row['title'],
 	    				"last_modified_on" => $row['last_modified_on'],
 	    				"created_on" => $row['created_on'],
-	    				"answer_count" => $row['answer_count'] 
+	    				"answer_count" => $row['answer_count'],
+	    				"tag_list" => $this->getTagsOnQuestionsCache($row['question_id'])
 	    			);
 	    	}
+
+	    	if(count($this->uncached_question_id))
+	    		$uncached_tag_list = $this->getTagsOnQuestionsDB();
+
+	    	foreach($uncached_tag_list as $row){
+	    		$tag_list = '{'.$row['tag_list'].'}';
+	    		$retval[$row['question_id']]['tag_list'] = (array)json_decode($tag_list,true);
+	    	}
+
 	    	return $retval;
+	    }
+
+	    public function getTagsOnQuestionsDB(){
+
+	    	//$query = "SELECT Tags_Questions.question_id as question_id, GROUP_CONCAT(Tags_Questions.tag_id separator ',') as tag_ids, GROUP_CONCAT(Tags.tag_name SEPARATOR ',') as tag_names FROM Tags_Questions INNER JOIN Tags on Tags_Questions.tag_id=Tags.tag_id where Tags_Questions.question_id in (".implode(',',$this->uncached_question_id).") group by Tags_Questions.question_id";
+	    	$query = "SELECT Tags_Questions.question_id, GROUP_CONCAT(concat('\"',Tags_Questions.tag_id,'\":\"',Tags.tag_name,'\"') separator ',') as tag_list FROM Tags_Questions INNER JOIN Tags on Tags_Questions.tag_id=Tags.tag_id where Tags_Questions.question_id in (".implode(',',$this->uncached_question_id).")group by Tags_Questions.question_id";
+	    	
+	    	$result = $this->db->query($query);
+
+	    	foreach ($result->result_array() as $row) {
+	    		$key = (int)$row['question_id'];
+	    		$value = '{'.$row['tag_list'].'}';
+	    		$this->cache->redis->save($key, $value,null);
+	    	}
+
+	    	return $result->result_array();
+	    }
+
+	    public function getTagsOnQuestionsCache($question_id){
+	    	$response = $this->cache->redis->get((int)$question_id);
+	    	if( $response == null ){
+	    		$this->uncached_question_id[] = $question_id;
+	    		return '';
+	    	}
+	    	else{				
+	    		return (array)json_decode($response,true);
+	    	}
 	    }
 
 	    public function getUserForQuestion( $question_id){

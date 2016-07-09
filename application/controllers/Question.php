@@ -65,7 +65,7 @@ class Question extends CI_Controller{
 			action_invalid_user();
 		}
 		$details = $this->questionlib->get_question_details($_GET,$_SESSION['user_id']);		
-
+		
 		if( isset($details['question-not-found']) )
 		{
 			http_response_code(401);

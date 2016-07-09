@@ -14,6 +14,7 @@ class Userhome extends CI_Controller {
 
 	public function index()
 	{
+		
 		$data = $this->questionlib->getRecentQuestions(0);
 		$data['followed_questions'] = $this->questionlib->getFollowedQuestions(0);
 		$this->load->view('header');
