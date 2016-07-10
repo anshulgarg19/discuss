@@ -30,6 +30,7 @@
 
 		$('#searchfield').autocomplete({
 		    serviceUrl: '/index.php/search/suggest',
+		    autoSelectFirst: true,
 		    onSelect: function (suggestion) {
 		        $('#hiddensearchinput').val(suggestion.data);
 	    	}
