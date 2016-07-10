@@ -40,7 +40,8 @@
 	          <input type="text" name="query" class="form-control" id="searchfield" placeholder="Search">
 	          <input type="hidden" name="value" class="form-control" id="hiddensearchinput">
 	        </div>
-	        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	        <button type="button" id="searchbutton" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+	        <span id="navbarsearcherror" style="color:red;"></span>
 	      </form>
 	      <ul class="nav navbar-nav navbar-right">
 	        <li><a id="header_first_name" href="/index.php/userprofile/showprofile"> <?php echo $_SESSION['firstname'];?> <span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>

@@ -1,6 +1,7 @@
 (function() {
 	'use strict';
 
+	$("#navbarsearcherror").hide();
 	//browser window scroll (in pixels) after which the "back to top" link is shown
 	var offset = 300,
 		//browser window scroll (in pixels) after which the "back to top" link opacity is reduced
@@ -31,9 +32,25 @@
 		$('#searchfield').autocomplete({
 		    serviceUrl: '/index.php/search/suggest',
 		    autoSelectFirst: true,
+		    showNoSuggestionNotice: true,
+		    noSuggestionNotice: 'No matching tags found',
+		    onInvalidateSelection: function() {
+		    	$('#hiddensearchinput').val("");
+		    },
 		    onSelect: function (suggestion) {
 		        $('#hiddensearchinput').val(suggestion.data);
 	    	}
+		});
+
+		$('#navBarSearchForm').submit(function(event) {
+
+			if($('#hiddensearchinput').val() === "") {
+				event.preventDefault();
+				$("#navbarsearcherror").show();
+				$("#navbarsearcherror").html('No tags matching this name found');
+			}
+			else
+				$('#navBarSearchForm')[0].submit();
 		});
 	});
 
