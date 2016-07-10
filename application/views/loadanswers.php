@@ -1,4 +1,5 @@
 <?php foreach($answers as $row) { ?>
+<div class="well">
 	<div class="answer-content"><?php echo $row['answer_content']; ?></div><br/>
 	<div class="row">
 		<div class="pull-right">
@@ -7,7 +8,8 @@
 			<br/><?php echo 'on: '.date("F j, Y, g:i a",strtotime($row['created_on'])); ?>
 		</div>
 	</div>
-	<div class="row">
-		<div class="partition"></div>
-	</div>
+</div>
+<div class="row">
+	<div class="partition"></div>
+</div>
 <?php } ?>

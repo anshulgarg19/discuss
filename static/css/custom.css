@@ -188,3 +188,12 @@ body {
 #recentlist > li > div > div.pull-right {
   margin-top: -15px;
 }
+
+#question > div > form > div.modal-body {
+  padding-bottom: 0px;
+}
+
+#question > div > form > div.modal-footer {
+  border-top: 0;
+  padding-top: 0px;
+}
