@@ -88,13 +88,6 @@ class Userprofile extends CI_controller{
 	public function changepic(){
 		
 		$filename = $_SESSION['user_id'];
-
-        //file config details
-        /*$fileconfig['upload_path'] 			= $this->config->item('upload_path');
-        $fileconfig['allowed_types']        = $this->config->item('allowed_types');
-        $fileconfig['max_size']             = $this->config->item('max_size');
-        $fileconfig['max_width']            = $this->config->item('max_width');
-        $fileconfig['max_height']           = $this->config->item('max_height');*/
         
 
         $fileconfig = getfileconfigurations();
